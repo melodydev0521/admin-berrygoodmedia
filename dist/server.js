@@ -49,6 +49,16 @@ mongoose_1.default.connect(mongoUrl)
     console.error("MongoDB Connection Error!");
     process.exit();
 });
+// if (process.env.NODE_ENV === "production") {
+// 	app.use(
+// 		express.static("./client/core/build", { maxAge: 31557600000 })
+// 	);
+// 	app.use(express.static('./client/'));
+// 	app.get('/', (req:Request, res:Response) => {
+// 		console.log('sending index.html');
+// 		res.sendFile('/dist/index.html');
+// 	});
+// }
 // Primary App Routers
 app.use("/api/revenue", revenue_1.default);
 const PORT = process.env.PORT || 8000;
