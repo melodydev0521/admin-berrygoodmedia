@@ -1,4 +1,17 @@
-import mongoose, { Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema, Document } from 'mongoose';
+
+interface IRevenueItem {
+    name?: string,
+    roas: number,
+    profit: number,
+    revenue: number,
+    spend: number,
+    offer: string
+}
+export interface IRevenue extends Document {
+    data: Array<IRevenueItem>,
+    date: Date
+}
 
 const RevenueSchema: Schema = new Schema({
     data: [{
@@ -15,5 +28,5 @@ const RevenueSchema: Schema = new Schema({
     }
 });
 
-const RevenueModel = mongoose.model('revenues', RevenueSchema);
+const RevenueModel = mongoose.model<IRevenue>('revenues', RevenueSchema);
 export default RevenueModel;

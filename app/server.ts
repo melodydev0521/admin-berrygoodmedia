@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import cors from 'cors';
@@ -26,6 +26,17 @@ mongoose.connect(mongoUrl)
   process.exit();
 });
 
+// if (process.env.NODE_ENV === "production") {
+// 	app.use(
+// 		express.static("./client/core/build", { maxAge: 31557600000 })
+// 	);
+
+// 	app.use(express.static('./client/'));
+// 	app.get('/', (req:Request, res:Response) => {
+// 		console.log('sending index.html');
+// 		res.sendFile('/dist/index.html');
+// 	});
+// }
 // Primary App Routers
 app.use("/api/revenue", revenue);
 
