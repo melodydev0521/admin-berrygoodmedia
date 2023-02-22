@@ -7,7 +7,7 @@
     "dev": "npm run dev --prefix ./server"
   },
   "main": "index.js",
-  "repository": "https://github.com/melodydev0521/affiliate-backend-ts.git",
+  "repository": "https://github.com/melodydev0521/affiliate-ts.git",
   "author": "WebMelody <dev.mattew.chen@gmail.com>",
   "license": "MIT",
   "private": true
