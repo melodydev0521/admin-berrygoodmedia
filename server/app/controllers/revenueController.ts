@@ -17,17 +17,14 @@ export const getRevenues: RequestHandler = (req: Request, res: Response) => {
  * @param next 
  * @desc Add new Revenue data
  */
-export const addRevenue: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-    // Create new Revenue
-    const newRevenue: IRevenue = new RevenueModel({
-        data: req.body.revenues
-    });
-    // Save Revenue
-    newRevenue
-        .save()
-        .then((revenue: IRevenue) => {
-            res.status(200).json(revenue);
-        });
+export const addRevenue: RequestHandler = (req: Request, res: Response) => {
+    // Create new Revenues
+    RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
+        name: item.name,
+        offer: item.offer,
+        adGroupId: item.adGroupId
+    })));
+    res.status(200).json({success: true});
 }
 
 export const removeRevenue: RequestHandler = (req: Request, res: Response) => {

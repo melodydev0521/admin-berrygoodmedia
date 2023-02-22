@@ -14,7 +14,7 @@ app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// MongoDB Connection
+// MongoDB Connection open your heart 
 const mongoUrl: string = MONGO_URI as string;
 mongoose.set('strictQuery', false);
 mongoose.connect(mongoUrl)
@@ -27,9 +27,6 @@ mongoose.connect(mongoUrl)
 });
 
 // if (process.env.NODE_ENV === "production") {
-// 	app.use(
-// 		express.static("./client/core/build", { maxAge: 31557600000 })
-// 	);
 
 // 	app.use(express.static('./client/'));
 // 	app.get('/', (req:Request, res:Response) => {
