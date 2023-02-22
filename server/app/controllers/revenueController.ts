@@ -22,7 +22,9 @@ export const addRevenue: RequestHandler = (req: Request, res: Response) => {
     RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
         name: item.name,
         offer: item.offer,
-        adGroupId: item.adGroupId
+        adGroupId: item.adGroupId,
+        bearerToken: item.bearerToken,
+        advertiserId: item.advertiserId
     })));
     res.status(200).json({success: true});
 }
