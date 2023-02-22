@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "affiliate",
   "scripts": {
+    "start": "npm start --prefix ./server",
     "dev": "npm run dev --prefix ./server"
   },
   "main": "index.js",

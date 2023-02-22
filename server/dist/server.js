@@ -38,7 +38,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: true }));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
-// MongoDB Connection
+// MongoDB Connection open your heart 
 const mongoUrl = secret_1.MONGO_URI;
 mongoose_1.default.set('strictQuery', false);
 mongoose_1.default.connect(mongoUrl)
@@ -50,9 +50,6 @@ mongoose_1.default.connect(mongoUrl)
     process.exit();
 });
 // if (process.env.NODE_ENV === "production") {
-// 	app.use(
-// 		express.static("./client/core/build", { maxAge: 31557600000 })
-// 	);
 // 	app.use(express.static('./client/'));
 // 	app.get('/', (req:Request, res:Response) => {
 // 		console.log('sending index.html');

@@ -30,17 +30,14 @@ exports.getRevenues = getRevenues;
  * @param next
  * @desc Add new Revenue data
  */
-const addRevenue = (req, res, next) => {
-    // Create new Revenue
-    const newRevenue = new Revenue_1.default({
-        data: req.body.revenues
-    });
-    // Save Revenue
-    newRevenue
-        .save()
-        .then((revenue) => {
-        res.status(200).json(revenue);
-    });
+const addRevenue = (req, res) => {
+    // Create new Revenues
+    Revenue_1.default.insertMany(req.body.revenues.map((item) => ({
+        name: item.name,
+        offer: item.offer,
+        adGroupId: item.adGroupId
+    })));
+    res.status(200).json({ success: true });
 };
 exports.addRevenue = addRevenue;
 const removeRevenue = (req, res) => {

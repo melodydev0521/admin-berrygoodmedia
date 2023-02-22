@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "ts-node-dev ./app/server.ts",
     "build": "tsc",
-    "start": "node dist"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

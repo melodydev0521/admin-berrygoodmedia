@@ -25,14 +25,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const RevenueSchema = new mongoose_1.Schema({
-    data: [{
-            name: String,
-            roas: Number,
-            profit: Number,
-            revenue: Number,
-            spend: Number,
-            offer: String
-        }],
+    name: {
+        type: String,
+        required: true
+    },
+    offer: {
+        type: String,
+        required: true
+    },
+    adGroupId: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now
