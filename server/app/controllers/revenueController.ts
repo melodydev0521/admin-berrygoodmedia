@@ -32,7 +32,7 @@ export const addRevenue: RequestHandler = (req: Request, res: Response) => {
 export const removeRevenue: RequestHandler = (req: Request, res: Response) => {
     RevenueModel
         .findByIdAndDelete(req.params._id)
-        .then((devRev: any) => res.json(devRev));
+        .then((devRev: any) => res.json(devRev._id));
 }
 
 export const removeAllRevenue: RequestHandler = async (req: Request, res: Response) => {
