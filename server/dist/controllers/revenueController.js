@@ -35,7 +35,9 @@ const addRevenue = (req, res) => {
     Revenue_1.default.insertMany(req.body.revenues.map((item) => ({
         name: item.name,
         offer: item.offer,
-        adGroupId: item.adGroupId
+        adGroupId: item.adGroupId,
+        bearerToken: item.bearerToken,
+        advertiserId: item.advertiserId
     })));
     res.status(200).json({ success: true });
 };
@@ -43,7 +45,7 @@ exports.addRevenue = addRevenue;
 const removeRevenue = (req, res) => {
     Revenue_1.default
         .findByIdAndDelete(req.params._id)
-        .then((devRev) => res.json(devRev));
+        .then((devRev) => res.json(devRev._id));
 };
 exports.removeRevenue = removeRevenue;
 const removeAllRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

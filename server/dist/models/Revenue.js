@@ -30,10 +30,17 @@ const RevenueSchema = new mongoose_1.Schema({
         required: true
     },
     offer: {
+        type: String
+    },
+    adGroupId: {
         type: String,
         required: true
     },
-    adGroupId: {
+    advertiserId: {
+        type: String,
+        required: true
+    },
+    bearerToken: {
         type: String,
         required: true
     },
