@@ -5,7 +5,10 @@ export const tiktokAccounts = [
     { name: "Stacks Ads", value: '7060955335363805185' },
     { name: "Plug 2022", value: '7063596340252573698' },
     { name: "Pluggy", value: '7054703945205170178' },
-    { name: "New Plug", value: '7068326186375528449' }
+    { name: "New Plug", value: '7068326186375528449' },
+    { name: "BerryGood Media 01", value: '7197722036767096833' },
+    { name: "BerryGood Media 02", value: '7197722077057597442' },
+    { name: "BerryGood Media 03", value: '7197722173161668610' }
 ];
 
 export const plugAccounts = [

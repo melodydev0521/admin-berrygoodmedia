@@ -61,6 +61,7 @@ export default function Dashboard() {
         setLoading(true);
 		setTotal(initialTotal);
         var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
+        console.log(result)
         setRevenues(result);
         var totalVal = {
 			name: 'Total',
