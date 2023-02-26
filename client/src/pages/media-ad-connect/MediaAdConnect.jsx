@@ -62,7 +62,6 @@ const AdManager = () => {
     };
 
     const [state, setState] = React.useState(initialState);
-    const [context, setContext] = useAppContext();
 
     React.useEffect(() => {
         setState({
@@ -109,16 +108,14 @@ const AdManager = () => {
         }
         setState({ ...state, isMediaLoading: true, mediaSources: [] })
         const infuseData = await getInfuse(state.startDate, state.endDate)
-        var plugData = await getPlug(state.startDate, state.endDate, state.plugAccount.id)
+        const plugData = await getPlug(state.startDate, state.endDate, state.plugAccount.id)
         if (infuseData === "server_error" || plugData === "server_error") return;
-
-        plugData = isEmpty(plugData.data) ? { data: [] } : plugData
         var index = 1;
         var mediaSources = [];
         if (!isEmpty(infuseData)) {
             mediaSources = [
                 ...mediaSources,
-                ...infuseData.data.map((item) => ({
+                ...infuseData.map((item) => ({
                     no: index++,
                     icon: '',
                     name: item.Stat.source,
@@ -130,7 +127,7 @@ const AdManager = () => {
         if (!isEmpty(plugData)) {
             mediaSources = [
                 ...mediaSources,
-                ...plugData.data.map((item) => ({
+                ...plugData.map((item) => ({
                     no: index++,
                     icon: item.campaign_image_url,
                     name: item.media_name,

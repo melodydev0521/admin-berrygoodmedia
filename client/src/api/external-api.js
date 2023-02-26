@@ -7,61 +7,20 @@ import { errorPublic } from "./general"
  * @params {startDate, endDate}
  * @return JSON Infuse data
  */
-export const getInfuse = (startDate, endDate) => {
-    return fetch(
-        `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${startDate}&filters[Stat.date][values][]=${endDate}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
-        { method: 'GET' }
-    )
-        .then(res => res.json())
-        .then(data => data.response.data)
+export const getInfuse = (start, end) => {
+    return axios.get(`/api/external-api/infuse/${start}/${end}`)
+        .then(res => res.data)
         .catch(err => errorPublic(err))
 }
 
 /**
  * @params {startDate, endDate}
- * @return JSON Plug Data
+ * @return JSON Infuse data
  */
-export const getPlug = (startDate, endDate, bearerToken, timezone = 'New_York') => {
-    /**
-     * @method POST
-     * @desc Get Firebase Token
-     */
-    return fetch(
-        `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
-        {
-            method: 'POST',
-            body: JSON.stringify({
-                grant_type: 'refresh_token',
-                refresh_token:
-                    'AOEOulZYVnczctVS6DlGCj1eKDu4wXWCN0I35wr0vsf0xNv8MjZFZclKWCA8OYk8Cp4XDnjEvNKawaRiUMQ653NlcG1wmRWOvr6uGkGCiB75_ZnX-5fmtJzbGweTjfkwEnHiFBylTsGL08sJ_8GbUxV-oBOu4WtXqQ',
-            }),
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            const idToken = data.id_token
-            /**
-             * @method GET
-             * @desc Get Plug data by Firebase token with JSON type
-             */
-            return fetch(
-                `https://theplug-prod.herokuapp.com/api/v1/bqReport?start_date=${startDate}&end_date=${endDate}&timezone=America/${timezone}&columns=date,campaign,campaign_name,campaign_image_url,media,media_name,dollars&format=json`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: bearerToken,
-                        FirebaseToken: idToken,
-                    },
-                }
-            )
-                .then((res) => res.json())
-                .then((data) => {
-                    return data
-                })
-                .catch((err) => errorPublic(err))
-        })
-        .catch((err) => errorPublic(err))
+export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
+    return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
+        .then(res => res.data)
+        .catch(err => errorPublic(err));
 }
 
 /**
@@ -141,7 +100,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             
             if (!isEmpty(infuseData)) {
                 mediaSources = [
-                    ...infuseData.data.map((item) => ({
+                    ...infuseData.map((item) => ({
                         no: index++,
                         icon: '',
                         name: item.Stat.source,
@@ -156,7 +115,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     plugData = await getPlug(start, end, element.value, timezone)
                     mediaSources = [
                         ...mediaSources,
-                        ...plugData.data.map(item => ({
+                        ...plugData.map(item => ({
                             no: index++,
                             icon: item.campaign_image_url,
                             name: item.media_name,
@@ -169,7 +128,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 plugData = await getPlug(start, end, bearerToken, timezone)
                 mediaSources = [
                     ...mediaSources,
-                    ...plugData.data.map((item) => ({
+                    ...plugData.map((item) => ({
                         no: index++,
                         icon: item.campaign_image_url,
                         name: item.media_name,

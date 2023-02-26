@@ -1,4 +1,4 @@
-import { RequestHandler, Request, Response, NextFunction } from "express";
+import { RequestHandler, Request, Response } from "express";
 import RevenueModel, { IRevenue } from '../models/Revenue';
 
 export const getRevenueList: RequestHandler = (req: Request, res: Response) => {

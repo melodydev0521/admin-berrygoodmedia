@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import cors from 'cors';
 import revenue from './routes/revenue';
+import external from './routes/external';
 import { MONGO_URI } from "./config/secret";
 import mongoose from "mongoose";
 
@@ -36,6 +37,7 @@ mongoose.connect(mongoUrl)
 // }
 // Primary App Routers
 app.use("/api/revenue", revenue);
+app.use("/api/external-api", external);
 
 const PORT = process.env.PORT || 8000;
 
