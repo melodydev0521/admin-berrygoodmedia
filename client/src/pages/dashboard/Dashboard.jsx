@@ -236,6 +236,7 @@ export default function Dashboard() {
 							// loading={loading}
                             style={{width: '100%'}}
 							variant="outlined"
+                            onClick={getRevenues}
 						>
 							<span>Get Connections</span>
 						</Button>
