@@ -99,7 +99,7 @@ export const getTiktok = (startDate, endDate, advertiser_id) => {
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getCampaigns = (startDate, endDate, advertiser_id) => {
+export const getCampaignsApi = (startDate, endDate, advertiser_id) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type

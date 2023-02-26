@@ -3,7 +3,7 @@ import isEmpty from 'is-empty'
 import styled from 'styled-components'
 import { Grid, Button } from '@mui/material'
 import { useAppContext } from '../../context/AppContext'
-import { getInfuse, getPlug, getTiktok } from '../../api/external-api'
+import { getInfuse, getPlug, getTiktok, getCampaignsApi } from '../../api/external-api'
 import BasicDatePicker from '../../components/styled-elements/date-picker/StyledDatePicker'
 import MediaList from '../../components/connect-components/MediaList'
 import AdSetList from '../../components/connect-components/AdSetList'
@@ -176,7 +176,8 @@ const AdManager = () => {
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getCampaigns(state.startDate, state.endDate, state.tiktokAccount.id);
+        const tiktokData = await getCampaignsApi(state.startDate, state.endDate, state.tiktokAccount.id);
+        console.log(tiktokData)
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
