@@ -10,7 +10,7 @@
     "build": "concurrently \"npm run build --prefix ./client\" \"npm run build --prefix ./server\""
   },
   "main": "index.js",
-  "repository": "https://github.com/melodydev0521/affiliate-ts.git",
+  "repository": "https://github.com/melodydev0521/affiliate-admin.git",
   "author": "WebMelody <dev.mattew.chen@gmail.com>",
   "license": "MIT",
   "private": true,
