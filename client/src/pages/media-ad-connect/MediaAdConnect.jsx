@@ -177,7 +177,6 @@ const AdManager = () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const tiktokData = await getCampaignsApi(state.startDate, state.endDate, state.tiktokAccount.id);
-        console.log(tiktokData)
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];

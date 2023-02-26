@@ -121,6 +121,7 @@ export const getCampaignsApi = (startDate, endDate, advertiser_id) => {
     )
         .then((res) => res.json())
         .then((data) => {
+            console.log(data);
             return data.data
         })
         .catch((err) => errorPublic(err))
