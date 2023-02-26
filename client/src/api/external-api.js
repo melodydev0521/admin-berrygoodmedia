@@ -2,27 +2,26 @@
 import isEmpty from "is-empty"
 import axios from 'axios'
 import { tiktokAccounts, plugAccounts } from "../config/accounts"
+import { errorPublic } from "./general"
 /**
  * @params {startDate, endDate}
  * @return JSON Infuse data
  */
-export const getInfuse = async (startDate, endDate) => {
+export const getInfuse = (startDate, endDate) => {
     return fetch(
         `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${startDate}&filters[Stat.date][values][]=${endDate}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
         { method: 'GET' }
     )
-        .then((res) => res.json())
-        .then((data) => data.response.data)
-        .catch((err) => {
-            console.log(err)
-        })
+        .then(res => res.json())
+        .then(data => data.response.data)
+        .catch(err => errorPublic(err))
 }
 
 /**
  * @params {startDate, endDate}
  * @return JSON Plug Data
  */
-export const getPlug = async (startDate, endDate, bearerToken, timezone = 'New_York') => {
+export const getPlug = (startDate, endDate, bearerToken, timezone = 'New_York') => {
     /**
      * @method POST
      * @desc Get Firebase Token
@@ -31,11 +30,6 @@ export const getPlug = async (startDate, endDate, bearerToken, timezone = 'New_Y
         `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
         {
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/x-www-form-urlencoded',
-            //     'grant_type': 'refresh_token',
-            //     'regresh_token_1': 'AOEOulZYVnczctVS6DlGCj1eKDu4wXWCN0I35wr0vsf0xNv8MjZFZclKWCA8OYk8Cp4XDnjEvNKawaRiUMQ653NlcG1wmRWOvr6uGkGCiB75_ZnX-5fmtJzbGweTjfkwEnHiFBylTsGL08sJ_8GbUxV-oBOu4WtXqQ'
-            // },
             body: JSON.stringify({
                 grant_type: 'refresh_token',
                 refresh_token:
@@ -44,7 +38,7 @@ export const getPlug = async (startDate, endDate, bearerToken, timezone = 'New_Y
         }
     )
         .then((res) => res.json())
-        .then(async (data) => {
+        .then((data) => {
             const idToken = data.id_token
             /**
              * @method GET
@@ -65,16 +59,16 @@ export const getPlug = async (startDate, endDate, bearerToken, timezone = 'New_Y
                 .then((data) => {
                     return data
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => errorPublic(err))
         })
-        .catch((err) => console.log(err))
+        .catch((err) => errorPublic(err))
 }
 
 /**
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getTiktok = async (startDate, endDate, advertiser_id) => {
+export const getTiktok = (startDate, endDate, advertiser_id) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type
@@ -98,14 +92,11 @@ export const getTiktok = async (startDate, endDate, advertiser_id) => {
         .then((data) => {
             return data.data
         })
-        .catch((err) => {
-            console.log(err)
-        })
+        .catch((err) => errorPublic(err))
 }
 
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
-    console.log("123")
     return axios.get(`api/revenue`, {
             headers: {
                 'Content-Type': 'application/json'

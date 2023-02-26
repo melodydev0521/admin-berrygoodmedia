@@ -61,7 +61,7 @@ export default function Dashboard() {
         setLoading(true);
 		setTotal(initialTotal);
         var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
-        console.log(result)
+        if (result === "server_error") return;
         setRevenues(result);
         var totalVal = {
 			name: 'Total',
@@ -97,6 +97,7 @@ export default function Dashboard() {
 
     const handleRevenueDelete = async key => {
         const _id = await deleteRevenue(key);
+        if (_id === "server_error") return;
         var index = 1;
         setRevenues(revenues.filter(item => item._id !== _id).map(item => ({...item, no: index++})));
     }

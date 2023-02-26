@@ -94,6 +94,7 @@ const AdManager = () => {
 
     const excludeConnectedRevenues = async (contentType, contentVal) => {
         const savedRevenue = await getRevenues();
+        if (savedRevenue === "server_error") return;
         if (contentType === 'media') {
             return contentVal.filter(item => savedRevenue.filter(i => i.name === item.name).length === 0)
         } else if (contentType === 'tiktok') {
@@ -109,6 +110,7 @@ const AdManager = () => {
         setState({ ...state, isMediaLoading: true, mediaSources: [] })
         const infuseData = await getInfuse(state.startDate, state.endDate)
         var plugData = await getPlug(state.startDate, state.endDate, state.plugAccount.id)
+        if (infuseData === "server_error" || plugData === "server_error") return;
 
         plugData = isEmpty(plugData.data) ? { data: [] } : plugData
         var index = 1;
@@ -151,6 +153,7 @@ const AdManager = () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const tiktokData = await getTiktok(state.startDate, state.endDate, state.tiktokAccount.id);
+        if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
         if (!isEmpty(tiktokData)) {
@@ -234,13 +237,14 @@ const AdManager = () => {
     }
 
     const handleDataSave = async () => {
-        await addRevenue(state.data.map(item => ({
+        const result = await addRevenue(state.data.map(item => ({
             name: item.name, 
             offer: item.offer, 
             adGroupId: item.adgroupId,
             advertiserId: state.tiktokAccount.id,
             bearerToken: state.plugAccount.id
         })));
+        if (result === "server_error") return;
         // setContext({...context, ad_data: state.data});
     }
 
