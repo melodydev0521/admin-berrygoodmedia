@@ -145,7 +145,6 @@ const AdManager = () => {
     }
 
     const getAdSets = async () => {
-
         if (isEmpty(state.tiktokAccount)) {
             alert('error');
             return;
@@ -162,6 +161,31 @@ const AdManager = () => {
                 adgroupId: item.dimensions.adgroup_id,
                 spend: item.metrics.spend,
                 adgroupName: item.metrics.adgroup_name,
+            }));
+        }
+        
+        adSets = await excludeConnectedRevenues('tiktok', adSets);
+        setState({...state, adSets: adSets, isAdLoading: false});
+        automaticConnection();
+    }
+
+    const getCampaigns = async () => {
+        if (isEmpty(state.tiktokAccount)) {
+            alert('error');
+            return;
+        }
+        setState({ ...state, isAdLoading: true, adSets: [] });
+
+        const tiktokData = await getCampaigns(state.startDate, state.endDate, state.tiktokAccount.id);
+        if (tiktokData === "server_error") return;
+        var index = 1;
+        var adSets = [];
+        if (!isEmpty(tiktokData)) {
+            adSets = tiktokData.list.map((item) => ({
+                no: index ++,
+                adgroupId: item.dimensions.campaign_id,
+                spend: item.metrics.spend,
+                adgroupName: item.metrics.campaign_name,
             }));
         }
         
@@ -302,10 +326,17 @@ const AdManager = () => {
                                         GET MEDIA SOURCES
                                     </StyledButton>
                                 </Grid>
-                                <Grid container item md={3} xs={6}>
-                                    <StyledButton onClick={getAdSets}>
-                                        GET AD SETS
-                                    </StyledButton>
+                                <Grid container item spacing={1} md={3} xs={6}>
+                                    <Grid container item xs={6}>
+                                        <StyledButton onClick={getAdSets}>
+                                            GET AD SETS
+                                        </StyledButton>
+                                    </Grid>
+                                    <Grid container item xs={6}>
+                                        <StyledButton onClick={getCampaigns}>
+                                            Get Campaigns
+                                        </StyledButton>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid container item spacing={2} direction={'row'} justifyContent={'space-between'}>

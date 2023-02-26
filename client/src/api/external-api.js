@@ -95,6 +95,37 @@ export const getTiktok = (startDate, endDate, advertiser_id) => {
         .catch((err) => errorPublic(err))
 }
 
+/**
+ * @params {startDate, endDate}
+ * @return TikTok data with JSON
+ */
+export const getCampaigns = (startDate, endDate, advertiser_id) => {
+    /**
+     * @method GET
+     * @desc Get Tiktok data with JSON type
+     */
+    return fetch(
+        `https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${advertiser_id}&page=1&data_level=AUCTION_CAMAPIGIN&report_type=BASIC&dimensions=["campaign_id"]&metrics=["adgroup_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
+        { 
+            method: 'GET',
+            headers: {
+                "Access-Control-Request-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                'Access-Control-Allow-Origin': '*',
+                "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Token': '70f21646e0a7da20e90acaf96b939a4c49d8fc59'
+            }
+        }
+    )
+        .then((res) => res.json())
+        .then((data) => {
+            return data.data
+        })
+        .catch((err) => errorPublic(err))
+}
+
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
     return axios.get(`api/revenue`, {
