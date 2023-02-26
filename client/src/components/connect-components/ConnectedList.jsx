@@ -38,8 +38,9 @@ export default function ConnectedList(props) {
                 state.data.map((item) => (
                     <StyledListItem
                         key={item.no}
+                        style={{ padding: '3px 5px' }}
                     >
-                        <div style={{width: '45%'}}>
+                        <div style={{width: '45%', display: 'flex', flexDirection: 'row'}}>
                             {!isEmpty(item.icon) && 
                                 <img 
                                     style={{ borderRadius: '50%', margin: '0 3px' }} 

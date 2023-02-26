@@ -108,7 +108,7 @@ export default function Dashboard() {
             align: 'center',
             label: 'no',
             style: {
-                width: '30px'
+                width: '20px'
             }
         },
         {
@@ -231,14 +231,14 @@ export default function Dashboard() {
                         </Grid>
                     </Grid>
                     <Grid container item md={3} sm={12} xs={12}>
-						<LoadingButton
+						<Button
 							// size="small"
-							onClick={getRevenues}
-							loading={loading}
+							// loading={loading}
+                            style={{width: '100%'}}
 							variant="outlined"
 						>
-							<span>Get</span>
-						</LoadingButton>
+							<span>Get Connections</span>
+						</Button>
                     </Grid>
                 </Grid>
                 <Grid item container>
