@@ -217,7 +217,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     adgroupName: item.metrics.adgroup_name,
                 }));
 
-                tiktokData = await getTiktok_campaign(start, end, advertiser_id.value);
+                tiktokData = await getTiktok_campaign(start, end, advertiser_id);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
