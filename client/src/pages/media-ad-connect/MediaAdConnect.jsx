@@ -3,7 +3,7 @@ import isEmpty from 'is-empty'
 import styled from 'styled-components'
 import { Grid, Button } from '@mui/material'
 import { useAppContext } from '../../context/AppContext'
-import { getInfuse, getPlug, getTiktok, getCampaignsApi } from '../../api/external-api'
+import { getInfuse, getPlug, getTiktok_adgroup, getTiktok_campaign } from '../../api/external-api'
 import BasicDatePicker from '../../components/styled-elements/date-picker/StyledDatePicker'
 import MediaList from '../../components/connect-components/MediaList'
 import AdSetList from '../../components/connect-components/AdSetList'
@@ -98,7 +98,7 @@ const AdManager = () => {
         if (contentType === 'media') {
             return contentVal.filter(item => savedRevenue.filter(i => i.name === item.name).length === 0)
         } else if (contentType === 'tiktok') {
-            return contentVal.filter(item => savedRevenue.filter(i => i.adGroupId === item.adgroupId).length === 0)
+            return contentVal.filter(item => savedRevenue.filter(i => i.tiktokDataId === item.tiktokDataId).length === 0)
         }
     }
 
@@ -151,14 +151,14 @@ const AdManager = () => {
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getTiktok(state.startDate, state.endDate, state.tiktokAccount.id);
+        const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.tiktokAccount.id);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
         if (!isEmpty(tiktokData)) {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
-                adgroupId: item.dimensions.adgroup_id,
+                tiktokDataId: item.dimensions.adgroup_id,
                 spend: item.metrics.spend,
                 adgroupName: item.metrics.adgroup_name,
             }));
@@ -176,14 +176,14 @@ const AdManager = () => {
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getCampaignsApi(state.startDate, state.endDate, state.tiktokAccount.id);
+        const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.tiktokAccount.id);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
         if (!isEmpty(tiktokData)) {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
-                adgroupId: item.dimensions.campaign_id,
+                tiktokDataId: item.dimensions.campaign_id,
                 spend: item.metrics.spend,
                 adgroupName: item.metrics.campaign_name,
             }));
@@ -230,7 +230,7 @@ const AdManager = () => {
             ],
             adSets: [
                 ...state.adSets,
-                { no: removeData.adSets, adgroupId: removeData.adgroupId, adgroupName: removeData.adgroupName, spend: removeData.spend }
+                { no: removeData.adSets, tiktokDataId: removeData.tiktokDataId, adgroupName: removeData.adgroupName, spend: removeData.spend }
             ],
             data: state.data.filter(item => item.no !== key)
         });
@@ -248,7 +248,7 @@ const AdManager = () => {
         const adSets = 
             state.data.map(item => ({
                 no: item.adSets, 
-                adgroupId: item.adgroupId, 
+                tiktokDataId: item.tiktokDataId, 
                 adgroupName: item.adgroupName, 
                 spend: item.spend
             }));
@@ -264,7 +264,7 @@ const AdManager = () => {
         const result = await addRevenue(state.data.map(item => ({
             name: item.name, 
             offer: item.offer, 
-            adGroupId: item.adgroupId,
+            tiktokDataId: item.tiktokDataId,
             advertiserId: state.tiktokAccount.id,
             bearerToken: state.plugAccount.id
         })));

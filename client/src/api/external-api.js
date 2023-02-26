@@ -68,7 +68,7 @@ export const getPlug = (startDate, endDate, bearerToken, timezone = 'New_York') 
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getTiktok = (startDate, endDate, advertiser_id) => {
+export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type
@@ -99,7 +99,7 @@ export const getTiktok = (startDate, endDate, advertiser_id) => {
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getCampaignsApi = (startDate, endDate, advertiser_id) => {
+export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type
@@ -183,26 +183,50 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             index = 1;
 
             if (advertiser_id === 'all') {
-                for (const element of tiktokAccounts) {
-                    tiktokData = await getTiktok(start, end, element.value);
+                for (let element of tiktokAccounts) {
+                    tiktokData = await getTiktok_adgroup(start, end, element.value);
                     adSets = [
                         ...adSets,
                         ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
                             no: index ++,
-                            adgroupId: item.dimensions.adgroup_id,
+                            tiktokDataId: item.dimensions.adgroup_id,
                             spend: Number(item.metrics.spend),
                             adgroupName: item.metrics.adgroup_name,
                         }))
                     ];
                 }
+
+                for (let element of tiktokAccounts) {
+                    tiktokData = await getTiktok_campaign(start, end, element.value);
+                    adSets = [
+                        ...adSets,
+                        ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                            no: index ++,
+                            tiktokDataId: item.dimensions.campaign_id,
+                            spend: Number(item.metrics.spend),
+                            adgroupName: item.metrics.campaign_name,
+                        }))
+                    ];
+                }
             } else {
-                tiktokData = await getTiktok(start, end, advertiser_id);
+                tiktokData = await getTiktok_adgroup(start, end, advertiser_id);
                 adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
                     no: index ++,
-                    adgroupId: item.dimensions.adgroup_id,
+                    tiktokDataId: item.dimensions.adgroup_id,
                     spend: Number(item.metrics.spend),
                     adgroupName: item.metrics.adgroup_name,
                 }));
+
+                tiktokData = await getTiktok_campaign(start, end, advertiser_id.value);
+                adSets = [
+                    ...adSets,
+                    ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                        no: index ++,
+                        tiktokDataId: item.dimensions.campaign_id,
+                        spend: Number(item.metrics.spend),
+                        adgroupName: item.metrics.campaign_name,
+                    }))
+                ];
             }
 
             index = 1;
@@ -211,7 +235,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 var isMatch = data.filter(i => item.name == i.name).length !== 0 ? true : false;
                 if (isMatch) {
                     const revenueData = data.filter(i => item.name == i.name)[0]
-                    const adset = adSets.filter(ad => ad.adgroupId == revenueData.adGroupId)[0];
+                    const adset = adSets.filter(ad => ad.tiktokDataId == revenueData.tiktokDataId)[0];
                     if (!isEmpty(adset)) {
                         result.push({
                             no: index ++,
