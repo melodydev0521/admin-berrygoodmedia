@@ -46,7 +46,7 @@ export default function Dashboard() {
             return;
         }
         setLoading(true);
-        var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone, status);
+        var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);
