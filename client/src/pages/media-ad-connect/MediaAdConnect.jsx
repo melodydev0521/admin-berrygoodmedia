@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router'
 import isEmpty from 'is-empty'
 import styled from 'styled-components'
 import { Grid, Button } from '@mui/material'
@@ -62,6 +63,7 @@ const AdManager = () => {
     };
 
     const [state, setState] = React.useState(initialState);
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         setState({
@@ -266,7 +268,7 @@ const AdManager = () => {
             bearerToken: state.plugAccount.id
         })));
         if (result === "server_error") return;
-        // setContext({...context, ad_data: state.data});
+        navigate('/dashboard');
     }
 
     const handleAccountSelect = (accountType, account) => {
