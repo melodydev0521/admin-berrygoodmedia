@@ -18,6 +18,8 @@ export const getRevenues: RequestHandler = (req: Request, res: Response) => {
  * @desc Add new Revenue data
  */
 export const addRevenue: RequestHandler = (req: Request, res: Response) => {
+    console.log(req.body);
+    return;
     // Create new Revenues
     RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
         name: item.name,
