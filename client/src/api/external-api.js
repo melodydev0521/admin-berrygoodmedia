@@ -251,7 +251,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             index = 1;
             const result = [];
-            console.log(mediaSources)
             data.forEach(item => {
                 var isMatch = mediaSources.filter(i => i.name == item.name).length !== 0 ? true : false;
                 if (isMatch) {
@@ -273,7 +272,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }
                 }
             });
-            console.log(result);
             return result;
         });
 }

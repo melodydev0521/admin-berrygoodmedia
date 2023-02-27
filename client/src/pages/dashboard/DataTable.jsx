@@ -67,10 +67,11 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             align: 'center',
             label: '',
             render: icon => {
-                isEmpty(icon) ? 
+                icon === '' ? 
                     <div /> : <img
                         width={15}
                         height={15}
+                        style={{ borderRadius: '50%' }} 
                         alt={`${icon}`}
                         src={`${icon}`}
                 />}
