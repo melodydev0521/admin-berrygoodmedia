@@ -260,6 +260,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                         result.push({
                             no: index ++,
                             _id: item._id,
+                            icon: media.icon,
                             tiktokDataId: item.tiktokDataId,
                             name: media.name,
                             roas: media.revenue / adset.spend,
@@ -271,7 +272,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }
                 }
             });
-            console.log(result);
             return result;
         });
 }
