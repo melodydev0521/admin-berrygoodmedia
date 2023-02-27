@@ -2,7 +2,7 @@
 import isEmpty from "is-empty"
 import axios from 'axios'
 import { tiktokAccounts, plugAccounts } from "../config/accounts"
-import { errorPublic } from "./general"
+import { publicError } from "./general"
 /**
  * @params {startDate, endDate}
  * @return JSON Infuse data
@@ -10,13 +10,13 @@ import { errorPublic } from "./general"
 export const getInfuse = (start, end) => {
     // return axios.get(`/api/external-api/infuse/${start}/${end}`)
     //     .then(res => res.data)
-    //     .catch(err => errorPublic(err))
+    //     .catch(err => publicError(err))
     fetch(
         `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${start}&filters[Stat.date][values][]=${end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
         { method: 'GET' })
         .then(res => res.json())
         .then((data) => {
-            res.json(data.response.data.data)
+            return data.response.data.data
         })
         .catch(err => publicError(err));
 }
@@ -28,7 +28,7 @@ export const getInfuse = (start, end) => {
 export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
     // return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
     //     .then(res => res.data)
-    //     .catch(err => errorPublic(err));
+    //     .catch(err => publicError(err));
     fetch(
         `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
         {
@@ -60,7 +60,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
             )
                 .then((res) => res.json())
                 .then((data) => {
-                    res.json(data.data)
+                    return data.data;
                 })
                 .catch((err) => publicError(err))
         })
@@ -95,7 +95,7 @@ export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
         .then((data) => {
             return data.data
         })
-        .catch((err) => errorPublic(err))
+        .catch((err) => publicError(err))
 }
 
 /**
@@ -127,7 +127,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
             console.log(data);
             return data.data
         })
-        .catch((err) => errorPublic(err))
+        .catch((err) => publicError(err))
 }
 
 
