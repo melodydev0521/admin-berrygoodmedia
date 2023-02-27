@@ -18,12 +18,11 @@ export const getRevenues: RequestHandler = (req: Request, res: Response) => {
  * @desc Add new Revenue data
  */
 export const addRevenue: RequestHandler = (req: Request, res: Response) => {
-    return res.json(req.body);
     // Create new Revenues
     RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
         name: item.name,
         offer: item.offer,
-        adGroupId: item.tiktokDataId,
+        tiktokDataId: item.tiktokDataId,
         bearerToken: item.bearerToken,
         advertiserId: item.advertiserId
     })));

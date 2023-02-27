@@ -9,8 +9,7 @@ export const addRevenue = (revenue) => {
             data: { revenues: revenue }
         })
         .then(res => {
-            console.log(res.data);
-            return;
+            return res.data;
         });
 }
 

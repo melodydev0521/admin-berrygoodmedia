@@ -267,8 +267,6 @@ const AdManager = () => {
             advertiserId: state.tiktokAccount.id,
             bearerToken: state.plugAccount.id
         })));
-        console.log(result);
-        return;
         if (result === "server_error") return;
         navigate('/dashboard');
     }
