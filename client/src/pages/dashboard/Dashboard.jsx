@@ -54,16 +54,16 @@ export default function Dashboard() {
 
     const refreshRevenues = async () => {
         const result = await getOnlyRevenues(date.start, date.end, account.plugAccount.id, timezone);
-        const newRevenues = revenues;
-        newRevenues.map(item => ({...item, revenue: result.filter(i => i.name === item.name)[0].revenue}));
+        var newRevenues = revenues;
+        console.log(newRevenues, result);
+        newRevenues = newRevenues.map(item => ({...item, revenue: result.filter(i => i.name === item.name)[0].revenue}));
         setRevenues(newRevenues);
     }
 
     const refreshSpends = async () => {
         const result = await getOnlySpends(date.start, date.end, account.tiktokAccount.id);
-        const newRevenues = revenues;
-        console.log(newRevenues, result)
-        newRevenues.map(item => ({...item, spend: result.filter(i => i.tiktokDataId === item.tiktokDataId)[0].spend}));
+        var newRevenues = revenues;
+        newRevenues = newRevenues.map(item => ({...item, spend: result.filter(i => i.tiktokDataId === item.tiktokDataId)[0].spend}));
         setRevenues([...newRevenues]);
     }
 
