@@ -326,6 +326,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
             }))
         ];
     }
+    console.log(plugData)
     return plugData;
 }
 
@@ -372,7 +373,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
             }))
         ];
     }
-
+    console.log(tiktokData)
 
     return tiktokData;
 }
