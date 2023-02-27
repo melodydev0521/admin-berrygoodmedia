@@ -131,7 +131,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
                 </Button>
         }
     ];
-
+    console.log(revenues)
     return (
         <Grid item container md={9} xs={12}>
             <StyledTable 
