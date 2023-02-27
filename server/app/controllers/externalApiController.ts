@@ -1,12 +1,11 @@
 import { RequestHandler, Request, Response } from "express";
-import fetch from "node-fetch";
 
 export const getInfuse: RequestHandler = (req, res) => {
-    return fetch(
+    fetch(
         `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${req.params.start}&filters[Stat.date][values][]=${req.params.end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
         { method: 'GET' })
         .then(res => res.json())
-        .then(data => {
+        .then((data) => {
             res.json(data.response.data.data)
         })
         .catch(err => console.log(err));
