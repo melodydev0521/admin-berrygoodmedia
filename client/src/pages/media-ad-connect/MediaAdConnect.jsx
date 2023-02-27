@@ -87,7 +87,7 @@ const AdManager = () => {
                     }
                 });
             });
-            setState({...state, data: [...connected, state.data]})
+            setState({...state, data: [...connected, state.data]});
         }
     }
 

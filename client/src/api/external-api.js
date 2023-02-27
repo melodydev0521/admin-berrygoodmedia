@@ -7,12 +7,21 @@ import { publicError } from "./general"
  * @params {startDate, endDate}
  * @return JSON Infuse data
  */
-export const getInfuse = (start, end) => {
+export const getInfuse = (start, end, fields = ['Stat.source', 'Stat.payout', 'Stat.clicks']) => {
     // return axios.get(`/api/external-api/infuse/${start}/${end}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err))
+    var fieldSets = '';
+    if (!isEmpty(fields)) {
+        fields.forEach((item, index) => {
+            fieldSets += 'fields[]=' + item;
+            if (index !== fields.length - 1) {
+                fieldSets += '&';
+            }
+        });
+    }
     return fetch(
-        `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${start}&filters[Stat.date][values][]=${end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
+        `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&${fieldSets}&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${start}&filters[Stat.date][values][]=${end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
         { method: 'GET' })
         .then(res => res.json())
         .then((data) => {
@@ -25,10 +34,19 @@ export const getInfuse = (start, end) => {
  * @params {startDate, endDate}
  * @return JSON Infuse data
  */
-export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
+export const getPlug = (start, end, bearerToken, timezone = "New_York", fields = ['date', 'campaign', 'campaign_name', 'campaign_image_url', 'media', 'media_name', 'dollars']) => {
     // return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err));
+    var fieldSets = '';
+    if (!isEmpty(fields)) {
+        fields.forEach((item, index) => {
+            fieldSets += item;
+            if (index !== fields.length - 1) {
+                fieldSets += ',';
+            }
+        })
+    }
     return fetch(
         `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
         {
@@ -48,7 +66,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
              * @desc Get Plug data by Firebase token with JSON type
              */
             return fetch(
-                `https://theplug-prod.herokuapp.com/api/v1/bqReport?start_date=${start}&end_date=${end}&timezone=America/${timezone}&columns=date,campaign,campaign_name,campaign_image_url,media,media_name,dollars&format=json`,
+                `https://theplug-prod.herokuapp.com/api/v1/bqReport?start_date=${start}&end_date=${end}&timezone=America/${timezone}&columns=${fieldSets}&format=json`,
                 {
                     method: 'GET',
                     headers: {
@@ -124,7 +142,6 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
     )
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
             return data.data
         })
         .catch((err) => publicError(err))
@@ -260,4 +277,19 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
 export const deleteRevenue = key => {
     return axios.delete(`api/revenue/${key}`).then(res => res.data);
+}
+
+export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
+    const infuse = await getInfuse(start, end, ['Stat.payout', 'Stat.source']);
+    const plug = await getPlug(start, end, bearerToken, timezone, ['campaign_name', 'dollars']);
+    const medias = [
+        ...infuse.map(item => ({ name: item.Stat.source, revenue: item.Stat.payout })),
+        ...plug.map(item => ({ name: item.campaign_name, revenue: item.dollars }))
+    ];
+    return medias;
+}
+
+export const getOnlySpends = async (start, end, tiktok) => {
+    const tiktok = await getTiktok_adgroup(start, end, tiktok);
+    return tiktok;
 }

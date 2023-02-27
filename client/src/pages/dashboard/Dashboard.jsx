@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import isEmpty from 'is-empty'
-import { deleteRevenue, getDataByConnection } from '../../api/external-api'
+import { deleteRevenue, getDataByConnection, getOnlyRevenues, getOnlySpends } from '../../api/external-api'
 import StyledDatePicker from '../../components/styled-elements/date-picker/StyledDatePicker'
 import StyledSelect from '../../components/styled-elements/select/StyledSelect';
 import { tiktokAccounts, plugAccounts } from '../../config/accounts';
@@ -50,6 +50,20 @@ export default function Dashboard() {
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);
+    }
+
+    const refreshRevenues = async () => {
+        const result = await getOnlyRevenues(date.start, date.end, account.plugAccount.id, timezone);
+        const newRevenues = revenues;
+        newRevenues.map(item => ({...item, revenue: result.filter(i => i.name === item.name)[0].revenue}));
+        setRevenues(newRevenues);
+    }
+
+    const refreshSpends = async () => {
+        const result = await getOnlySpends(date.start, date.end, account.tiktokAccount.id);
+        const newRevenues = revenues;
+        newRevenues.map(item => ({...item, spend: result.filter(i => i.name === i.name)[0].spend}));
+        setRevenues(newRevenues);
     }
 
     const handleSearchDate = (e) => {
@@ -136,7 +150,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                // onClick={getData}
+                                onClick={refreshRevenues}
                             >
                                 <span>Revenues</span>
                             </StyledButton>
@@ -145,14 +159,14 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                // onClick={getData}
+                                onClick={refreshSpends}
                             >
                                 <span>Spends</span>
                             </StyledButton>
                         </Grid>
                     </Grid>
                 </Grid>
-                <DataTable data={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
+                <DataTable revenues={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
             </Grid>
         </Grid>
     )
