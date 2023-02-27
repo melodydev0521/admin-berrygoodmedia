@@ -280,6 +280,7 @@ export const deleteRevenue = key => {
 }
 
 export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
+    console.log(bearerToken)
     const infuse = await getInfuse(start, end, ['Stat.payout', 'Stat.source']);
     const plug = await getPlug(start, end, bearerToken, timezone, ['campaign_name', 'dollars']);
     const medias = [
