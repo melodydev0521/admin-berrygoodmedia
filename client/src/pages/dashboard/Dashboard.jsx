@@ -40,12 +40,12 @@ export default function Dashboard() {
         });
     }, []);
 
-    const getData = async () => {
+    const getData = async (status) => {
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
             alert('choose account or timezone');
             return;
         }
-        if (isEmpty(revenues)) setLoading(true);
+        if (isEmpty(status)) setLoading(true);
         var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
         if (result === "server_error") return;
         setRevenues(result);
@@ -152,7 +152,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={getData}
+                                onClick={() => getData('refresh')}
                             >
                                 <span>Revenues</span>
                             </StyledButton>
@@ -161,7 +161,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={getData}
+                                onClick={() => getData('refresh')}
                             >
                                 <span>Spends</span>
                             </StyledButton>
