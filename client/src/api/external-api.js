@@ -326,6 +326,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
             }))
         ];
     }
+    console.log(mediaSources)
     return mediaSources;
 }
 
@@ -372,6 +373,6 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
             }))
         ];
     }
-
+    console.log(adSets)
     return adSets;
 }
