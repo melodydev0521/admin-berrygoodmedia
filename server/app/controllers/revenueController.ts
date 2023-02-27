@@ -25,8 +25,10 @@ export const addRevenue: RequestHandler = (req: Request, res: Response) => {
         tiktokDataId: item.tiktokDataId,
         bearerToken: item.bearerToken,
         advertiserId: item.advertiserId
-    })));
-    res.status(200).json({success: true});
+    })))
+    .then((data:any) => {
+        res.status(200).json(data);
+    });
 }
 
 export const removeRevenue: RequestHandler = (req: Request, res: Response) => {
