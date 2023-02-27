@@ -145,7 +145,7 @@ export default function Dashboard() {
 							<span>Get Connections</span>
 						</StyledButton>
                     </Grid>
-                    <Grid container item direction={"row"}>
+                    {/*<Grid container item direction={"row"}>
                         <Grid container item xs={6}>
                             <StyledButton
                                 variant="outlined"
@@ -164,7 +164,7 @@ export default function Dashboard() {
                                 <span>Spends</span>
                             </StyledButton>
                         </Grid>
-                    </Grid>
+                            </Grid>*/}
                 </Grid>
                 <DataTable revenues={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
             </Grid>
