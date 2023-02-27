@@ -76,15 +76,15 @@ export default function DataTable({ondelete, revenues, isLoading}) {
                         src={`${icon}`}
                 />}
         },
-        {
-            id: 'name',
-            align: 'left',
-            label: 'Name',
-            columnAlign: 'left',
-            style: {
-                width: '30%',
-            },
-        },
+        // {
+        //     id: 'name',
+        //     align: 'left',
+        //     label: 'Name',
+        //     columnAlign: 'left',
+        //     style: {
+        //         width: '30%',
+        //     },
+        // },
         {
             id: 'revenue',
             align: 'center',
