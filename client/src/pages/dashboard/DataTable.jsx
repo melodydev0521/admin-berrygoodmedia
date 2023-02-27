@@ -69,8 +69,8 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             render: (icon, item) => 
                 icon === '' ? 
                     <p></p> : <img
-                        width={20}
-                        height={20}
+                        width={25}
+                        height={25}
                         style={{ borderRadius: '50%' }} 
                         alt={`${item.name}`}
                         src={`${icon}`}
