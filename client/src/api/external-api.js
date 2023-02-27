@@ -307,7 +307,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
     var plugData;
     if (bearerToken === 'all') {
         for (const element of plugAccounts) {
-            plugData = await getPlug(start, end, element.value, timezone, ['campaign_name', 'dollars']);
+            plugData = await getPlug(start, end, element.value, timezone,);
             mediaSources = [
                 ...mediaSources,
                 ...plugData.map(item => ({
@@ -317,7 +317,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
             ];
         }
     } else {
-        plugData = await getPlug(start, end, bearerToken, timezone, ['campaign_name', 'dollars']);
+        plugData = await getPlug(start, end, bearerToken, timezone);
         mediaSources = [
             ...mediaSources,
             ...plugData.map((item) => ({
@@ -330,50 +330,50 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
 }
 
 export const getOnlySpends = async (start, end, advertiser_id) => {
-    // const tiktok = await getTiktok_adgroup(start, end, tiktokAccount);
+    const tiktok = await getTiktok_adgroup(start, end, tiktokAccount);
 
-    // if (advertiser_id === 'all') {
-    //     for (let element of tiktokAccounts) {
-    //         tiktokData = await getTiktok_adgroup(start, end, element.value, ['']);
-    //         adSets = [
-    //             ...adSets,
-    //             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-    //                 tiktokDataId: item.dimensions.adgroup_id,
-    //                 spend: Number(item.metrics.spend),
-    //                 adgroupName: item.metrics.adgroup_name,
-    //             }))
-    //         ];
-    //     }
+    if (advertiser_id === 'all') {
+        for (let element of tiktokAccounts) {
+            tiktokData = await getTiktok_adgroup(start, end, element.value, ['']);
+            adSets = [
+                ...adSets,
+                ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                    tiktokDataId: item.dimensions.adgroup_id,
+                    spend: Number(item.metrics.spend),
+                    adgroupName: item.metrics.adgroup_name,
+                }))
+            ];
+        }
 
-    //     for (let element of tiktokAccounts) {
-    //         tiktokData = await getTiktok_campaign(start, end, element.value, ['']);
-    //         adSets = [
-    //             ...adSets,
-    //             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-    //                 tiktokDataId: item.dimensions.campaign_id,
-    //                 spend: Number(item.metrics.spend),
-    //                 adgroupName: item.metrics.campaign_name,
-    //             }))
-    //         ];
-    //     }
-    // } else {
-    //     tiktokData = await getTiktok_adgroup(start, end, advertiser_id);
-    //     adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-    //         tiktokDataId: item.dimensions.adgroup_id,
-    //         spend: Number(item.metrics.spend),
-    //         adgroupName: item.metrics.adgroup_name,
-    //     }));
+        for (let element of tiktokAccounts) {
+            tiktokData = await getTiktok_campaign(start, end, element.value, ['']);
+            adSets = [
+                ...adSets,
+                ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                    tiktokDataId: item.dimensions.campaign_id,
+                    spend: Number(item.metrics.spend),
+                    adgroupName: item.metrics.campaign_name,
+                }))
+            ];
+        }
+    } else {
+        tiktokData = await getTiktok_adgroup(start, end, advertiser_id);
+        adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+            tiktokDataId: item.dimensions.adgroup_id,
+            spend: Number(item.metrics.spend),
+            adgroupName: item.metrics.adgroup_name,
+        }));
 
-    //     tiktokData = await getTiktok_campaign(start, end, advertiser_id);
-    //     adSets = [
-    //         ...adSets,
-    //         ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-    //             tiktokDataId: item.dimensions.campaign_id,
-    //             spend: Number(item.metrics.spend),
-    //             adgroupName: item.metrics.campaign_name,
-    //         }))
-    //     ];
-    // }
+        tiktokData = await getTiktok_campaign(start, end, advertiser_id);
+        adSets = [
+            ...adSets,
+            ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                tiktokDataId: item.dimensions.campaign_id,
+                spend: Number(item.metrics.spend),
+                adgroupName: item.metrics.campaign_name,
+            }))
+        ];
+    }
 
-    // return tiktok;
+    return tiktok;
 }
