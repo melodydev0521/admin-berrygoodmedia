@@ -333,7 +333,6 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
 
     var tiktokData = [];
     var adSets = [];
-    index = 1;
 
     if (advertiser_id === 'all') {
         for (let element of tiktokAccounts) {
