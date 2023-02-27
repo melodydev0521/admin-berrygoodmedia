@@ -260,6 +260,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                         result.push({
                             no: index ++,
                             _id: item._id,
+                            tiktokDataId: item.tiktokDataId,
                             name: media.name,
                             roas: media.revenue / adset.spend,
                             profit: media.revenue - adset.spend,
