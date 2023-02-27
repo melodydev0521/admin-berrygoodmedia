@@ -40,13 +40,13 @@ export default function Dashboard() {
         });
     }, []);
 
-    const getData = async (status) => {
+    const getData = async () => {
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
             alert('choose account or timezone');
             return;
         }
-        if (isEmpty(status)) setLoading(true);
-        var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
+        setLoading(true);
+        var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone, status);
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);
@@ -54,7 +54,6 @@ export default function Dashboard() {
 
     const refreshRevenues = async () => {
         const result = await getOnlyRevenues(date.start, date.end, account.plugAccount.id, timezone);
-        console.log(result)
         const newRevenues = revenues;
         newRevenues.map(item => ({...item, revenue: result.filter(i => i.name === item.name)[0].revenue}));
         setRevenues(newRevenues);
@@ -152,7 +151,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={() => getData('refresh')}
+                                onClick={refreshRevenues}
                             >
                                 <span>Revenues</span>
                             </StyledButton>
@@ -161,7 +160,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={() => getData('refresh')}
+                                onClick={refreshSpends}
                             >
                                 <span>Spends</span>
                             </StyledButton>

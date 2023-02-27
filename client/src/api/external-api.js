@@ -270,25 +270,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }
                 }
             });
-            // mediaSources.forEach(item => {
-            //     var isMatch = data.filter(i => item.name == i.name).length !== 0 ? true : false;
-            //     if (isMatch) {
-            //         const revenueData = data.filter(i => item.name == i.name)[0]
-            //         const adset = adSets.filter(ad => ad.tiktokDataId == revenueData.tiktokDataId)[0];
-            //         if (!isEmpty(adset)) {
-            //             result.push({
-            //                 no: index ++,
-            //                 _id: revenueData._id,
-            //                 name: item.name,
-            //                 roas: item.revenue / adset.spend,
-            //                 profit: item.revenue - adset.spend,
-            //                 revenue: item.revenue,
-            //                 spend: adset.spend,
-            //                 offer: item.offer
-            //             });
-            //         }
-            //     }
-            // });
 
             return result;
         });
@@ -302,7 +283,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
     var mediaSources;
     const infuse = await getInfuse(start, end, ['Stat.payout', 'Stat.source']);
     mediaSources = [
-        ...infuse.map(item => ({name: item.Stat.name, revenue: item.Stat.revenue}))
+        ...infuse.map(item => ({name: item.Stat.source, revenue: item.Stat.payout}))
     ];
     var plugData;
     if (bearerToken === 'all') {
