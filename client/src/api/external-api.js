@@ -289,7 +289,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
     return medias;
 }
 
-export const getOnlySpends = async (start, end, tiktok) => {
-    const tiktok = await getTiktok_adgroup(start, end, tiktok);
+export const getOnlySpends = async (start, end, tiktokAccount) => {
+    const tiktok = await getTiktok_adgroup(start, end, tiktokAccount);
     return tiktok;
 }
