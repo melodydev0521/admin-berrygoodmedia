@@ -251,25 +251,44 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             index = 1;
             const result = [];
-            mediaSources.forEach(item => {
-                var isMatch = data.filter(i => item.name == i.name).length !== 0 ? true : false;
+            data.forEach(item => {
+                var isMatch = mediaSources.filter(i => i.name == item.name).length !== 0 ? true : false;
                 if (isMatch) {
-                    const revenueData = data.filter(i => item.name == i.name)[0]
-                    const adset = adSets.filter(ad => ad.tiktokDataId == revenueData.tiktokDataId)[0];
+                    const media = mediaSources.filter(i => item.name == i.name)[0]
+                    const adset = adSets.filter(ad => ad.tiktokDataId == item.tiktokDataId)[0];
                     if (!isEmpty(adset)) {
                         result.push({
                             no: index ++,
-                            _id: revenueData._id,
-                            name: item.name,
-                            roas: item.revenue / adset.spend,
-                            profit: item.revenue - adset.spend,
-                            revenue: item.revenue,
+                            _id: item._id,
+                            name: media.name,
+                            roas: media.revenue / adset.spend,
+                            profit: media.revenue - adset.spend,
+                            revenue: media.revenue,
                             spend: adset.spend,
-                            offer: item.offer
+                            offer: media.offer
                         });
                     }
                 }
             });
+            // mediaSources.forEach(item => {
+            //     var isMatch = data.filter(i => item.name == i.name).length !== 0 ? true : false;
+            //     if (isMatch) {
+            //         const revenueData = data.filter(i => item.name == i.name)[0]
+            //         const adset = adSets.filter(ad => ad.tiktokDataId == revenueData.tiktokDataId)[0];
+            //         if (!isEmpty(adset)) {
+            //             result.push({
+            //                 no: index ++,
+            //                 _id: revenueData._id,
+            //                 name: item.name,
+            //                 roas: item.revenue / adset.spend,
+            //                 profit: item.revenue - adset.spend,
+            //                 revenue: item.revenue,
+            //                 spend: adset.spend,
+            //                 offer: item.offer
+            //             });
+            //         }
+            //     }
+            // });
 
             return result;
         });

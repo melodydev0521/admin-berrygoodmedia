@@ -45,7 +45,7 @@ export default function Dashboard() {
             alert('choose account or timezone');
             return;
         }
-        setLoading(true);
+        if (isEmpty(revenues)) setLoading(true);
         var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
         if (result === "server_error") return;
         setRevenues(result);
