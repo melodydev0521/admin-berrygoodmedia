@@ -152,7 +152,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={refreshRevenues}
+                                onClick={getData}
                             >
                                 <span>Revenues</span>
                             </StyledButton>
@@ -161,7 +161,7 @@ export default function Dashboard() {
                             <StyledButton
                                 variant="outlined"
                                 disabled={revenues.length === 0}
-                                onClick={refreshSpends}
+                                onClick={getData}
                             >
                                 <span>Spends</span>
                             </StyledButton>
