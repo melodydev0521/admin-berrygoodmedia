@@ -66,25 +66,25 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             id: 'icon',
             align: 'center',
             label: '',
-            render: icon => {
+            render: (icon, item) => 
                 icon === '' ? 
                     <p>1</p> : <img
                         width={15}
                         height={15}
                         style={{ borderRadius: '50%' }} 
-                        alt={`${icon}`}
+                        alt={`${item.name}`}
                         src={`${icon}`}
-                />}
+                />
         },
-        // {
-        //     id: 'name',
-        //     align: 'left',
-        //     label: 'Name',
-        //     columnAlign: 'left',
-        //     style: {
-        //         width: '30%',
-        //     },
-        // },
+        {
+            id: 'name',
+            align: 'left',
+            label: 'Name',
+            columnAlign: 'left',
+            style: {
+                width: '30%',
+            },
+        },
         {
             id: 'revenue',
             align: 'center',
