@@ -8,9 +8,17 @@ import { errorPublic } from "./general"
  * @return JSON Infuse data
  */
 export const getInfuse = (start, end) => {
-    return axios.get(`/api/external-api/infuse/${start}/${end}`)
-        .then(res => res.data)
-        .catch(err => errorPublic(err))
+    // return axios.get(`/api/external-api/infuse/${start}/${end}`)
+    //     .then(res => res.data)
+    //     .catch(err => errorPublic(err))
+    fetch(
+        `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${start}&filters[Stat.date][values][]=${end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
+        { method: 'GET' })
+        .then(res => res.json())
+        .then((data) => {
+            res.json(data.response.data.data)
+        })
+        .catch(err => publicError(err));
 }
 
 /**
@@ -18,9 +26,45 @@ export const getInfuse = (start, end) => {
  * @return JSON Infuse data
  */
 export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
-    return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
-        .then(res => res.data)
-        .catch(err => errorPublic(err));
+    // return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
+    //     .then(res => res.data)
+    //     .catch(err => errorPublic(err));
+    fetch(
+        `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                grant_type: 'refresh_token',
+                refresh_token:
+                    'AOEOulZYVnczctVS6DlGCj1eKDu4wXWCN0I35wr0vsf0xNv8MjZFZclKWCA8OYk8Cp4XDnjEvNKawaRiUMQ653NlcG1wmRWOvr6uGkGCiB75_ZnX-5fmtJzbGweTjfkwEnHiFBylTsGL08sJ_8GbUxV-oBOu4WtXqQ',
+            }),
+        }
+    )
+        .then((res) => res.json())
+        .then((data) => {
+            const idToken = data.id_token;
+            /**
+             * @method GET
+             * @desc Get Plug data by Firebase token with JSON type
+             */
+            fetch(
+                `https://theplug-prod.herokuapp.com/api/v1/bqReport?start_date=${start}&end_date=${end}&timezone=America/${timezone}&columns=date,campaign,campaign_name,campaign_image_url,media,media_name,dollars&format=json`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': bearerToken,
+                        'FirebaseToken': idToken,
+                    },
+                }
+            )
+                .then((res) => res.json())
+                .then((data) => {
+                    res.json(data.data)
+                })
+                .catch((err) => publicError(err))
+        })
+        .catch((err) => publicError(err))
 }
 
 /**
