@@ -47,7 +47,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
              * @method GET
              * @desc Get Plug data by Firebase token with JSON type
              */
-            fetch(
+            return fetch(
                 `https://theplug-prod.herokuapp.com/api/v1/bqReport?start_date=${start}&end_date=${end}&timezone=America/${timezone}&columns=date,campaign,campaign_name,campaign_image_url,media,media_name,dollars&format=json`,
                 {
                     method: 'GET',
