@@ -68,7 +68,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             label: '',
             render: icon => {
                 icon === '' ? 
-                    <div /> : <img
+                    <p>1</p> : <img
                         width={15}
                         height={15}
                         style={{ borderRadius: '50%' }} 
@@ -131,7 +131,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
                 </Button>
         }
     ];
-    console.log(revenues)
+
     return (
         <Grid item container md={9} xs={12}>
             <StyledTable 
