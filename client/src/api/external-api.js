@@ -330,29 +330,30 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
 }
 
 export const getOnlySpends = async (start, end, advertiser_id) => {
-    const tiktok = await getTiktok_adgroup(start, end, tiktokAccount);
+
+    var tiktokData = [];
+    var adSets = [];
+    index = 1;
 
     if (advertiser_id === 'all') {
         for (let element of tiktokAccounts) {
-            tiktokData = await getTiktok_adgroup(start, end, element.value, ['']);
+            tiktokData = await getTiktok_adgroup(start, end, element.value);
             adSets = [
                 ...adSets,
                 ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
                     tiktokDataId: item.dimensions.adgroup_id,
                     spend: Number(item.metrics.spend),
-                    adgroupName: item.metrics.adgroup_name,
                 }))
             ];
         }
 
         for (let element of tiktokAccounts) {
-            tiktokData = await getTiktok_campaign(start, end, element.value, ['']);
+            tiktokData = await getTiktok_campaign(start, end, element.value);
             adSets = [
                 ...adSets,
                 ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
                     tiktokDataId: item.dimensions.campaign_id,
                     spend: Number(item.metrics.spend),
-                    adgroupName: item.metrics.campaign_name,
                 }))
             ];
         }
@@ -361,7 +362,6 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
         adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
             tiktokDataId: item.dimensions.adgroup_id,
             spend: Number(item.metrics.spend),
-            adgroupName: item.metrics.adgroup_name,
         }));
 
         tiktokData = await getTiktok_campaign(start, end, advertiser_id);
@@ -370,10 +370,10 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
                 tiktokDataId: item.dimensions.campaign_id,
                 spend: Number(item.metrics.spend),
-                adgroupName: item.metrics.campaign_name,
             }))
         ];
     }
 
-    return tiktok;
+
+    return tiktokData;
 }
