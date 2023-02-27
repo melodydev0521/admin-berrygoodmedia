@@ -11,7 +11,7 @@ export const getInfuse = (start, end) => {
     // return axios.get(`/api/external-api/infuse/${start}/${end}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err))
-    fetch(
+    return fetch(
         `https://fluent.api.hasoffers.com/Apiv3/json?api_key=36b3999c96af210dc8e5ed4a2a73f8ada2e8248f27d550ef3f2ce126dd3ccb0e&Target=Affiliate_Report&Method=getStats&fields[]=Stat.source&fields[]=Stat.payout&fields[]=Stat.clicks&filters[Stat.date][conditional]=BETWEEN&filters[Stat.date][values][]=${start}&filters[Stat.date][values][]=${end}&filters[Stat.payout][conditional]=GREATER_THAN&filters[Stat.payout][values]=.01&sort[Stat.payout]=desc`,
         { method: 'GET' })
         .then(res => res.json())
@@ -29,7 +29,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York") => {
     // return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err));
-    fetch(
+    return fetch(
         `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
         {
             method: 'POST',

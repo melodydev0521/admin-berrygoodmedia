@@ -122,7 +122,7 @@ const AdManager = () => {
                     revenue: parseFloat(item.Stat.payout),
                     offer: ''
                 })),
-            ]
+            ];
         }
         if (!isEmpty(plugData)) {
             mediaSources = [
@@ -134,7 +134,7 @@ const AdManager = () => {
                     revenue: parseFloat(item.dollars),
                     offer: item.campaign_name,
                 }))
-            ]
+            ];
         }
         mediaSources = await excludeConnectedRevenues('media', mediaSources);
         setState({...state, mediaSources: mediaSources, isMediaLoading: false});
