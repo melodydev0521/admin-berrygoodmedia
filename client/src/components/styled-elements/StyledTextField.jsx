@@ -12,6 +12,8 @@ export default function StyledTextField(props) {
             variant='outlined'
             fullWidth
             size="small"
+            error={props.error}
+            helperText={`${props.name} field is required!`}
         />
     )
 }
@@ -20,5 +22,6 @@ StyledTextField.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onchange: PropTypes.func,
-  value: PropTypes.string
+  value: PropTypes.string,
+  error: PropTypes.bool
 }

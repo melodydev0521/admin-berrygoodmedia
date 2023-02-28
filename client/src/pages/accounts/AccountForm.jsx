@@ -17,8 +17,14 @@ export default function AccountForm() {
         accountType: '',
         name: '',
         token: ''
-    }
+    };
+    const initialErrors = {
+        accountTypes: false,
+        name: false,
+        token: false
+    };
     const [account, setAccount] = React.useState(initialAccount);
+    const [errors, setErrors] = React.useState(initialErrors);
     const [context, setContext] = useAppContext();
 
     const handleAccountTypeChange = (name, item) => {
@@ -28,6 +34,20 @@ export default function AccountForm() {
     const handleTextFieldChange = e => setAccount({...account, [e.target.name]: e.target.value})
 
     const handleAccountSave = async () => {
+        // Validate Fields
+        var isValid = true;
+        var validate = {};
+        for (const i in account) {
+            validate[i] = account[i] === '';
+            if (account[i] === '') {
+                isValid = false;
+            }
+        }
+        setErrors(validate);
+        if (!isValid) return;
+        setErrors(initialErrors);
+        
+        // Save account
         const newAccount = await addAccount(account);
         setContext({...context, accounts: [...context.accounts, newAccount]});
         setAccount(initialAccount);
@@ -42,6 +62,7 @@ export default function AccountForm() {
                     label={"Account Type"}
                     onchange={handleAccountTypeChange}
                     value={account.accountType}
+                    error={errors.accountType}
                 />
             </Grid>
             <Grid container item lg={2} md={6} xs={6}>
@@ -50,6 +71,7 @@ export default function AccountForm() {
                     name="name"
                     onchange={handleTextFieldChange}
                     value={account.name}
+                    error={errors.name}
                 />
             </Grid>
             <Grid container item lg={5} md={12} xs={12}>
@@ -58,6 +80,7 @@ export default function AccountForm() {
                     name="token"
                     onchange={handleTextFieldChange}
                     value={account.token}
+                    error={errors.token}
                 />
             </Grid>
             <Grid container item xs={2}>

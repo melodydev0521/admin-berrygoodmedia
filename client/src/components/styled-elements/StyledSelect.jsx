@@ -7,7 +7,7 @@ import {
     Select
 } from '@mui/material';
 
-export default function BasicSelect(props) {
+export default function StyledSelect(props) {
 
     const [state, setState] = React.useState('');
 
@@ -20,9 +20,8 @@ export default function BasicSelect(props) {
                 id: event.target.value
             });
     };
-
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth error={props.error}>
             <InputLabel
                 size="small"
             >{props.label}</InputLabel>
@@ -40,9 +39,14 @@ export default function BasicSelect(props) {
     );
 }
 
-BasicSelect.propTypes = {
+StyledSelect.defaultProps = {
+    error: false
+}
+
+StyledSelect.propTypes = {
     data: PropTypes.array.isRequired,
     name: PropTypes.string,
     label: PropTypes.string,
-    onchange: PropTypes.func
+    onchange: PropTypes.func,
+    error: PropTypes.bool
 }
