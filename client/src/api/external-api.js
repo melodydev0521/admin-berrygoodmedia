@@ -149,6 +149,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
 
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
+    console.log(bearerToken, advertiser_id)
     return axios.get(`api/revenue`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -172,8 +173,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             }
             var plugData;
 
-            for (const element of plugAccounts) {
-                plugData = await getPlug(start, end, element.value, timezone)
+            for (const element of bearerToken) {
+                plugData = await getPlug(start, end, element, timezone)
                 mediaSources = [
                     ...mediaSources,
                     ...plugData.map(item => ({
@@ -190,8 +191,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             var adSets = [];
             index = 1;
 
-            for (let element of tiktokAccounts) {
-                tiktokData = await getTiktok_adgroup(start, end, element.value);
+            for (let element of advertiser_id) {
+                tiktokData = await getTiktok_adgroup(start, end, element);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -203,8 +204,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 ];
             }
 
-            for (let element of tiktokAccounts) {
-                tiktokData = await getTiktok_campaign(start, end, element.value);
+            for (let element of advertiser_id) {
+                tiktokData = await getTiktok_campaign(start, end, element);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({

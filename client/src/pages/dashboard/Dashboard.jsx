@@ -51,10 +51,10 @@ export default function Dashboard() {
         setLoading(true);
         var plugAccount = [account.plugAccount.id];
         var tiktokAccount = [account.tiktokAccount.id];
-        if (plugAccount === 'all') {
+        if (plugAccount[0] === 'all') {
             plugAccount = context.accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
-        if (tiktokAccount === 'all') {
+        if (tiktokAccount[0] === 'all') {
             tiktokAccount = context.accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
         }
         var result = await getDataByConnection(date.start, date.end, plugAccount, tiktokAccount, timezone);
