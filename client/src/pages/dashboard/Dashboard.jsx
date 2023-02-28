@@ -97,13 +97,13 @@ export default function Dashboard() {
     }
 
     return (
-        <Grid item container md={10} sm={11} xs={11} justifyContent="center" margin={"50px auto"}>
+        <Grid item container lg={10} sm={11} xs={11} justifyContent="center" margin={"50px auto"}>
             <Grid container item spacing={2} direction="row">
                 <Grid container item spacing={1} md={3} xs={12} direction={"column"}>
                     <StyledCard>
-                        <Grid container item spacing={1} marginTop={10}>
-                            <Grid container item spacing={1}>
-                                <Grid container item xs={6}>
+                        <Grid container item spacing={2} marginTop={10}>
+                            <Grid container item spacing={2}>
+                                <Grid container item md={12} xs={6}>
                                     <StyledDatePicker 
                                         label='Start Date'
                                         name='start' 
@@ -111,7 +111,7 @@ export default function Dashboard() {
                                         onchange={handleSearchDate} 
                                     />
                                 </Grid>
-                                <Grid container item xs={6}>
+                                <Grid container item md={12} xs={6}>
                                     <StyledDatePicker 
                                         label='End Date'
                                         name='end' 
@@ -120,7 +120,7 @@ export default function Dashboard() {
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid container item direction={"column"} spacing={1}>
+                            <Grid container item direction={"column"} spacing={2}>
                                 <Grid container item xs={4}>
                                     <StyledSelect
                                         name="plugAccount" 

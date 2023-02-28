@@ -103,7 +103,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             label: 'Profit',
             render: profit => 
                     <P 
-                        style={profit > 0 ? {color: 'green'} : profit < 0 ? {color: 'red'} : {color: '#fff'}}
+                        style={profit > 0 ? {color: '#2BC605'} : profit < 0 ? {color: '#FF2020'} : {color: '#fff'}}
                     >
                         {`$${Number(profit).toFixed(2)}`}
                     </P>

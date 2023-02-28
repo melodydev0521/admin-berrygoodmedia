@@ -91,9 +91,9 @@ export default function CustomizedTables(props) {
                                 <StyledTableCell 
                                     align="center"
                                     style={props.totalRow.spend < 0 ? 
-                                        {color: 'red'} : 
+                                        {color: '#FF2020'} : 
                                         props.totalRow.spend > 0 ? 
-                                        { color: 'green'} : 
+                                        { color: '#2BC605'} : 
                                         { color: '#333'}}
                                 >{`$ ${props.totalRow.profit}`}</StyledTableCell>
                                 <StyledTableCell style={{color: '#333'}} align="center">{`${(Number(props.totalRow.roas) * 100).toFixed(2)} %`}</StyledTableCell>

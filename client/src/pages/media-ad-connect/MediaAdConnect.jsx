@@ -283,8 +283,8 @@ const AdManager = () => {
                             Account Setting
                         </Typography>
                     </Grid>
-                    <Grid container item xs={12} direction={"row"}>
-                        <Grid container item direction={"row"} spacing={2} md={6} sm={6} xs={12}>
+                    <Grid container item xs={12} direction={"row"} spacing={1} justifyContent={'space-between'}>
+                        <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
                             <Grid container item xs={6}>
                                 <StyledSelect
                                     name="plugAccount" 
@@ -302,7 +302,7 @@ const AdManager = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid container item direction={"row"} spacing={2} md={6} sm={6} xs={12}>
+                        <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
                             <Grid container item md={6} xs={6}>
                                 <BasicDatePicker
                                     name="startDate"

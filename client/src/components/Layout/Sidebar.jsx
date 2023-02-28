@@ -31,7 +31,7 @@ export default function Sidebar(props) {
 
 	const drawer = (
 		<div>
-			<StyledAvatar src={'/avatars/josh.png'} />
+			<StyledAvatar />
 			<p></p>
 			<Toolbar />
 			<Divider />

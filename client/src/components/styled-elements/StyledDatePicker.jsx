@@ -26,6 +26,7 @@ export default function BasicDatePicker({ label, value, name, onchange}) {
                     <TextField
                         {...params}
                         size='small'
+                        fullWidth
                     />
                 )}
             />
