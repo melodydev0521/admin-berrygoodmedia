@@ -30,14 +30,13 @@ mongoose.connect(mongoUrl)
   process.exit();
 });
 
-// if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static('../../client/'));
+	app.get('/', (req:Request, res:Response) => {
+		res.sendFile('/build/index.html');
+	});
+}
 
-// 	app.use(express.static('./client/'));
-// 	app.get('/', (req:Request, res:Response) => {
-// 		console.log('sending index.html');
-// 		res.sendFile('/dist/index.html');
-// 	});
-// }
 // Primary App Routers
 app.use("/api/revenue", revenue);
 app.use("/api/external-api", external);

@@ -35,11 +35,13 @@ const addRevenue = (req, res) => {
     Revenue_1.default.insertMany(req.body.revenues.map((item) => ({
         name: item.name,
         offer: item.offer,
-        adGroupId: item.adGroupId,
+        tiktokDataId: item.tiktokDataId,
         bearerToken: item.bearerToken,
         advertiserId: item.advertiserId
-    })));
-    res.status(200).json({ success: true });
+    })))
+        .then((data) => {
+        res.status(200).json(data);
+    });
 };
 exports.addRevenue = addRevenue;
 const removeRevenue = (req, res) => {

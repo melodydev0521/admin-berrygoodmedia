@@ -32,7 +32,7 @@ const RevenueSchema = new mongoose_1.Schema({
     offer: {
         type: String
     },
-    adGroupId: {
+    tiktokDataId: {
         type: String,
         required: true
     },

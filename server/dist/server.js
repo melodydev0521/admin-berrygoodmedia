@@ -30,9 +30,12 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
-const revenue_1 = __importDefault(require("./routes/revenue"));
 const secret_1 = require("./config/secret");
 const mongoose_1 = __importDefault(require("mongoose"));
+// Router
+const revenue_1 = __importDefault(require("./routes/revenue"));
+const external_1 = __importDefault(require("./routes/external"));
+const account_1 = __importDefault(require("./routes/account"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: true }));
@@ -50,14 +53,15 @@ mongoose_1.default.connect(mongoUrl)
     process.exit();
 });
 // if (process.env.NODE_ENV === "production") {
-// 	app.use(express.static('./client/'));
-// 	app.get('/', (req:Request, res:Response) => {
-// 		console.log('sending index.html');
-// 		res.sendFile('/dist/index.html');
-// 	});
+app.use(express_1.default.static('./client/'));
+app.get('/', (req, res) => {
+    res.sendFile('/build/index.html');
+});
 // }
 // Primary App Routers
 app.use("/api/revenue", revenue_1.default);
+app.use("/api/external-api", external_1.default);
+app.use("/api/account", account_1.default);
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
