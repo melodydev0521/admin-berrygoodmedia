@@ -11,7 +11,7 @@ import DataArea from './DataArea'
 
 export default function AccountSetting() {
 	return (
-		<Grid container item md={8} sm={11} rowSpacing={2} style={{ margin: '30px auto' }}>
+		<Grid container item md={9} sm={11} rowSpacing={2} style={{ margin: '30px auto' }}>
 			<StyledCard>
 				<Box sx={{ display: 'flex', flexDirection: 'row' }}>
 					<ManageAccountsOutlinedIcon />

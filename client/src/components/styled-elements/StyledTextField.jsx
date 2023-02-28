@@ -13,7 +13,7 @@ export default function StyledTextField(props) {
             fullWidth
             size="small"
             error={props.error}
-            helperText={`${props.name} field is required!`}
+            // helperText={`${props.name} field is required!`}
         />
     )
 }
