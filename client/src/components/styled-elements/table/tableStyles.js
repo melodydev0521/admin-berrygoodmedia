@@ -9,18 +9,16 @@ import {
 import { Box } from '@mui/system'
 
 // Table Styles
-export const StyledTableContainer = styled(TableContainer)(() => ({
-    [`&`]: {
-        backgroundColor: '#1d1d1f',
-        padding: '0 10px',
-        borderRadius: '3px',
-        border: '0.5px solid #2B2A2F',
-    },
+export const StyledTableContainer = styled(TableContainer)(({theme}) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)',
+    padding: '0 10px',
+    borderRadius: '3px',
+    border: '0.5px solid #2B2A2F',
 }))
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        color: 'rgba(255, 255, 255, 0.5)',
+        color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5))',
         border: 'none',
         cursor: 'pointer',
         borderBottom: '0.5px solid #2B2A2F',
@@ -29,14 +27,11 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 14,
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         backgroundColor: 'transparent',
-        color: theme.palette.common.white,
     },
 }))
 
 export const StyledTablePagination = styled(TablePagination)(() => ({
-    [`& *`]: {
-        color: '#fff',
-    },
+    color: '#fff',
 }))
 
 

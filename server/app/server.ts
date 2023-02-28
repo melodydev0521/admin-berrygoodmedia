@@ -2,10 +2,13 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import cors from 'cors';
-import revenue from './routes/revenue';
-import external from './routes/external';
 import { MONGO_URI } from "./config/secret";
 import mongoose from "mongoose";
+
+// Router
+import revenue from './routes/revenue';
+import external from './routes/external';
+import account from './routes/account';
 
 dotenv.config();
 const app: Application = express();
@@ -38,6 +41,7 @@ mongoose.connect(mongoUrl)
 // Primary App Routers
 app.use("/api/revenue", revenue);
 app.use("/api/external-api", external);
+app.use("/api/account", account);
 
 const PORT = process.env.PORT || 8000;
 

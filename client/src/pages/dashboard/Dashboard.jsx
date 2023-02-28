@@ -1,26 +1,27 @@
 import React from 'react'
-import { Grid, Button } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { 
+    Grid, 
+    Typography, 
+    Box 
+} from '@mui/material'
+import HomeIcon from '@mui/icons-material/Home'
+import { useAppContext } from '../../context/AppContext'
+import { StyledButtonPrimary } from '../../components/styled-elements/buttonStyles'
+import { StyledCard } from '../../components/styled-elements/styledCard'
+import StyledSelect from '../../components/styled-elements/StyledSelect'
 import isEmpty from 'is-empty'
-import { deleteRevenue, getDataByConnection, getOnlyRevenues, getOnlySpends } from '../../api/external-api'
-import StyledDatePicker from '../../components/styled-elements/date-picker/StyledDatePicker'
-import StyledSelect from '../../components/styled-elements/select/StyledSelect';
-import { tiktokAccounts, plugAccounts } from '../../config/accounts';
+import { 
+    deleteRevenue, 
+    getDataByConnection, 
+    getOnlyRevenues, 
+    getOnlySpends 
+} from '../../api/external-api'
+import StyledDatePicker from '../../components/styled-elements/StyledDatePicker'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import LoadingButton from '@mui/lab/LoadingButton'
 import DataTable from './DataTable'
-
-export const StyledButton = styled(Button)(() => ({
-    [`&`]: {
-        padding: '5px 3px',
-        width: '100%',
-        color: "#fff",
-        fontWeight: '500',
-        textAlign: 'center'
-    }
-}));
 
 
 dayjs.extend(utc);
@@ -32,6 +33,8 @@ export default function Dashboard() {
     const [date, setDate] = React.useState({ start: '2023-2-19', end: '2023-2-19' });
     const [timezone, setTimezone] = React.useState(undefined);
     const [account, setAccount] = React.useState({ plugAccount: null, tiktokAccount: null});
+
+    const [context] = useAppContext();
 
     React.useEffect(() => {
         setDate({
@@ -46,7 +49,15 @@ export default function Dashboard() {
             return;
         }
         setLoading(true);
-        var result = await getDataByConnection(date.start, date.end, account.plugAccount.id, account.tiktokAccount.id, timezone);
+        var plugAccount = [account.plugAccount.id];
+        var tiktokAccount = [account.tiktokAccount.id];
+        if (plugAccount === 'all') {
+            plugAccount = context.accounts.filter(item => item.accountType === 'plug').map(item => item.token);
+        }
+        if (tiktokAccount === 'all') {
+            tiktokAccount = context.accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
+        }
+        var result = await getDataByConnection(date.start, date.end, plugAccount, tiktokAccount, timezone);
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);
@@ -86,87 +97,113 @@ export default function Dashboard() {
     }
 
     return (
-        <Grid item container md={10} sm={11} xs={11} justifyContent="center" margin={"auto"}>
-            <Grid container item spacing={1} direction="row" marginTop="50px">
+        <Grid item container md={10} sm={11} xs={11} justifyContent="center" margin={"50px auto"}>
+            <Grid container item spacing={2} direction="row">
                 <Grid container item spacing={1} md={3} xs={12} direction={"column"}>
-                    <Grid container item spacing={1}>
-                        <Grid container item xs={6}>
-                            <StyledDatePicker 
-                                name='start' 
-                                value={date.start} 
-                                onchange={handleSearchDate} 
-                            />
-                        </Grid>
-                        <Grid container item xs={6}>
-                            <StyledDatePicker 
-                                name='end' 
-                                value={date.end} 
-                                onchange={handleSearchDate} 
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item direction={"column"} spacing={1}>
-                        <Grid container item xs={4}>
-                            <StyledSelect
-                                name="plugAccount" 
-                                label="Plug Account" 
-                                onchange={handleAccountSelect} 
-                                data={[{name: 'All', value: 'all'}, ...plugAccounts]} 
-                            />
-                        </Grid>
-                        <Grid container item xs={4}>
-                            <StyledSelect 
-                                name="tiktokAccount" 
-                                label="Tiktok Account" 
-                                onchange={handleAccountSelect} 
-                                data={[{name: 'All', value: 'all'}, ...tiktokAccounts]} 
-                            />
-                        </Grid>
-                        <Grid container item xs={4}>
-                            <StyledSelect 
-                                name="selectTimezone"
-                                label="Timezone"
-                                onchange={handleTimezoneSelect}
-                                data={[
-                                    { name: 'New York', value: 'New_York' },
-                                    { name: 'Chicago', value: 'Chicago' }
-                                ]}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container item>
-						<StyledButton
-							// size="small"
-							// loading={loading}
-                            style={{width: '100%'}}
-							variant="outlined"
-                            onClick={getData}
-						>
-							<span>Get Connections</span>
-						</StyledButton>
-                    </Grid>
-                    <Grid container item direction={"row"}>
-                        <Grid container item xs={6}>
-                            <StyledButton
-                                variant="outlined"
-                                disabled={revenues.length === 0}
-                                onClick={refreshRevenues}
-                            >
-                                <span>Revenues</span>
-                            </StyledButton>
-                        </Grid>
-                        <Grid container item xs={6}>
-                            <StyledButton
-                                variant="outlined"
-                                disabled={revenues.length === 0}
-                                onClick={refreshSpends}
-                            >
-                                <span>Spends</span>
-                            </StyledButton>
-                        </Grid>
+                    <StyledCard>
+                        <Grid container item spacing={1} marginTop={10}>
+                            <Grid container item spacing={1}>
+                                <Grid container item xs={6}>
+                                    <StyledDatePicker 
+                                        label='Start Date'
+                                        name='start' 
+                                        value={date.start} 
+                                        onchange={handleSearchDate} 
+                                    />
+                                </Grid>
+                                <Grid container item xs={6}>
+                                    <StyledDatePicker 
+                                        label='End Date'
+                                        name='end' 
+                                        value={date.end} 
+                                        onchange={handleSearchDate} 
+                                    />
+                                </Grid>
                             </Grid>
+                            <Grid container item direction={"column"} spacing={1}>
+                                <Grid container item xs={4}>
+                                    <StyledSelect
+                                        name="plugAccount" 
+                                        label="Plug Account" 
+                                        onchange={handleAccountSelect} 
+                                        data={[
+                                            {name: 'All', value: 'all'}, 
+                                            ...context.accounts
+                                                .filter(item => item.accountType === 'plug')
+                                                .map(item => ({name: item.name, value: item.token}))
+                                        ]} 
+                                    />
+                                </Grid>
+                                <Grid container item xs={4}>
+                                    <StyledSelect 
+                                        name="tiktokAccount" 
+                                        label="Tiktok Account" 
+                                        onchange={handleAccountSelect} 
+                                        data={[
+                                            {name: 'All', value: 'all'}, 
+                                            ...context.accounts
+                                                .filter(item => item.accountType === 'tiktok')
+                                                .map(item => ({name: item.name, value: item.token}))
+                                        ]} 
+                                    />
+                                </Grid>
+                                <Grid container item xs={4}>
+                                    <StyledSelect 
+                                        name="selectTimezone"
+                                        label="Timezone"
+                                        onchange={handleTimezoneSelect}
+                                        data={[
+                                            { name: 'New York', value: 'New_York' },
+                                            { name: 'Chicago', value: 'Chicago' }
+                                        ]}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container item>
+                                <StyledButtonPrimary
+                                    style={{width: '100%'}}
+                                    variant="outlined"
+                                    onClick={getData}
+                                >
+                                    <span>Get Connections</span>
+                                </StyledButtonPrimary>
+                            </Grid>
+                            <Grid container item direction={"row"} spacing={1}>
+                                <Grid container item xs={6}>
+                                    <StyledButtonPrimary
+                                        // variant="outlined"
+                                        disabled={revenues.length === 0}
+                                        onClick={refreshRevenues}
+                                        fullWidth
+                                    >
+                                        <span>Revenues</span>
+                                    </StyledButtonPrimary>
+                                </Grid>
+                                <Grid container item xs={6}>
+                                    <StyledButtonPrimary
+                                        // variant="outlined"
+                                        disabled={revenues.length === 0}
+                                        onClick={refreshSpends}
+                                        fullWidth
+                                    >
+                                        <span>Spends</span>
+                                    </StyledButtonPrimary>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </StyledCard>
                 </Grid>
-                <DataTable revenues={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
+                <Grid container item md={9} xs={12} spacing={1}>
+                    <StyledCard>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '30px', marginBottom: '30px' }}>
+                            <HomeIcon />
+                            <Typography style={{ padding: '3px' }}>
+                                Account Setting
+                            </Typography>
+                        </Box>
+                        <DataTable revenues={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
+                    </StyledCard>
+                </Grid>
             </Grid>
         </Grid>
     )

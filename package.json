@@ -15,8 +15,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@types/react-router-config": "^5.0.6",
-    "@types/react-router-dom": "^5.3.3",
     "concurrently": "^7.6.0"
   }
 }

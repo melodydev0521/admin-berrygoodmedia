@@ -29,7 +29,7 @@ export default function CustomizedTables(props) {
     var index = 1;
 
     return (
-        <div style={{ width: '100%', marginBottom: '100px' }}>
+        <div style={{ width: '100%' }}>
             <StyledTableContainer>
                 <Table>
                     <TableHead>
@@ -81,7 +81,7 @@ export default function CustomizedTables(props) {
                                     </StyledTableCell>
                                 </TableRow>
                         }
-                        {!isEmpty(props.data) &&
+                        {(props.total && !isEmpty(props.data)) &&
                             <TableRow
                                 style={{ backgroundColor: '#f2f2f2' }}
                             >
@@ -120,5 +120,7 @@ export default function CustomizedTables(props) {
 CustomizedTables.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array,
-  totalRow: PropTypes.object
+  totalRow: PropTypes.object,
+  isLoading: PropTypes.bool,
+  total: PropTypes.bool.isRequired
 }

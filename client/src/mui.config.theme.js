@@ -1,19 +1,16 @@
 import { createTheme } from '@mui/material/styles'
 
-const palette = {
-    primary1Color: '#fff',
-    canvasColor: '#123',
-    primary2Color: '#321',
-    pickerHeaderColor: 'yellow',
-    alternateTextColor: 'red',
-    textColor: 'green',
-    pickerHeaderColor: 'brown'
-}
-
-const theme = createTheme({
+export const themeDark = createTheme({
     palette: {
+        mode: 'dark',
         background: {
-            default: "#1a2027"
+            default: "#000000"
+        },
+        primary: {
+            main: '#363636'
+        },
+        success: {
+            main: '#3F4899'
         }
     },
     components: {
@@ -21,6 +18,39 @@ const theme = createTheme({
             defaultProps: {
                 sx: {
                     fontSize: '17px',
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            defaultProps: {
+                sx: {
+                    fontSize: '15px',
+                },
+            }
+        },
+        MuiButton: {
+            defaultProps: {
+                sx: {
+                    textTransform: 'capitalize',
+                },
+            },
+        }
+    },
+});
+
+export const themeLight = createTheme({
+    palette: {
+        mode: 'light',
+        background: {
+            default: "#EFEFEF"
+        },
+        common: '#fff'
+    },
+    components: {
+        MuiInputLabel: {
+            defaultProps: {
+                sx: {
+                    fontSize: '15px',
                 },
             },
         },
@@ -40,5 +70,3 @@ const theme = createTheme({
         }
     },
 })
-
-export default theme

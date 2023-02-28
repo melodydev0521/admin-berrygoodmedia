@@ -133,12 +133,13 @@ export default function DataTable({ondelete, revenues, isLoading}) {
     ];
 
     return (
-        <Grid item container md={9} xs={12}>
+        <Grid item container xs={12}>
             <StyledTable 
                 isLoading={isLoading} 
                 columns={columns} 
                 data={ isEmpty(revenues) ? [] : revenues.map(item => ({...item, key: item._id}))}
                 totalRow={total}
+                total={true}
             />
         </Grid>
     )

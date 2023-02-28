@@ -1,4 +1,4 @@
-import { RequestHandler, Request, Response } from "express";
+import { RequestHandler } from "express";
 
 export const getInfuse: RequestHandler = (req, res) => {
     fetch(

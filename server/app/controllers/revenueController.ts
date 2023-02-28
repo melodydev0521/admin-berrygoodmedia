@@ -1,11 +1,11 @@
-import { RequestHandler, Request, Response } from "express";
+import { RequestHandler } from "express";
 import RevenueModel, { IRevenue } from '../models/Revenue';
 
-export const getRevenueList: RequestHandler = (req: Request, res: Response) => {
+export const getRevenueList: RequestHandler = (req, res) => {
     RevenueModel.find().select('_id, date').then((list: any) => res.json(list));
 }
 
-export const getRevenues: RequestHandler = (req: Request, res: Response) => {
+export const getRevenues: RequestHandler = (req, res) => {
     RevenueModel.find().then((revenues: any) => {
         res.status(200).json(revenues);
     });
@@ -17,7 +17,7 @@ export const getRevenues: RequestHandler = (req: Request, res: Response) => {
  * @param next 
  * @desc Add new Revenue data
  */
-export const addRevenue: RequestHandler = (req: Request, res: Response) => {
+export const addRevenue: RequestHandler = (req, res) => {
     // Create new Revenues
     RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
         name: item.name,
@@ -31,13 +31,13 @@ export const addRevenue: RequestHandler = (req: Request, res: Response) => {
     });
 }
 
-export const removeRevenue: RequestHandler = (req: Request, res: Response) => {
+export const removeRevenue: RequestHandler = (req, res) => {
     RevenueModel
         .findByIdAndDelete(req.params._id)
         .then((devRev: any) => res.json(devRev._id));
 }
 
-export const removeAllRevenue: RequestHandler = async (req: Request, res: Response) => {
+export const removeAllRevenue: RequestHandler = async (req, res) => {
     await RevenueModel.deleteMany();
     res.json({delete: 'success'})
 }

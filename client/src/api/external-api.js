@@ -171,25 +171,12 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 ];
             }
             var plugData;
-            if (bearerToken === 'all') {
-                for (const element of plugAccounts) {
-                    plugData = await getPlug(start, end, element.value, timezone)
-                    mediaSources = [
-                        ...mediaSources,
-                        ...plugData.map(item => ({
-                            no: index++,
-                            icon: item.campaign_image_url,
-                            name: item.media_name,
-                            revenue: parseFloat(item.dollars),
-                            offer: item.campaign_name,
-                        }))
-                    ];
-                }
-            } else {
-                plugData = await getPlug(start, end, bearerToken, timezone)
+
+            for (const element of plugAccounts) {
+                plugData = await getPlug(start, end, element.value, timezone)
                 mediaSources = [
                     ...mediaSources,
-                    ...plugData.map((item) => ({
+                    ...plugData.map(item => ({
                         no: index++,
                         icon: item.campaign_image_url,
                         name: item.media_name,
@@ -198,46 +185,26 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }))
                 ];
             }
+
             var tiktokData = [];
             var adSets = [];
             index = 1;
 
-            if (advertiser_id === 'all') {
-                for (let element of tiktokAccounts) {
-                    tiktokData = await getTiktok_adgroup(start, end, element.value);
-                    adSets = [
-                        ...adSets,
-                        ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-                            no: index ++,
-                            tiktokDataId: item.dimensions.adgroup_id,
-                            spend: Number(item.metrics.spend),
-                            adgroupName: item.metrics.adgroup_name,
-                        }))
-                    ];
-                }
+            for (let element of tiktokAccounts) {
+                tiktokData = await getTiktok_adgroup(start, end, element.value);
+                adSets = [
+                    ...adSets,
+                    ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                        no: index ++,
+                        tiktokDataId: item.dimensions.adgroup_id,
+                        spend: Number(item.metrics.spend),
+                        adgroupName: item.metrics.adgroup_name,
+                    }))
+                ];
+            }
 
-                for (let element of tiktokAccounts) {
-                    tiktokData = await getTiktok_campaign(start, end, element.value);
-                    adSets = [
-                        ...adSets,
-                        ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-                            no: index ++,
-                            tiktokDataId: item.dimensions.campaign_id,
-                            spend: Number(item.metrics.spend),
-                            adgroupName: item.metrics.campaign_name,
-                        }))
-                    ];
-                }
-            } else {
-                tiktokData = await getTiktok_adgroup(start, end, advertiser_id);
-                adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-                    no: index ++,
-                    tiktokDataId: item.dimensions.adgroup_id,
-                    spend: Number(item.metrics.spend),
-                    adgroupName: item.metrics.adgroup_name,
-                }));
-
-                tiktokData = await getTiktok_campaign(start, end, advertiser_id);
+            for (let element of tiktokAccounts) {
+                tiktokData = await getTiktok_campaign(start, end, element.value);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({

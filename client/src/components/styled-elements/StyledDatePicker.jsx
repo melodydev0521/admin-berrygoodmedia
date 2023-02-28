@@ -9,7 +9,6 @@ import timezone from 'dayjs/plugin/timezone'
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-const color = '#fff';
 
 export default function BasicDatePicker({ label, value, name, onchange}) {
     return (
@@ -26,16 +25,7 @@ export default function BasicDatePicker({ label, value, name, onchange}) {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        sx={{
-                            svg: { color },
-                            input: { color },
-                            label: { color },
-                            width: '100%',
-                            '& fieldset': {
-                                borderColor: '#4f4e4e',
-                                borderRadius: '3px',
-                            }
-                        }}
+                        size='small'
                     />
                 )}
             />
