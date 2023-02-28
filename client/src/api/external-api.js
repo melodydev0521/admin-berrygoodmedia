@@ -149,7 +149,6 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
 
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
-    console.log(bearerToken, advertiser_id)
     return axios.get(`api/revenue`, {
             headers: {
                 'Content-Type': 'application/json'

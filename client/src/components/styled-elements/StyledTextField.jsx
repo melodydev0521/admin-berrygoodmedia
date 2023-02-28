@@ -7,7 +7,8 @@ export default function StyledTextField(props) {
         <TextField
             name={props.name}
             label={props.label}
-            onchange={props.onchange}
+            onChange={props.onchange}
+            value={props.value}
             variant='outlined'
             fullWidth
             size="small"
@@ -18,5 +19,6 @@ export default function StyledTextField(props) {
 StyledTextField.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onchange: PropTypes.func
+  onchange: PropTypes.func,
+  value: PropTypes.string
 }

@@ -11,6 +11,9 @@ export const themeDark = createTheme({
         },
         success: {
             main: '#3F4899'
+        },
+        danger: {
+            main: '#ff3030'
         }
     },
     components: {
