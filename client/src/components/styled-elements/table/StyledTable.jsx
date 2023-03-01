@@ -15,6 +15,33 @@ import isEmpty from 'is-empty'
 import Empty from '../empty/Empty'
 import LoadingItem from '../LoadingItem'
 
+function descendingComparator (a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+function getComparator (order, orderBy) {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) {
+            return order;
+        }
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+}
 
 export default function CustomizedTables(props) {
     const [orderBy, setOrderBy] = React.useState(null);
@@ -50,19 +77,21 @@ export default function CustomizedTables(props) {
                                 </StyledTableCell>
                             </TableRow>
                              : !isEmpty(props.data) ?
-                                props.data.map(item => 
-                                    <TableRow key={item.key} hover>
-                                        {props.columns.map(col => 
-                                            <StyledTableCell
-                                                align={`${isEmpty(col.align) ? 'center' : col.align}`}
-                                                style={isEmpty(col.style) ? {} : col.style}
-                                                key={`${item.key + index++}`}
-                                            >
-                                                {
-                                                    isEmpty(col.render) ? item[col.id] : col.render(item[col.id], item)                                       
-                                                }
+                                stableSort(props.data, getComparator(order, orderBy))
+                                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((item, index) => 
+                                        <TableRow key={item.key} hover>
+                                            {props.columns.map(col => 
+                                                <StyledTableCell
+                                                    align={`${isEmpty(col.align) ? 'center' : col.align}`}
+                                                    style={isEmpty(col.style) ? {} : col.style}
+                                                    key={`${item.key + index++}`}
+                                                >
+                                                    {
+                                                        isEmpty(col.render) ? item[col.id] : col.render(item[col.id], item)                                       
+                                                    }
                                             </StyledTableCell>)}
-                                    </TableRow>)
+                                        </TableRow>)
                                 : <TableRow>
                                     <StyledTableCell
                                         align="center"
