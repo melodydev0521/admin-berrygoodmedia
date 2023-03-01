@@ -49,6 +49,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             totalVal.revenue = Number(totalVal.revenue).toFixed(2);
             totalVal.spend = Number(totalVal.spend).toFixed(2);
             totalVal.profit = Number(totalVal.profit).toFixed(2);
+            console.log(totalVal);
             setTotal(totalVal);
         }
     }, [revenues]);

@@ -11,6 +11,26 @@ export const getRevenues: RequestHandler = (req, res) => {
     });
 }
 
+/**
+ * @param req {revenues}
+ * @param res 
+ * @param next 
+ * @desc Add new Revenue data
+ */
+export const addRevenue: RequestHandler = (req, res) => {
+    // Create new Revenues
+    RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
+        name: item.name,
+        offer: item.offer,
+        tiktokDataId: item.tiktokDataId,
+        bearerToken: item.bearerToken,
+        advertiserId: item.advertiserId
+    })))
+    .then((data:any) => {
+        res.status(200).json(data);
+    });
+}
+
 export const removeRevenue: RequestHandler = (req, res) => {
     RevenueModel
         .findByIdAndDelete(req.params._id)
