@@ -9,7 +9,7 @@ import {
 	ListItemText,
 	ListItemButton,
 	ListItemIcon,
-	Card,
+	FormControlLabel,
 	Box
 } from '@mui/material'
 import routes from '../../config/routes';
@@ -17,6 +17,7 @@ import {
 	StyledSidebar,
 	StyledAvatar
 } from './sidebarStyles';
+import ThemeSwitch from './ThemeSwitch';
 
 export default function Sidebar(props) {
 
@@ -34,6 +35,7 @@ export default function Sidebar(props) {
 			<StyledAvatar />
 			<p></p>
 			<Toolbar />
+			{/*<ThemeSwitch />*/}
 			<Divider />
 			<List>
 				{routes.map(({id, path, text, icon}) => (

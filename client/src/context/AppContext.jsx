@@ -2,7 +2,7 @@ import React from 'react';
 import { getAccounts } from '../api/accounts';
 
 const initialState = {
-    mode: 'light',
+    theme: 'dark',
     accounts: []
 };
 

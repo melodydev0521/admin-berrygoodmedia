@@ -29,6 +29,8 @@ dayjs.extend(timezone);
 
 export default function Dashboard() {
     const [loading, setLoading] = React.useState(false);
+    const [revenueLoading, setRevenueLoading] = React.useState(false);
+    const [spendLoading, setSpendLoading] = React.useState(false);
     const [revenues, setRevenues] = React.useState([]);
     const [date, setDate] = React.useState({ start: '2023-2-19', end: '2023-2-19' });
     const [timezone, setTimezone] = React.useState(undefined);
@@ -64,17 +66,21 @@ export default function Dashboard() {
     }
 
     const refreshRevenues = async () => {
+        setRevenueLoading(true);
         const result = await getOnlyRevenues(date.start, date.end, account.plugAccount.id, timezone);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, revenue: Number(result.filter(i => i.name === item.name)[0].revenue)}));
         setRevenues(newRevenues);
+        setRevenueLoading(false);
     }
 
     const refreshSpends = async () => {
+        setSpendLoading(true);
         const result = await getOnlySpends(date.start, date.end, account.tiktokAccount.id);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, spend: Number(result.filter(i => i.tiktokDataId === item.tiktokDataId)[0].spend)}));
         setRevenues([...newRevenues]);
+        setSpendLoading(false);
     }
 
     const handleSearchDate = (e) => {
@@ -171,22 +177,28 @@ export default function Dashboard() {
                             <Grid container item direction={"row"} spacing={1}>
                                 <Grid container item xs={6}>
                                     <StyledButtonPrimary
-                                        // variant="outlined"
                                         disabled={revenues.length === 0}
                                         onClick={refreshRevenues}
                                         fullWidth
                                     >
-                                        <span>Revenues</span>
+                                        {
+                                            revenueLoading ? 
+                                            <img src={'/assets/loading/loading-bolt.gif'} width={30} height={30} /> : 
+                                            <span>Revenues</span>
+                                        }
                                     </StyledButtonPrimary>
                                 </Grid>
                                 <Grid container item xs={6}>
                                     <StyledButtonPrimary
-                                        // variant="outlined"
                                         disabled={revenues.length === 0}
                                         onClick={refreshSpends}
                                         fullWidth
                                     >
-                                        <span>Spends</span>
+                                        {
+                                            spendLoading ? 
+                                            <img src={'/assets/loading/loading-bolt.gif'} width={30} height={30} /> : 
+                                            <span>Revenues</span>
+                                        }
                                     </StyledButtonPrimary>
                                 </Grid>
                             </Grid>

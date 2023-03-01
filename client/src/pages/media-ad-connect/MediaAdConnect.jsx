@@ -16,6 +16,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { styled as muiStyled } from '@mui/system';
+import { StyledButtonPrimary, StyledButtonSuccess } from '../../components/styled-elements/buttonStyles';
 
 const StyledButton = muiStyled(Button)(({ theme }) => ({
     [`&`]: {
@@ -326,20 +327,20 @@ const AdManager = () => {
                             <Grid container item rowSpacing={1} justifyContent={'space-around'}>
                                 <Grid container item spacing={2} direction={'row'} justifyContent={'space-between'}>
                                     <Grid container item md={3} xs={6}>
-                                        <StyledButton onClick={getMediaSource}>
+                                        <StyledButtonSuccess onClick={getMediaSource} fullWidth>
                                             GET MEDIA SOURCES
-                                        </StyledButton>
+                                        </StyledButtonSuccess>
                                     </Grid>
                                     <Grid container item spacing={1} md={3} xs={6}>
                                         <Grid container item xs={6}>
-                                            <StyledButton onClick={getAdSets}>
+                                            <StyledButtonSuccess onClick={getAdSets} fullWidth>
                                                 AD SETS
-                                            </StyledButton>
+                                            </StyledButtonSuccess>
                                         </Grid>
                                         <Grid container item xs={6}>
-                                            <StyledButton onClick={getCampaigns}>
+                                            <StyledButtonSuccess onClick={getCampaigns} fullWidth>
                                                 Campaigns
-                                            </StyledButton>
+                                            </StyledButtonSuccess>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -357,12 +358,14 @@ const AdManager = () => {
                                             onchange={handleDataChange}
                                             onremove={handleDataRemove}
                                         />
-                                            <StyledButton
+                                            <StyledButtonPrimary
                                                 style={{ backgroundColor: '#363636', marginTop: '15px' }}
                                                 onClick={handleDataSave}
+                                                fullWidth
+                                                sx={{padding: '10px'}}
                                             >
                                                 Add Connection Revenues
-                                            </StyledButton>
+                                            </StyledButtonPrimary>
                                     </Grid>
                                     <Grid container item md={3} xs={6}>
                                         <AdSetList
