@@ -197,7 +197,7 @@ export default function Dashboard() {
                                         {
                                             spendLoading ? 
                                             <img src={'/assets/loading/loading-bolt.gif'} width={30} height={30} /> : 
-                                            <span>Revenues</span>
+                                            <span>Spends</span>
                                         }
                                     </StyledButtonPrimary>
                                 </Grid>
