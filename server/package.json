@@ -9,6 +9,8 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev ./app/server.ts",
+    "dev-windows": "set NODE_ENV=development && npm run dev",
+    "dev-linux": "NODE_ENV=development && ts-node-dev ",
     "build": "tsc",
     "start": "node dist/server.js"
   },

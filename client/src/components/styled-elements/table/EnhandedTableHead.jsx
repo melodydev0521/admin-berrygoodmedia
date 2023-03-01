@@ -11,16 +11,6 @@ import {
 } from './tableStyles'
 import isEmpty from "is-empty"
 import { visuallyHidden } from '@mui/utils'
-
-// const descendingComparator = (a, b, orderBy) => {
-//     if (b[orderBy] < a[orderBy]) {
-//         return -1;
-//     }
-//     if (b[orderBy] > a[orderBy]) {
-//         return 1;
-//     }
-//     return 0;
-// }
 export default function EnhancedTableHead(props) {
     const { 
         order, 
