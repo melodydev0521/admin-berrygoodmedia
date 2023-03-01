@@ -4,27 +4,27 @@ import {
     Table, 
     TableBody, 
     TableHead, 
-    TableRow 
+    TableRow,
 } from '@mui/material'
 import {
     StyledTableCell,
     StyledTableContainer,
-    StyledTablePagination,
 } from './tableStyles'
+import EnhancedTableHead from './EnhandedTableHead'
 import isEmpty from 'is-empty'
-// import TablePagination from "./TablePagination"
 import Empty from '../empty/Empty'
 import LoadingItem from '../LoadingItem'
-export default function CustomizedTables(props) {
-    const initialState = {
-        current: 1,
-        pageSize: 10,
-    }
-    const [state, setState] = React.useState(initialState);
 
-    const handlePageChange = target => {
-        setState({...state, current: target});
-    }
+
+export default function CustomizedTables(props) {
+    const [orderBy, setOrderBy] = React.useState(null);
+    const [order, setOrder] = React.useState('asc');
+
+    const handleRequestSort = (event, property) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
 
     var index = 1;
 
@@ -34,16 +34,12 @@ export default function CustomizedTables(props) {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            {
-                                props.columns.map(col =>
-                                    <StyledTableCell
-                                        key={ col.id }
-                                        align={ `${isEmpty(col.columnAlign) ? 'center' : col.columnAlign}` }
-                                        style={ isEmpty(col.columnStyle) ? {} : col.columnStyle }
-                                    >
-                                        { col.label }
-                                    </StyledTableCell>
-                            )}
+                            <EnhancedTableHead
+                                order={order}
+                                orderBy={orderBy}
+                                onRequestSort={handleRequestSort}
+                                columns={props.columns}
+                            />
                         </TableRow>
                     </TableHead>
                     <TableBody>

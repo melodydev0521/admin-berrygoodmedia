@@ -48,7 +48,6 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             totalVal.profit = Number(totalVal.revenue - totalVal.spend).toFixed(2);
             totalVal.revenue = Number(totalVal.revenue).toFixed(2);
             totalVal.spend = Number(totalVal.spend).toFixed(2);
-            console.log(totalVal);
             setTotal(totalVal);
         }
     }, [revenues]);
@@ -84,6 +83,8 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             style: {
                 width: '30%',
             },
+            sort: true,
+            sorter: (a, b) => a.name - b.name
         },
         {
             id: 'revenue',
