@@ -90,18 +90,21 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             id: 'revenue',
             align: 'center',
             label: 'Revenue',
+            sort: true,
             render: revenue => <P>{`$${revenue.toFixed(2)}`}</P>
         },
         {
             id: 'spend',
             align: 'center',
             label: 'Spend',
+            sort: true,
             render: spend => <P>{`$${Number(spend).toFixed(2)}`}</P>
         },
         {
             id: 'profit',
             align: 'center',
             label: 'Profit',
+            sort: true,
             render: profit => 
                     <P 
                         style={profit > 0 ? {color: '#2BC605'} : profit < 0 ? {color: '#FF2020'} : {color: '#fff'}}
@@ -113,6 +116,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
             id: 'roas',
             align: 'center',
             label: 'ROAS',
+            sort: true,
             render: roas => <P>{(Number(roas) * 100).toFixed() === 'Infinity' ? 'Infinity' : (Number(roas) * 100).toFixed() + ' %'}</P>
         },
         {
@@ -123,6 +127,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
                 padding: '0',
                 width: '30px'
             },
+            sort: true,
             render: (item, col) =>  
                 <Button
                     style={{ cursor: 'pointer', padding: '0' }} 

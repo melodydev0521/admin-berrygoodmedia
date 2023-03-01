@@ -32,16 +32,12 @@ export default function CustomizedTables(props) {
         <div style={{ width: '100%' }}>
             <StyledTableContainer>
                 <Table>
-                    <TableHead>
-                        <TableRow>
-                            <EnhancedTableHead
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
-                                columns={props.columns}
-                            />
-                        </TableRow>
-                    </TableHead>
+                    <EnhancedTableHead
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={handleRequestSort}
+                        columns={props.columns}
+                    />
                     <TableBody>
                         {props.isLoading ? 
                             <TableRow>
