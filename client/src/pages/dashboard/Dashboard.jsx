@@ -83,7 +83,11 @@ export default function Dashboard() {
 
     const refreshRevenues = async () => {
         setRevenueLoading(true);
-        const result = await getOnlyRevenues(date.start, date.end, account.plugAccount.id, timezone);
+        var plugAccount = [account.plugAccount.id];
+        if (plugAccount[0] === 'all') {
+            plugAccount = context.accounts.filter(item => item.accountType === 'plug').map(item => item.token);
+        }
+        const result = await getOnlyRevenues(date.start, date.end, plugAccount, timezone);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, revenue: Number(result.filter(i => i.name === item.name)[0].revenue)}));
         setRevenues(newRevenues);
@@ -92,7 +96,11 @@ export default function Dashboard() {
 
     const refreshSpends = async () => {
         setSpendLoading(true);
-        const result = await getOnlySpends(date.start, date.end, account.tiktokAccount.id);
+        var tiktokAccount = [account.tiktokAccount.id];
+        if (tiktokAccount[0] === 'all') {
+            tiktokAccount = context.accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
+        }
+        const result = await getOnlySpends(date.start, date.end, tiktokAccount);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, spend: Number(result.filter(i => i.tiktokDataId === item.tiktokDataId)[0].spend)}));
         setRevenues([...newRevenues]);
