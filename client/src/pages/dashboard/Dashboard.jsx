@@ -33,7 +33,7 @@ export default function Dashboard() {
     const [revenues, setRevenues] = React.useState([]);
     const [date, setDate] = React.useState({ start: '2023-2-19', end: '2023-2-19' });
     const [timezone, setTimezone] = React.useState(undefined);
-    const [account, setAccount] = React.useState({ plugAccount: null, tiktokAccount: null});
+    const [account, setAccount] = React.useState({ plugAccount: {}, tiktokAccount: {}});
     const [unavailable, setUnavailable] = React.useState(true);
     const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', tiktok: ''});
 
