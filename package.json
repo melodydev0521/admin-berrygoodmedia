@@ -4,8 +4,7 @@
   "description": "affiliate",
   "scripts": {
     "start": "npm start --prefix ./server",
-    "dev-windows": "concurrently \"npm run dev-windows --prefix ./server\" \"npm start --prefix ./client\"",
-    "dev-linux": "concurrently \"npm run dev-linux --prefix ./server\" \"npm start --prefix ./client\"",
+    "dev": "concurrently \"npm run dev --prefix ./server\" \"npm start --prefix ./client\"",
     "client": "npm start --prefix ./client",
     "build": "concurrently \"npm run build --prefix ./client\" \"npm run build --prefix ./server\""
   },

@@ -52,17 +52,17 @@ mongoose_1.default.connect(mongoUrl)
     console.error("MongoDB Connection Error!");
     process.exit();
 });
-// if (process.env.NODE_ENV === "production") {
-app.use(express_1.default.static('./client/'));
-app.get('/', (req, res) => {
-    res.sendFile('/build/index.html');
-});
-// }
+if (process.env.NODE_ENV === "production") {
+    app.use(express_1.default.static('../../client/'));
+    app.get('/', (req, res) => {
+        res.sendFile('/build/index.html');
+    });
+}
 // Primary App Routers
 app.use("/api/revenue", revenue_1.default);
 app.use("/api/external-api", external_1.default);
 app.use("/api/account", account_1.default);
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
 });

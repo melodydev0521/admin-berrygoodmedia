@@ -8,8 +8,6 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev ./app/server.ts",
-    "dev-linux": "NODE_ENV=development && npm run dev",
-    "dev-windows": "set NODE_ENV=development && npm run dev",
     "build": "tsc",
     "start": "node dist/server.js"
   },
