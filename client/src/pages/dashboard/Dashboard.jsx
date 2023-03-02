@@ -20,7 +20,6 @@ import StyledDatePicker from '../../components/styled-elements/StyledDatePicker'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import LoadingButton from '@mui/lab/LoadingButton'
 import DataTable from './DataTable'
 
 
@@ -35,6 +34,8 @@ export default function Dashboard() {
     const [date, setDate] = React.useState({ start: '2023-2-19', end: '2023-2-19' });
     const [timezone, setTimezone] = React.useState(undefined);
     const [account, setAccount] = React.useState({ plugAccount: null, tiktokAccount: null});
+    const [unavailable, setUnavailable] = React.useState(true);
+    const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', tiktok: ''});
 
     const [context] = useAppContext();
 
@@ -44,6 +45,14 @@ export default function Dashboard() {
             end: dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD'),
         });
     }, []);
+
+    React.useEffect(() => {
+        if (loadUsedAccount.plug === account.plugAccount && 
+            loadUsedAccount.tiktok === account.plugAccount &&
+            revenues.length !== 0)
+            setUnavailable(true);
+        else setUnavailable(false);
+    }, [account]);
 
     const getData = async () => {
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
@@ -62,6 +71,13 @@ export default function Dashboard() {
         var result = await getDataByConnection(date.start, date.end, plugAccount, tiktokAccount, timezone);
         if (result === "server_error") return;
         setRevenues(result);
+        setLoadUsedAccount({
+            plug: account.plugAccount.id, 
+            tiktok: account.tiktokAccount.id
+        });
+        if (result.length !== 0) {
+            setUnavailable(false);
+        }
         setLoading(false);
     }
 
@@ -177,7 +193,7 @@ export default function Dashboard() {
                             <Grid container item direction={"row"} spacing={1}>
                                 <Grid container item xs={6}>
                                     <StyledButtonPrimary
-                                        disabled={revenues.length === 0}
+                                        disabled={unavailable}
                                         onClick={refreshRevenues}
                                         fullWidth
                                     >
@@ -190,7 +206,7 @@ export default function Dashboard() {
                                 </Grid>
                                 <Grid container item xs={6}>
                                     <StyledButtonPrimary
-                                        disabled={revenues.length === 0}
+                                        disabled={unavailable}
                                         onClick={refreshSpends}
                                         fullWidth
                                     >

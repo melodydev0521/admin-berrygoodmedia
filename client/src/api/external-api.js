@@ -1,7 +1,6 @@
 // Created by MelodyDev 02/17/2023
 import isEmpty from "is-empty"
 import axios from 'axios'
-import { tiktokAccounts, plugAccounts } from "../config/accounts"
 import { publicError } from "./general"
 /**
  * @params {startDate, endDate}
@@ -254,22 +253,11 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
         ...infuse.map(item => ({name: item.Stat.source, revenue: item.Stat.payout}))
     ];
     var plugData;
-    if (bearerToken === 'all') {
-        for (const element of plugAccounts) {
-            plugData = await getPlug(start, end, element.value, timezone,);
-            mediaSources = [
-                ...mediaSources,
-                ...plugData.map(item => ({
-                    name: item.media_name,
-                    revenue: parseFloat(item.dollars),
-                }))
-            ];
-        }
-    } else {
-        plugData = await getPlug(start, end, bearerToken, timezone);
+    for (const element of bearerToken) {
+        plugData = await getPlug(start, end, element.value, timezone,);
         mediaSources = [
             ...mediaSources,
-            ...plugData.map((item) => ({
+            ...plugData.map(item => ({
                 name: item.media_name,
                 revenue: parseFloat(item.dollars),
             }))
@@ -283,36 +271,19 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     var tiktokData = [];
     var adSets = [];
 
-    if (advertiser_id === 'all') {
-        for (let element of tiktokAccounts) {
-            tiktokData = await getTiktok_adgroup(start, end, element.value);
-            adSets = [
-                ...adSets,
-                ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-                    tiktokDataId: item.dimensions.adgroup_id,
-                    spend: Number(item.metrics.spend),
-                }))
-            ];
-        }
+    for (let element of advertiser_id) {
+        tiktokData = await getTiktok_adgroup(start, end, element.token);
+        adSets = [
+            ...adSets,
+            ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
+                tiktokDataId: item.dimensions.adgroup_id,
+                spend: Number(item.metrics.spend),
+            }))
+        ];
+    }
 
-        for (let element of tiktokAccounts) {
-            tiktokData = await getTiktok_campaign(start, end, element.value);
-            adSets = [
-                ...adSets,
-                ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-                    tiktokDataId: item.dimensions.campaign_id,
-                    spend: Number(item.metrics.spend),
-                }))
-            ];
-        }
-    } else {
-        tiktokData = await getTiktok_adgroup(start, end, advertiser_id);
-        adSets = isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
-            tiktokDataId: item.dimensions.adgroup_id,
-            spend: Number(item.metrics.spend),
-        }));
-
-        tiktokData = await getTiktok_campaign(start, end, advertiser_id);
+    for (let element of advertiser_id) {
+        tiktokData = await getTiktok_campaign(start, end, element.token);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
