@@ -50,8 +50,8 @@ export default function Dashboard() {
         if (loadUsedAccount.plug === account.plugAccount && 
             loadUsedAccount.tiktok === account.plugAccount &&
             revenues.length !== 0)
-            setUnavailable(true);
-        else setUnavailable(false);
+            setUnavailable(false);
+        else setUnavailable(true);
     }, [account]);
 
     const getData = async () => {
