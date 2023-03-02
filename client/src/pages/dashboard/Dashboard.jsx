@@ -48,7 +48,7 @@ export default function Dashboard() {
 
     React.useEffect(() => {
         if (loadUsedAccount.plug === account.plugAccount.id && 
-            loadUsedAccount.tiktok === account.plugAccount.id &&
+            loadUsedAccount.tiktok === account.tiktok.id &&
             revenues.length !== 0)
             setUnavailable(false);
         else setUnavailable(true);
