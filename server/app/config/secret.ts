@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === "development") {
 } else if (process.env.NODE_ENV === "production") {
     mongoUrl = mongoUrl.replace(/<db_name>/i, dbName);
 }
-console.log(mongoUrl)
 
-export const MONGO_URI = process.env.MONGO_URI;
+export const MONGO_URI = mongoUrl;
 export const PORT = process.env.PORT;
