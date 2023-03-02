@@ -254,7 +254,7 @@ export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {
     ];
     var plugData;
     for (const element of bearerToken) {
-        plugData = await getPlug(start, end, element.value, timezone,);
+        plugData = await getPlug(start, end, element, timezone,);
         mediaSources = [
             ...mediaSources,
             ...plugData.map(item => ({
@@ -272,7 +272,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     var adSets = [];
 
     for (let element of advertiser_id) {
-        tiktokData = await getTiktok_adgroup(start, end, element.token);
+        tiktokData = await getTiktok_adgroup(start, end, element);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -283,7 +283,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     }
 
     for (let element of advertiser_id) {
-        tiktokData = await getTiktok_campaign(start, end, element.token);
+        tiktokData = await getTiktok_campaign(start, end, element);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
