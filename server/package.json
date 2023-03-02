@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Affiliate Backend with Typescript",
   "main": "server.js",
-  "repository": "https://github.com/melodydev0521/affiliate-backend-ts.git",
   "author": "melody",
   "license": "MIT",
   "private": true,
