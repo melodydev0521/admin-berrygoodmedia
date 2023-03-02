@@ -4,14 +4,14 @@
   "description": "affiliate",
   "scripts": {
     "start": "npm start --prefix ./server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev-windows": "concurrently \"npm run dev-windows --prefix ./server\" \"npm start --prefix ./client\"",
+    "dev-linux": "concurrently \"npm run dev-linux --prefix ./server\" \"npm start --prefix ./client\"",
     "client": "npm start --prefix ./client",
-    "server": "npm run dev --prefix ./server",
     "build": "concurrently \"npm run build --prefix ./client\" \"npm run build --prefix ./server\""
   },
   "main": "index.js",
-  "repository": "https://github.com/melodydev0521/affiliate-admin.git",
-  "author": "WebMelody <dev.mattew.chen@gmail.com>",
+  "repository": "https://github.com/melodydev0521/admin-berrygoodmedia.git",
+  "author": "MelodyDev0521 <melodydev0521@gmail.com>",
   "license": "MIT",
   "private": true,
   "dependencies": {

@@ -42,7 +42,7 @@ app.use("/api/revenue", revenue);
 app.use("/api/external-api", external);
 app.use("/api/account", account);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 80;
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
