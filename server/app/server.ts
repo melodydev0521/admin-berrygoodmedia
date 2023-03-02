@@ -1,9 +1,10 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application } from "express";
 import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import cors from 'cors';
 import { MONGO_URI } from "./config/secret";
 import mongoose from "mongoose";
+import path from 'path';
 
 // Router
 import revenue from './routes/revenue';
@@ -31,10 +32,10 @@ mongoose.connect(mongoUrl)
 });
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static('../../client/'));
-	app.get('/', (req:Request, res:Response) => {
-		res.sendFile('/build/index.html');
-	});
+  app.use(express.static(path.join(__dirname, '../../client/build')));
+	app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+  });
 }
 
 // Primary App Routers
