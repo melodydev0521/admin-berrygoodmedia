@@ -82,6 +82,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                     if (!isEmpty(plugData)) {
                         plugData.forEach(item => {
                             const matched = result.filter(i => i.media_name === item.media_name);
+                            console.log(matched);
                             if (matched.length === 0) {
                                 result.push({
                                     campaign_image_url: item.campaign_image_url,
@@ -90,7 +91,6 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                                     dollars: item.dollars
                                 });
                             } else {
-                                console.log(result.map(i => i.media_name).indexOf(item.media_name))
                                 result[result.map(i => i.media_name).indexOf(item.media_name)].dollars += matched[0].dollars;
                             }
                         });
