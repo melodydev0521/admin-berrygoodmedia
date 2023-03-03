@@ -77,7 +77,24 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
             )
                 .then((res) => res.json())
                 .then((data) => {
-                    return data.data;
+                    var result = [];
+                    const plugData = data.data;
+                    if (!isEmpty(plugData)) {
+                        plugData.forEach(item => {
+                            const mathced = result.filter(i => i.campaign_name === item.campaign_name);
+                            if (mathced.length === 0) {
+                                result.push({
+                                    campaign_image_url: item.campaign_image_url,
+                                    campaign_name: item.campaign_name,
+                                    media_name: item.media_name,
+                                    dollars: Number(item.dollars)
+                                });
+                            } else {
+                                result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += Number(mathced[0].dollars);
+                            }
+                        });
+                    }
+                    return result;
                 })
                 .catch((err) => publicError(err))
         })
