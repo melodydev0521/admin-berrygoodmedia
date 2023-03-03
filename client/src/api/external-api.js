@@ -87,10 +87,10 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                                     campaign_image_url: item.campaign_image_url,
                                     campaign_name: item.campaign_name,
                                     media_name: item.media_name,
-                                    dollars: parseFloat(item.dollars)
+                                    dollars: item.dollars
                                 });
                             } else {
-                                result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += parseFloat(mathced[0].dollars);
+                                result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += parseFloatmathced[0].dollars;
                             }
                         });
                     }
