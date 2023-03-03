@@ -3,7 +3,8 @@ import { getAccounts } from '../api/accounts';
 
 const initialState = {
     theme: 'dark',
-    accounts: []
+    accounts: [],
+    userInfo: null
 };
 
 const AppContext = React.createContext(initialState);

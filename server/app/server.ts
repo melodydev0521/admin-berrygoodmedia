@@ -10,6 +10,8 @@ import path from 'path';
 import revenue from './routes/revenue';
 import external from './routes/external';
 import account from './routes/account';
+import auth from './routes/auth';
+import user from './routes/user';
 
 dotenv.config();
 const app: Application = express();
@@ -42,6 +44,8 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/revenue", revenue);
 app.use("/api/external-api", external);
 app.use("/api/account", account);
+app.use("/api/auth", auth);
+app.use("/api/user", user);
 
 const PORT = process.env.PORT || 80;
 

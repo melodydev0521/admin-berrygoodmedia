@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import {
 	Drawer,
 	Toolbar,
@@ -24,6 +24,7 @@ export default function Sidebar(props) {
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const navigate = useNavigate();
+	const location = useLocation();
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
@@ -60,6 +61,7 @@ export default function Sidebar(props) {
 				width: '100%',
 				minHeight: { md: '100vh' } 
 			}}
+			style={location.pathname === '/login' ? {display: 'none'} : {display: 'block'}}
 			aria-label="mailbox folders"
 		>
 			<Drawer

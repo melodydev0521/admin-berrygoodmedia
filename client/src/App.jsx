@@ -9,6 +9,8 @@ import { themeDark, themeLight } from './mui.config.theme';
 import './App.css';
 import Sidebar from './components/Layout/Sidebar';
 import routes from './config/routes';
+import Login from './pages/signin/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function Main () {
 	const [context] = useAppContext();
@@ -16,7 +18,7 @@ function Main () {
 	return (
 		<ThemeProvider theme={context.theme === 'dark' ? themeDark : themeLight}>
 			<BrowserRouter>
-				<ScopedCssBaseline style={{minHeight: "100vh"}}>
+				<ScopedCssBaseline>
 					<Grid container direction={'row'} spacing={1}>
 						<Grid container item xl={2} lg={3} md={3} xs={12}>
 							<Sidebar />
@@ -24,18 +26,37 @@ function Main () {
 						<Grid container item xl={10} lg={9} md={9} xs={12}>
 							{routes.map(route => 
 								<Routes key={route.id}>
-									<Route path={route.path} element={route.component} />
+										<Route path={route.path} element={route.component} />
 								</Routes>
 							)}
 						</Grid>
 					</Grid>
 				</ScopedCssBaseline>
+				<Routes>
+					<Route path='/login' element={<Login />} />					
+				</Routes>
 			</BrowserRouter>
 		</ThemeProvider>
 	)
 }
 
 function App() {
+	// useEffect(() => {
+	// 	// check for token in LS when app first runs
+	// 	if (localStorage.token) {
+	// 		// if there is a token set axios headers for all requests
+	// 		setAuthToken(localStorage.token);
+	// 	}
+	// 	// try to fetch a user, if no token or invalid token we
+	// 	// will get a 401 response from our API
+	// 	store.dispatch(loadUser());
+	
+	// 	// log user out from all tabs if they log out in one tab
+	// 	window.addEventListener('storage', () => {
+	// 	  	if (!localStorage.token) store.dispatch({ type: LOGOUT });
+	// 	});
+	// }, []);
+
 	return (
 		<AppWrapper>
 			<Main />
