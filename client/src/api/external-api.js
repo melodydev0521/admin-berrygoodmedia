@@ -166,7 +166,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
 
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
-    return api.get(`api/revenue`, {
+    return api.get(`revenue`, {
             headers: {
                 'Content-Type': 'application/json'
             }})
