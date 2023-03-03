@@ -81,6 +81,7 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                     const plugData = data.data;
                     if (!isEmpty(plugData)) {
                         plugData.forEach(item => {
+                            if (item.media_name === 'IRL B iOS US LC') console.log(item.dollars)
                             const matched = result.filter(i => i.media_name === item.media_name);
                             if (matched.length === 0) {
                                 result.push({
