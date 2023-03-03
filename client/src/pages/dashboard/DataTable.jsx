@@ -5,7 +5,8 @@ import StyledTable from '../../components/styled-elements/table/StyledTable'
 import DeleteIcon from '@mui/icons-material/Delete';
 import isEmpty from 'is-empty';
 import { deleteRevenue } from '../../api/external-api';
-import style from 'styled-components'
+import style from 'styled-components';
+import TotalCards from './TotalCards';
 
 const P = style.p`
     margin: 0;
@@ -139,7 +140,8 @@ export default function DataTable({ondelete, revenues, isLoading}) {
     ];
 
     return (
-        <Grid item container xs={12}>
+        <Grid item container xs={12} rowSpacing={2}>
+            <TotalCards total={total} />
             <StyledTable 
                 isLoading={isLoading} 
                 columns={columns} 
