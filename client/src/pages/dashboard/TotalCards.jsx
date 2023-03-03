@@ -39,7 +39,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>Revenue</CardTitle>
-                            <CardContent>$<CountUp end={revenue} /></CardContent>
+                            <CardContent>$<CountUp end={Number(revenue.toFixed(2))} /></CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
@@ -52,7 +52,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>Spend</CardTitle>
-                            <CardContent>$<CountUp end={spend} /></CardContent>
+                            <CardContent>$<CountUp end={Number(spend.toFixed(2))} /></CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
@@ -65,7 +65,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>Profit</CardTitle>
-                            <CardContent>$<CountUp end={profit} /></CardContent>
+                            <CardContent>$<CountUp end={Number(profit.toFixed(2))} /></CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
@@ -78,7 +78,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>ROAS</CardTitle>
-                            <CardContent>$<CountUp end={roas} /></CardContent>
+                            <CardContent><CountUp end={roas * 100} />%</CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>

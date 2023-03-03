@@ -234,7 +234,7 @@ export default function Dashboard() {
                         <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '30px', marginBottom: '30px' }}>
                             <HomeIcon />
                             <Typography style={{ padding: '3px' }}>
-                                Account Setting
+                                Dashboard
                             </Typography>
                         </Box>
                         <DataTable revenues={revenues} isLoading={loading} ondelete={handleRevenueDelete} />
