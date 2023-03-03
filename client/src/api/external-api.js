@@ -79,7 +79,6 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                 .then((data) => {
                     var result = [];
                     const plugData = data.data;
-                    console.log(plugData);
                     if (!isEmpty(plugData)) {
                         plugData.forEach(item => {
                             const mathced = result.filter(i => i.campaign_name === item.campaign_name);
@@ -88,14 +87,14 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                                     campaign_image_url: item.campaign_image_url,
                                     campaign_name: item.campaign_name,
                                     media_name: item.media_name,
-                                    dollars: Number(item.dollars)
+                                    dollars: parseFloat(item.dollars)
                                 });
                             } else {
-                                result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += Number(mathced[0].dollars);
+                                result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += parseFloat(mathced[0].dollars);
                             }
                         });
                     }
-                    console.log(result)
+                    console.log(result);
                     return result;
                 })
                 .catch((err) => publicError(err))
