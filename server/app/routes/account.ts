@@ -5,6 +5,7 @@ import {
     editAccount, 
     getAccounts 
 } from '../controllers/accountSettingController';
+import { protect } from '../middlewares/authMiddleware';
 const router: Router = express.Router();
 
 router.get('/', getAccounts);

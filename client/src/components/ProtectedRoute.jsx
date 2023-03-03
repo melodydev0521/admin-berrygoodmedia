@@ -1,15 +1,16 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthStatus } from '../hooks/useAuthStatus';
+import { useAppContext } from '../context/AppContext';
 
 const ProtectedRoute = () => {
 
-    const { loggedIn, checkingStatus } = useAuthStatus();
+    const [context] = useAppContext();
+    const { isAuthenticated } = context;
 
-    if(checkingStatus) {
-        return <img src='/loading.svg' width={50} height={50} />
-    }
+    // if(checkingStatus) {
+    //     return <img src='/loading.svg' width={50} height={50} />
+    // }
 
-    return loggedIn ? <Outlet /> : <Navigate to="/login" />
+    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 
 }
 

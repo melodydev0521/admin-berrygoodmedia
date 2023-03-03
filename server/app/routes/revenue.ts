@@ -6,6 +6,7 @@ import {
     removeAllRevenue, 
     removeRevenue 
 } from '../controllers/revenueController';
+import { protect } from '../middlewares/authMiddleware';
 
 const router: Router = express.Router();
 

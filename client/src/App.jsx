@@ -11,9 +11,27 @@ import Sidebar from './components/Layout/Sidebar';
 import routes from './config/routes';
 import Login from './pages/signin/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import setAuthToken from './utils/setAuthToken';
+import { loadUser } from './api/auth';
 
 function Main () {
-	const [context] = useAppContext();
+	const [context, setContext] = useAppContext();
+
+	// React.useEffect(() => {
+	// 	// check for token in LS when app first runs
+	// 	if (localStorage.userInfo) {
+	// 		// if there is a token set axios he`aders for all requests
+	// 		setAuthToken(localStorage.userInfo);
+	// 	}
+	// 	loadUserInfo();
+	// 	// try to fetch a user, if no token or invalid token we
+	// 	// will get a 401 response from our API
+	// }, []);
+
+	// const loadUserInfo = async () => {
+	// 	const user = loadUser();
+	// 	setContext({...context, isAuthenticated: true, userInfo: user});
+	// }
 
 	return (
 		<ThemeProvider theme={context.theme === 'dark' ? themeDark : themeLight}>
@@ -41,21 +59,6 @@ function Main () {
 }
 
 function App() {
-	// useEffect(() => {
-	// 	// check for token in LS when app first runs
-	// 	if (localStorage.token) {
-	// 		// if there is a token set axios headers for all requests
-	// 		setAuthToken(localStorage.token);
-	// 	}
-	// 	// try to fetch a user, if no token or invalid token we
-	// 	// will get a 401 response from our API
-	// 	store.dispatch(loadUser());
-	
-	// 	// log user out from all tabs if they log out in one tab
-	// 	window.addEventListener('storage', () => {
-	// 	  	if (!localStorage.token) store.dispatch({ type: LOGOUT });
-	// 	});
-	// }, []);
 
 	return (
 		<AppWrapper>

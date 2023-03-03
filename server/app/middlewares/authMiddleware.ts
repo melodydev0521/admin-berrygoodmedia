@@ -1,35 +1,33 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import User, { IUserRequest } from '../models/User';
+import { IUserRequest } from '../models/User';
+import config from 'config';
 
-export const protect = asyncHandler (async(req: IUserRequest, res: Response, next: NextFunction) =>  {
+export const protect = (req: IUserRequest, res: Response, next: NextFunction) =>  {
+  // Get token from header
+  const token = req.header('x-auth-token');
 
-    let token;
+  // Check if not token
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-
-        try {            
-            token = req.headers.authorization.split(" ")[1];
-            const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
-
-            req.user = await User.findById(decoded.id).select("-password");
-
-            next();
-        } catch (error: any) {
-            console.log(error.message);
-            res.status(401);
-            throw new Error("no token, no auth");
-        }
-
-    }
-
-    if(!token) {
-        res.status(401);
-        throw new Error("no token, no auth");
-    }
-
-})
+  // Verify token
+  try {
+    jwt.verify(token, config.get('jwtSecret'), (error, decoded: any) => {
+      if (error) {
+        return res.status(401).json({ msg: 'Token is not valid' });
+      } else {
+        req.user = decoded.user;
+        next();
+      }
+    });
+  } catch (err) {
+    console.error('something wrong with auth middleware');
+    res.status(500).json({ msg: 'Server Error' });
+  }
+}
 
 export const admin = (req: IUserRequest, res: Response, next: NextFunction) => {
 

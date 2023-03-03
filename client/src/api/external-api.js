@@ -1,13 +1,13 @@
 // Created by MelodyDev 02/17/2023
 import isEmpty from "is-empty"
-import axios from 'axios'
+import api from "../utils/api";
 import { publicError } from "./general"
 /**
  * @params {startDate, endDate}
  * @return JSON Infuse data
  */
 export const getInfuse = (start, end, fields = ['Stat.source', 'Stat.payout', 'Stat.clicks']) => {
-    // return axios.get(`/api/external-api/infuse/${start}/${end}`)
+    // return api.get(`/external-api/infuse/${start}/${end}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err))
     var fieldSets = '';
@@ -34,7 +34,7 @@ export const getInfuse = (start, end, fields = ['Stat.source', 'Stat.payout', 'S
  * @return JSON Infuse data
  */
 export const getPlug = (start, end, bearerToken, timezone = "New_York", fields = ['date', 'campaign', 'campaign_name', 'campaign_image_url', 'media', 'media_name', 'dollars']) => {
-    // return axios.get(`/api/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
+    // return api.get(`/external-api/plug/${start}/${end}/${timezone}/${bearerToken}`)
     //     .then(res => res.data)
     //     .catch(err => publicError(err));
     var fieldSets = '';
@@ -46,7 +46,6 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
             }
         })
     }
-    console.log(start, end);
     return fetch(
         `https://securetoken.googleapis.com/v1/token?key=AIzaSyCRYBeb5B5J0EJQr7-631BTwu4f6p9EsKc`,
         {
@@ -167,7 +166,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
 
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
-    return axios.get(`api/revenue`, {
+    return api.get(`api/revenue`, {
             headers: {
                 'Content-Type': 'application/json'
             }})
@@ -262,7 +261,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 }
 
 export const deleteRevenue = key => {
-    return axios.delete(`api/revenue/${key}`).then(res => res.data);
+    return api.delete(`revenue/${key}`).then(res => res.data);
 }
 
 export const getOnlyRevenues = async (start, end, bearerToken, timezone) => {

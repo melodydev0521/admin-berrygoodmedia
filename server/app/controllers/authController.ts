@@ -34,7 +34,7 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
 
     const { email, password } = req.body;
     
-    const user = await UserModel.findOne({ email })
+    const user = await UserModel.findOne({ email: email })
 
     if(!user) {
         res.status(401);
@@ -44,12 +44,12 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
     if(await user.comparePassword(password)) {
 
         res.status(201).json({
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id)
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
         });
 
     } else {

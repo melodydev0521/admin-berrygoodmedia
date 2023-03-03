@@ -1,13 +1,13 @@
-import axios from 'axios';
+import api from "../utils/api";
 
 export const getAccounts = () => {
-    return axios.get('/api/account').then(res => res.data);
+    return api.get('/account').then(res => res.data);
 }
 
 export const addAccount = (account) => {
-    return axios.post('/api/account', account).then(res => res.data);
+    return api.post('/account', account).then(res => res.data);
 }
 
 export const deleteAccount = _id => {
-    return axios.delete(`/api/account/${_id}`).then(res => res.data);
+    return api.delete(`/account/${_id}`).then(res => res.data);
 }

@@ -1,7 +1,7 @@
-import axios from "axios";
+import api from "../utils/api";
 
 export const addRevenue = (revenue) => {
-    return axios(`api/revenue`, {
+    return api(`/revenue`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -14,11 +14,11 @@ export const addRevenue = (revenue) => {
 }
 
 export const getRevenues = () => {
-    return axios.get(`api/revenue`).then(res => res.data)
+    return api.get(`/revenue`).then(res => res.data)
 }
 
 export const deleteRevenue = (key) => {
-    axios.delete(`api/revenue/${key}`)
+    api.delete(`/revenue/${key}`)
         .then(res => {
             
         })
