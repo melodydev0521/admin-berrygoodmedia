@@ -35,7 +35,7 @@ function Main () {
 
 	return (
 		<ThemeProvider theme={context.theme === 'dark' ? themeDark : themeLight}>
-			<BrowserRouter>
+			<BrowserRouter basename='/'>
 				<ScopedCssBaseline>
 					<Grid container direction={'row'} spacing={1}>
 						<Grid container item xl={2} lg={3} md={3} xs={12}>
