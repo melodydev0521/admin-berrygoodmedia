@@ -90,11 +90,11 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                                     dollars: item.dollars
                                 });
                             } else {
+                                console.log(result.map(i => i.media_name).indexOf(item.media_name))
                                 result[result.map(i => i.media_name).indexOf(item.media_name)].dollars += matched[0].dollars;
                             }
                         });
                     }
-                    console.log(result);
                     return result;
                 })
                 .catch((err) => publicError(err))
