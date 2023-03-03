@@ -90,7 +90,8 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
                                     dollars: item.dollars
                                 });
                             } else {
-                                console.log(mathced[0].dollars)
+                                console.log(mathced[0].dollars);
+                                console.log(result.map(i => i.campaign_name).indexOf(item.campaign_name));
                                 result[result.map(i => i.campaign_name).indexOf(item.campaign_name)].dollars += mathced[0].dollars;
                             }
                         });
