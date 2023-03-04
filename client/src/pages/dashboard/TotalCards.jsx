@@ -37,10 +37,10 @@ export default function TotalCards(props) {
     const [state, setState] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
 
     React.useEffect(() => {
-        if (revenue !== total.revenue || 
-            spend !== total.spend || 
-            profit !== total.profit || 
-            roas !== total.roas) {
+        if (state.revenue !== total.revenue || 
+            state.spend !== total.spend || 
+            state.profit !== total.profit || 
+            state.roas !== total.roas) {
                 setState(props.total);
             }
     }, [props.total]);
