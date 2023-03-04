@@ -66,18 +66,42 @@ export default function Login() {
         email: '',
         password: ''
     });
+    const initialError = {
+        email: '', password: ''
+    };
+    const [error, setError] = React.useState(initialError);
     const [loading, setLoading] = React.useState(false);
+
     let navigate = useNavigate();
+
     const [appContext, setAppContext] = useAppContext();
 
     const handleLogin = async () => {
         const result = await login(user);
+        console.log(result);
+        if (result.response !== undefined) {
+            if (result.response.status === 400) {
+                validTextField(result.response.data);
+            }
+            return;
+        }
+        setError(initialError);
         setLoading(true);
         setAuthToken(result.token);
         const newUser = await loadUser();
         setLoading(false);
         setAppContext({...appContext, user: newUser});
         navigate('/');
+    }
+
+    const validTextField = err => {
+        if (err.email !== undefined) {
+            setError({...initialError, email: err.email})
+        }
+
+        if (err.password !== undefined) {
+            setError({...initialError, password: err.email})
+        }
     }
 
     const handleInputChange = e => setUser({...user, [e.target.name]: e.target.value});
@@ -95,7 +119,9 @@ export default function Login() {
                                         name='email'
                                         label="Email ID"
                                         type={'email'}
+                                        helperText={error.email}
                                         variant="standard"
+                                        error={error.email === '' ? false : true}
                                         value={user.email}
                                         onChange={handleInputChange}
                                     />
@@ -106,6 +132,8 @@ export default function Login() {
                                         name='password'
                                         label="Password" 
                                         variant="standard"
+                                        error={error.password === '' ? false : true}
+                                        helperText={error.password}
                                         type={'password'}
                                         value={user.password}
                                         onChange={handleInputChange}

@@ -4,7 +4,7 @@ export const login = user => {
     return api.post('/auth/login', user)
         .then(res => res.data)
         .catch(err => {
-            console.log(err);
+            return err
         });
 }
 

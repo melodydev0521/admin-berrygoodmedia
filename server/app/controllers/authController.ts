@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
+import isEmpty from "is-empty";
 import UserModel, { IUserRequest } from "../models/User";
 import generateToken from "../utils/getnerateToken";
 
 export const loadUser = asyncHandler(async (req: IUserRequest, res: Response) => {
-    console.log(req.user);
     try {
         const user = await UserModel.findById(req.user.id).select('-password');
         res.json(user);
@@ -29,12 +29,17 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 
     await user.save();
 
-    res.status(201).json({
+    const loggedUser = {
         id: user._id,
         name: user.name,
         email: user.email,
+        avatar: user.avatar,
         isAdmin: user.isAdmin,
-        token: generateToken(user._id)
+    }
+
+    res.status(201).json({
+        user: loggedUser,
+        token: generateToken({user: loggedUser})
     });
 });
 
@@ -44,12 +49,22 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 export const login = asyncHandler(async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
+
+    if (isEmpty(email)) {
+        throw res.status(400).json({email: 'email is required'});
+        // throw new Error("Email is required")
+    }
+
+    if (isEmpty(password)) {
+        throw res.status(400).json({password: 'password is required'});
+        // throw new Error("Password is required")
+    }
     
-    const user = await UserModel.findOne({ email: email })
+    const user = await UserModel.findOne({ email: email });
 
     if(!user) {
-        res.status(401);
-        throw new Error("User not found");
+        throw res.status(400).json({email: 'User not exists'});
+        // throw new Error("User not found");
     }
 
     if(await user.comparePassword(password)) {
@@ -68,8 +83,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
         });
 
     } else {
-        res.status(401);
-        throw new Error("Email or password incorrect");
+        throw res.status(400).json({password: 'password is incorrect'});
     }
 
 });
