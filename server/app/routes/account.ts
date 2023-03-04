@@ -8,9 +8,9 @@ import {
 import { auth } from '../middlewares/authMiddleware';
 const router: Router = express.Router();
 
-router.get('/', getAccounts);
-router.post('/', addAccount);
-router.post('/:_id', editAccount);
-router.delete('/:_id', deleteAccount);
+router.get('/', auth, getAccounts);
+router.post('/', auth, addAccount);
+router.post('/:_id', auth, editAccount);
+router.delete('/:_id', auth, deleteAccount);
 
 export default router;

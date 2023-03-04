@@ -86,11 +86,16 @@ export default function Login() {
         }
         setError(initialError);
         setLoading(true);
-        console.log(result);
         setAuthToken(result.token);
         const newUser = await loadUser();
         setLoading(false);
-        setAppContext({...appContext, user: newUser, isAuthenticated: true, token: result.token});
+        setAppContext({
+            ...appContext, 
+            user: newUser, 
+            isAuthenticated: true, 
+            token: result.token, 
+            checkingStatus: false
+        });
         navigate('/');
     }
 

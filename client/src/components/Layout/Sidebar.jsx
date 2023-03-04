@@ -50,7 +50,7 @@ export default function Sidebar(props) {
 			<List>
 				{routes.map(({id, path, text, icon}) => (
 					<ListItem key={id}>
-						<ListItemButton onClick={() => navigate(path)}>
+						<ListItemButton onClick={() => navigate(path)} sx={{borderRadius: '15px'}}>
 							<ListItemIcon>
 								{icon}
 							</ListItemIcon>
