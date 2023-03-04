@@ -18,11 +18,14 @@ import {
 	StyledAvatar
 } from './sidebarStyles';
 import ThemeSwitch from './ThemeSwitch';
+import { useAppContext } from '../../context/AppContext';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Sidebar(props) {
 
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
+	const [context, setContext] = useAppContext();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const handleDrawerToggle = () => {
@@ -30,6 +33,12 @@ export default function Sidebar(props) {
 	};
 
 	const container = window !== undefined ? () => window().document.body : undefined;
+
+	const logoutUser = () => {
+		setContext({...context, isAuthenticated: false, user: null});
+		localStorage.clear();
+		navigate('/login');
+	}
 
 	const drawer = (
 		<div>
@@ -40,17 +49,27 @@ export default function Sidebar(props) {
 			<Divider />
 			<List>
 				{routes.map(({id, path, text, icon}) => (
-				<ListItem key={id} disablePadding>
-					<ListItemButton onClick={() => navigate(path)}>
-						<ListItemIcon>
-							{icon}
-						</ListItemIcon>
-						<ListItemText primary={text} />
-					</ListItemButton>
-				</ListItem>
+					<ListItem key={id}>
+						<ListItemButton onClick={() => navigate(path)}>
+							<ListItemIcon>
+								{icon}
+							</ListItemIcon>
+							<ListItemText primary={text} />
+						</ListItemButton>
+					</ListItem>
 				))}
 			</List>
 			<Divider />
+			<List>
+				<ListItem>
+					<ListItemButton onClick={logoutUser}>
+						<ListItemIcon>
+							<LogoutIcon />
+						</ListItemIcon>
+						<ListItemText primary='logout' />
+					</ListItemButton>
+				</ListItem>
+			</List>
 		</div>
 	);
 

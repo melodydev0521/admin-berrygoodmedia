@@ -20,11 +20,14 @@ const LoginCard = styled.div`
     border-radius: 15px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    padding: 30px;
+    padding: 50px;
     background-color: #1F1F1F;
     width: 100%;
     margin: auto;
-    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const SubmitButton = styled(Button)`
@@ -36,6 +39,25 @@ const SubmitButton = styled(Button)`
     color: #fff !important;
     margin-top: 15px !important;
     font-size: 25px !important;
+`;
+
+const StyledLogInput = styled(Box)`
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+`
+
+const StyledLoginInput = styled(TextField)`
+    font-size: 20px;
+    width: 100%;
+    justify-content: center;
+    & input {
+        padding: 5px;
+    }
+    & input:-webkit-autofill {
+        background-color: #000 important;
+    }
 `
 
 export default function Login() {
@@ -44,13 +66,17 @@ export default function Login() {
         email: '',
         password: ''
     });
+    const [loading, setLoading] = React.useState(false);
     let navigate = useNavigate();
     const [appContext, setAppContext] = useAppContext();
 
     const handleLogin = async () => {
         const result = await login(user);
-        setAuthToken(result);
-        loadUser();
+        setLoading(true);
+        setAuthToken(result.token);
+        const newUser = await loadUser();
+        setLoading(false);
+        setAppContext({...appContext, user: newUser});
         navigate('/');
     }
 
@@ -59,42 +85,37 @@ export default function Login() {
     return (
         <LoginDesk>
             <Grid container item xs={12} justifyContent={'center'}>
-                <Grid container item lg={3} md={8} xs={11}>
-                    <LoginCard>
-                        <img src='/logo.png' style={{ alignItems: 'center', width: '150px', margin: '10px auto'}} />
-                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                            <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            <TextField 
-                                name='email'
-                                label="Email ID"
-                                type={'email'}
-                                variant="standard"
-                                sx={{
-                                    fontSize: '24px',
-                                    width: '60%'
-                                }}
-                                value={user.email}
-                                onChange={handleInputChange}
-                            />
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                            <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            <TextField 
-                                name='password'
-                                label="Password" 
-                                variant="standard"
-                                type={'password'}
-                                sx={{
-                                    fontSize: '24px',
-                                    width: '60%'
-                                }}
-                                value={user.password}
-                                onChange={handleInputChange}
-                            />
-                        </Box>
-                    </LoginCard>
-                    <SubmitButton onClick={() => handleLogin()}>Log In</SubmitButton>
-                </Grid>
+                    {!loading ? 
+                        <Grid container item lg={3} md={8} xs={11}>
+                            <LoginCard>
+                                <img src='/logo.png' style={{ alignItems: 'center', width: '150px', margin: '30px auto'}} />
+                                <StyledLogInput>
+                                    <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    <StyledLoginInput 
+                                        name='email'
+                                        label="Email ID"
+                                        type={'email'}
+                                        variant="standard"
+                                        value={user.email}
+                                        onChange={handleInputChange}
+                                    />
+                                </StyledLogInput>
+                                <StyledLogInput>
+                                    <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    <StyledLoginInput 
+                                        name='password'
+                                        label="Password" 
+                                        variant="standard"
+                                        type={'password'}
+                                        value={user.password}
+                                        onChange={handleInputChange}
+                                    />
+                                </StyledLogInput>
+                            </LoginCard> 
+                            <SubmitButton onClick={() => handleLogin()}>Log In</SubmitButton>
+                        </Grid> :
+                        <img src='/assets/happy-hacker.gif' style={{ alignItems: 'center', width: '150px', margin: '10px auto'}} />
+                    }
             </Grid>
         </LoginDesk>
     )

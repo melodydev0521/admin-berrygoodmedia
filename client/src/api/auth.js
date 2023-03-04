@@ -10,7 +10,6 @@ export const login = user => {
 
 export const loadUser = ()  => {
     return api.get('/auth').then(res => {
-        console.log(res.data)
         return res.data;
-    }).catch(err => console.log(err));
+    }).catch(err => window.location.href = '/login');
 };

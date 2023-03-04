@@ -21,7 +21,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import DataTable from './DataTable'
-
+import { getAccounts } from '../../api/accounts';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -37,13 +37,14 @@ export default function Dashboard() {
     const [unavailable, setUnavailable] = React.useState(true);
     const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', tiktok: ''});
 
-    const [context] = useAppContext();
+    const [context, setContext] = useAppContext();
 
     React.useEffect(() => {
         setDate({
             start: dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD'),
             end: dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD'),
         });
+        getInitAccounts();
     }, []);
 
     React.useEffect(() => {
@@ -53,6 +54,11 @@ export default function Dashboard() {
             setUnavailable(false);
         else setUnavailable(true);
     }, [account]);
+
+    const getInitAccounts = async () => {
+        const accounts = await getAccounts();
+        setContext({...context, accounts: accounts});
+    }
 
     const getData = async () => {
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {

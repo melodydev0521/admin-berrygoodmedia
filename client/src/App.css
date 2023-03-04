@@ -9,18 +9,34 @@ body {
   user-select: none;
 }
 
-@keyframes bounce-in-right {
+@keyframes card-bounce {
   0% {
-    opacity: 0;
     transform: translateY(30px);
   }
-  /* 60% {
+  100% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* @keyframes card-hover {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% { 
     opacity: 1;
     transform: translateY(-10px);
   }
-  80% { transform: translateY(2px); } */
-  100% { 
-    transform: translateY(0);
-    opacity: 1; 
-  }
+} */
+
+.card-hover {
+  transition: all .3s;
+}
+
+.card-hover:hover { 
+    transform: translateY(-10px);
+      /* animation: card-hover 0.5s ease; */
+    /* animation-fill-mode: forwards; */
+
 }

@@ -17,6 +17,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { styled as muiStyled } from '@mui/system';
 import { StyledButtonPrimary, StyledButtonSuccess } from '../../components/styled-elements/buttonStyles';
+import { getAccounts } from '../../api/accounts';
 
 const StyledButton = muiStyled(Button)(({ theme }) => ({
     [`&`]: {
@@ -58,7 +59,7 @@ const AdManager = () => {
 
     const [state, setState] = React.useState(initialState);
     const navigate = useNavigate();
-    const [context] = useAppContext();
+    const [context, setContext] = useAppContext();
 
     React.useEffect(() => {
         setState({
@@ -66,11 +67,17 @@ const AdManager = () => {
             startDate: dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD'),
             endDate: dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD'),
         });
+        getInitAccounts();
     }, []);
 
     React.useEffect(() => {
         
     }, [context.accounts]);
+
+    const getInitAccounts = async () => {
+        const accounts = await getAccounts();
+        setContext({...context, accounts: accounts});
+    }
 
     const handleSearchDate = (e) => {
         setState({ ...state, [e.name]: e.value })

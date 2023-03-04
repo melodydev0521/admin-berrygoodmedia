@@ -54,13 +54,17 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
     if(await user.comparePassword(password)) {
 
-        res.status(201).json({
+        const loggedUser = {
             id: user._id,
             name: user.name,
             email: user.email,
             avatar: user.avatar,
             isAdmin: user.isAdmin,
-            token: generateToken(user._id)
+        }
+
+        res.status(201).json({
+            user: loggedUser,
+            token: generateToken({user: loggedUser})
         });
 
     } else {

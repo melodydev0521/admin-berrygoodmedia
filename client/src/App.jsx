@@ -17,21 +17,23 @@ import { loadUser } from './api/auth';
 function Main () {
 	const [context, setContext] = useAppContext();
 
-	// React.useEffect(() => {
-	// 	// check for token in LS when app first runs
-	// 	if (localStorage.auth) {
-	// 		// if there is a token set axios he`aders for all requests
-	// 		setAuthToken(localStorage.auth);
-	// 	}
-	// 	loadtoken();
-	// 	// try to fetch a user, if no token or invalid token we
-	// 	// will get a 401 response from our API
-	// }, []);
+	React.useEffect(() => {
+		if (window.location.pathname !== '/login') {
+			// check for token in LS when app first runs
+			if (localStorage.token) {
+				// if there is a token set axios he`aders for all requests
+				setAuthToken(localStorage.token);
+			}
+			loadtoken();
+			// try to fetch a user, if no token or invalid token we
+			// will get a 401 response from our API
+		}
+	}, []);
 
-	// const loadtoken = async () => {
-	// 	const user = loadUser();
-	// 	setContext({...context, isAuthenticated: true, user: user});
-	// }
+	const loadtoken = async () => {
+		const user = await loadUser();
+		setContext({...context, isAuthenticated: true, user: user});
+	}
 
 	return (
 		<ThemeProvider theme={context.theme === 'dark' ? themeDark : themeLight}>

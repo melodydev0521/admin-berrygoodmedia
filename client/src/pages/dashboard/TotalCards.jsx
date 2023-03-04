@@ -11,9 +11,13 @@ const StyledCard = styled(Card)`
     padding: 15px;
     transition: 0.5s;
     opacity: 0;
-    animation: bounce-in-right 0.5s ease;
+    animation: card-bounce 0.5s ease;
     animation-fill-mode: forwards;
-`
+    cursor: pointer;
+    transition: 0.5s;
+`;
+
+
 
 const CardTitle = styled.h3`
     margin: 5px;
@@ -32,7 +36,7 @@ export default function TotalCards(props) {
 
     return (
         <Grid item container spacing={3} xs={12} sx={{marginBottom: '20px'}}>
-            <Grid item container xs={3}>
+            <Grid item container xs={3} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.6s'}}>
                     <Grid container item direction={'row'} spacing={2}>
                         <Grid item xs={5}>
@@ -45,7 +49,7 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3}>
+            <Grid item container xs={3} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.7s'}}>
                     <Grid container item direction={'row'} spacing={2}>
                         <Grid item xs={5}>
@@ -58,7 +62,7 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3}>
+            <Grid item container xs={3} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.8s'}}>
                     <Grid container item direction={'row'} spacing={2}>
                         <Grid item xs={5}>
@@ -71,7 +75,7 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3}>
+            <Grid item container xs={3} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.9s'}}>
                     <Grid container item direction={'row'} spacing={2}>
                         <Grid item xs={5}>

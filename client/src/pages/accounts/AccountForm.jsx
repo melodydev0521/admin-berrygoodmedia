@@ -5,6 +5,7 @@ import { addAccount } from '../../api/accounts'
 import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledTextField from '../../components/styled-elements/StyledTextField'
+import { getAccounts } from '../../api/accounts';
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
@@ -26,6 +27,15 @@ export default function AccountForm() {
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
     const [context, setContext] = useAppContext();
+
+    React.useEffect(() => {
+        getInitAccounts();
+    }, []);
+
+    const getInitAccounts = async () => {
+        const accounts = await getAccounts();
+        setContext({...context, accounts: accounts});
+    }
 
     const handleAccountTypeChange = (name, item) => {
         setAccount({...account, accountType: item.id});
