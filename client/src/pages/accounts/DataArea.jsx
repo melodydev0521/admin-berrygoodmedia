@@ -1,5 +1,4 @@
 import React from 'react'
-import { useAppContext } from '../../context/AppContext'
 import { deleteAccount, getAccounts } from '../../api/accounts'
 import StyledTable from '../../components/styled-elements/table/StyledTable'
 import { IconButton } from '@mui/material'
@@ -8,24 +7,24 @@ import DeleteIcon from '@mui/icons-material/Delete'
 export default function DataArea() {
 
     const [loading, setLoading] = React.useState(false);
-    const [context, setContext] = useAppContext();
+    const [accounts, setAccounts] = React.useState([]);
 
     React.useEffect(() => {
-        getData();
+        getInitAccounts();
     }, []);
 
-    const getData = async () => {
+    const getInitAccounts = async () => {
         setLoading(true);
-        const data = await getAccounts();
-        setContext({...context, accounts: data});
+        const result = await getAccounts();
+        setAccounts(result);
         setLoading(false);
     }
-
+    
     const handleAccountDelete = async (_id) => {
         const deleted = await deleteAccount(_id);
-        const updatedAccounts = context.accounts;
+        const updatedAccounts = accounts;
         updatedAccounts.splice(updatedAccounts.map(item => item._id).indexOf(deleted._id), 1);
-        setContext({...context, accounts: updatedAccounts});
+        setAccounts(updatedAccounts);
     }
 
     const columns = [
@@ -74,7 +73,7 @@ export default function DataArea() {
 
     return (
         <StyledTable 
-            data={context.accounts.map(item => ({...item, no: index++, key: item._id}))}
+            data={accounts.map(item => ({...item, no: index++, key: item._id}))}
             columns={columns}
             isLoading={loading}
             total={false}
