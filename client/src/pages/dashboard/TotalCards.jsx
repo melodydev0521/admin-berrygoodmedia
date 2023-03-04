@@ -35,7 +35,7 @@ export default function TotalCards(props) {
     const { revenue, spend, profit, roas } = props.total;
 
     const convertNumberString = number => { 
-        return `$${number.toFixed(2).toLocaleString("en-US")}`
+        return number.toFixed(2).toLocaleString("en-US")
     }
 
     return (
@@ -49,7 +49,7 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>Revenue</CardTitle>
                             <CardContent>
-                                <CountUp end={revenue} formattingFn={convertNumberString} />
+                                $<CountUp end={revenue} formattingFn={convertNumberString} />
                             </CardContent>
                         </Grid>
                     </Grid>
