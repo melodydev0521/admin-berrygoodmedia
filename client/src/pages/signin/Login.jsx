@@ -4,7 +4,7 @@ import EmailIcon from '@mui/icons-material/Email'
 import LockIcon from '@mui/icons-material/Lock'
 import React from 'react'
 import styled from 'styled-components'
-import { login } from '../../api/auth'
+import { loadUser, login } from '../../api/auth'
 import { useAppContext } from '../../context/AppContext'
 import setAuthToken from '../../utils/setAuthToken'
 
@@ -49,8 +49,8 @@ export default function Login() {
 
     const handleLogin = async () => {
         const result = await login(user);
-        localStorage.setItem("userInfo", JSON.stringify(result));
-        setAuthToken(result)
+        setAuthToken(result);
+        loadUser();
         navigate('/');
     }
 

@@ -1,13 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { NextFunction, Request, Response } from 'express';
-import asyncHandler from 'express-async-handler';
+import { NextFunction, Response } from 'express';
 import { IUserRequest } from '../models/User';
 import config from 'config';
 
-export const protect = (req: IUserRequest, res: Response, next: NextFunction) =>  {
+export const auth = (req: IUserRequest, res: Response, next: NextFunction) =>  {
   // Get token from header
   const token = req.header('x-auth-token');
-
+  console.log(token)
   // Check if not token
   if (!token) {
     return res.status(401).json({ msg: 'No token, authorization denied' });
@@ -15,7 +14,7 @@ export const protect = (req: IUserRequest, res: Response, next: NextFunction) =>
 
   // Verify token
   try {
-    jwt.verify(token, config.get('jwtSecret'), (error, decoded: any) => {
+    jwt.verify(JSON.stringify(token), config.get('jwtSecret'), (error, decoded: any) => {
       if (error) {
         return res.status(401).json({ msg: 'Token is not valid' });
       } else {

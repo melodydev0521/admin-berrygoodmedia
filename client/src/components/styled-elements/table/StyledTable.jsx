@@ -111,9 +111,9 @@ export default function CustomizedTables(props) {
                                 <StyledTableCell style={{color: '#333'}} align="center">{`$ ${props.totalRow.spend}`}</StyledTableCell>
                                 <StyledTableCell 
                                     align="center"
-                                    style={props.totalRow.spend < 0 ? 
+                                    style={props.totalRow.profit < 0 ? 
                                         {color: '#FF2020'} : 
-                                        props.totalRow.spend > 0 ? 
+                                        props.totalRow.profit > 0 ? 
                                         { color: '#2BC605'} : 
                                         { color: '#333'}}
                                 >{`$ ${props.totalRow.profit}`}</StyledTableCell>

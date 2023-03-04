@@ -4,7 +4,7 @@ import { getAccounts } from '../api/accounts';
 const initialState = {
     theme: 'dark',
     accounts: [],
-    userInfo: null,
+    token: null,
     isAuthenticated: false
 };
 

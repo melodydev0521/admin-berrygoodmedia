@@ -19,18 +19,18 @@ function Main () {
 
 	// React.useEffect(() => {
 	// 	// check for token in LS when app first runs
-	// 	if (localStorage.userInfo) {
+	// 	if (localStorage.auth) {
 	// 		// if there is a token set axios he`aders for all requests
-	// 		setAuthToken(localStorage.userInfo);
+	// 		setAuthToken(localStorage.auth);
 	// 	}
-	// 	loadUserInfo();
+	// 	loadtoken();
 	// 	// try to fetch a user, if no token or invalid token we
 	// 	// will get a 401 response from our API
 	// }, []);
 
-	// const loadUserInfo = async () => {
+	// const loadtoken = async () => {
 	// 	const user = loadUser();
-	// 	setContext({...context, isAuthenticated: true, userInfo: user});
+	// 	setContext({...context, isAuthenticated: true, user: user});
 	// }
 
 	return (

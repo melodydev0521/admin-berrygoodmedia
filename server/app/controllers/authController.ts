@@ -1,12 +1,23 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import UserModel from "../models/User";
+import UserModel, { IUserRequest } from "../models/User";
 import generateToken from "../utils/getnerateToken";
+
+export const loadUser = asyncHandler(async (req: IUserRequest, res: Response) => {
+    console.log(req.user);
+    try {
+        const user = await UserModel.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (err: any) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
 
 // @Desc Register user
 // @Route /api/users/register
 // @Method POST
-export const registerController = asyncHandler(async (req: Request, res: Response) => {
+export const register = asyncHandler(async (req: Request, res: Response) => {
     const { name, email, password, avatar } = req.body;
 
     const user = new UserModel({
@@ -30,7 +41,7 @@ export const registerController = asyncHandler(async (req: Request, res: Respons
 // @Desc Login user
 // @Route /api/users/login
 // @Method POST
-export const loginController = asyncHandler(async (req: Request, res: Response) => {
+export const login = asyncHandler(async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
     
