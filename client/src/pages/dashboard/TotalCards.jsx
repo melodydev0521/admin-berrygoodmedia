@@ -32,10 +32,21 @@ const CardContent = styled.p`
 
 export default function TotalCards(props) {
 
-    const { revenue, spend, profit, roas } = props.total;
+    const {total} = props;
+
+    const [state, setState] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
+
+    React.useEffect(() => {
+        if (revenue !== total.revenue || 
+            spend !== total.spend || 
+            profit !== total.profit || 
+            roas !== total.roas) {
+                setState(props.total);
+            }
+    }, [props.total]);
 
     const convertNumberString = number => { 
-        return number.toFixed(2).toLocaleString("en-US")
+        return number.toLocaleString("en-US");
     }
 
     return (
@@ -49,7 +60,7 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>Revenue</CardTitle>
                             <CardContent>
-                                $<CountUp end={revenue} formattingFn={convertNumberString} />
+                                $<CountUp end={total.revenue} decimals={2} formattingFn={convertNumberString} />
                             </CardContent>
                         </Grid>
                     </Grid>
@@ -63,7 +74,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>Spend</CardTitle>
-                            <CardContent>$<CountUp end={spend} formattingFn={convertNumberString} /></CardContent>
+                            <CardContent>$<CountUp end={total.spend} decimals={2} formattingFn={convertNumberString} /></CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
@@ -76,7 +87,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>Profit</CardTitle>
-                            <CardContent>$<CountUp end={profit} formattingFn={convertNumberString} /></CardContent>
+                            <CardContent>$<CountUp end={total.profit} decimals={2} formattingFn={convertNumberString} /></CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
@@ -89,7 +100,7 @@ export default function TotalCards(props) {
                         </Grid>
                         <Grid item xs={7}>
                             <CardTitle>ROAS</CardTitle>
-                            <CardContent><CountUp end={roas * 100} formattingFn={convertNumberString} />%</CardContent>
+                            <CardContent><CountUp end={total.roas * 100} decimals={2} formattingFn={convertNumberString} />%</CardContent>
                         </Grid>
                     </Grid>
                 </StyledCard>
