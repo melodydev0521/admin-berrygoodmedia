@@ -18,21 +18,22 @@ function Main () {
 	const [context, setContext] = useAppContext();
 
 	React.useEffect(() => {
-		setContext({...context, checkingStatus: true})
-		// check for token in LS when app first runs
-		if (localStorage.token) {
-			// if there is a token set axios he`aders for all requests
-			setAuthToken(localStorage.token);
+		if (window.location.pathname !== '/login') {
+			setContext({...context, checkingStatus: true})
+			// check for token in LS when app first runs
+			if (localStorage.token) {
+				// if there is a token set axios he`aders for all requests
+				setAuthToken(localStorage.token);
+			}
+			loadtoken();
+			// try to fetch a user, if no token or invalid token we
+			// will get a 401 response from our API
 		}
-		loadtoken();
-		// try to fetch a user, if no token or invalid token we
-		// will get a 401 response from our API
 	}, []);
 
 	const loadtoken = async () => {
 		const user = await loadUser();
-		console.log(user)
-		setContext({...context, isAuthenticated: true, user: user, checkingStatus: false});
+		setContext({...context, isAuthenticated: true, user: user, checkingStatus: false, token: localStorage.token});
 	}
 
 	return (

@@ -1,8 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useAppContext } from '../../context/AppContext'
 import isEmpty from 'is-empty'
-import { Grid, Button, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined'
 import { StyledCard } from '../../components/styled-elements/styledCard'
 import { getInfuse, getPlug, getTiktok_adgroup, getTiktok_campaign } from '../../api/external-api'
@@ -18,22 +17,6 @@ import timezone from 'dayjs/plugin/timezone'
 import { styled as muiStyled } from '@mui/system';
 import { StyledButtonPrimary, StyledButtonSuccess } from '../../components/styled-elements/buttonStyles';
 import { getAccounts } from '../../api/accounts';
-
-const StyledButton = muiStyled(Button)(({ theme }) => ({
-    [`&`]: {
-        backgroundColor: 'rgba(111, 100, 207)',
-        padding: '10px 0',
-        textAlign: 'center',
-        color: '#fff',
-        fontSize: '13px',
-        borderRadius: '3px',
-        width: '100%',
-        textTransform: 'uppercase',
-    },
-    [`&:hover`]: {
-        backgroundColor: '#6c65f0',
-    },
-}));
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -59,7 +42,8 @@ const AdManager = () => {
 
     const [state, setState] = React.useState(initialState);
     const navigate = useNavigate();
-    const [context, setContext] = useAppContext();
+    const [accounts, setAccounts] = React.useState([]);
+
 
     React.useEffect(() => {
         setState({
@@ -70,13 +54,9 @@ const AdManager = () => {
         getInitAccounts();
     }, []);
 
-    React.useEffect(() => {
-        
-    }, [context.accounts]);
-
     const getInitAccounts = async () => {
-        const accounts = await getAccounts();
-        setContext({...context, accounts: accounts});
+        const result = await getAccounts();
+        setAccounts(result);
     }
 
     const handleSearchDate = (e) => {
@@ -298,7 +278,7 @@ const AdManager = () => {
                                     name="plugAccount" 
                                     label="Plug Account" 
                                     onchange={handleAccountSelect}
-                                    data={context.accounts.filter(item => item.accountType === 'plug').map(item => ({name: item.name, value: item.token}))} 
+                                    data={accounts.filter(item => item.accountType === 'plug').map(item => ({name: item.name, value: item.token}))} 
                                 />
                             </Grid>
                             <Grid container item xs={6}>
@@ -306,7 +286,7 @@ const AdManager = () => {
                                     name="tiktokAccount" 
                                     label="Tiktok Account" 
                                     onchange={handleAccountSelect}
-                                    data={context.accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token}))} 
+                                    data={accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token}))} 
                                 />
                             </Grid>
                         </Grid>

@@ -5,7 +5,6 @@ import {
     Box 
 } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
-import { useAppContext } from '../../context/AppContext'
 import { StyledButtonPrimary } from '../../components/styled-elements/buttonStyles'
 import { StyledCard } from '../../components/styled-elements/styledCard'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
@@ -36,8 +35,7 @@ export default function Dashboard() {
     const [account, setAccount] = React.useState({ plugAccount: {}, tiktokAccount: {}});
     const [unavailable, setUnavailable] = React.useState(true);
     const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', tiktok: ''});
-
-    const [context, setContext] = useAppContext();
+    const [accounts, setAccounts] = React.useState([]);
 
     React.useEffect(() => {
         setDate({
@@ -56,8 +54,8 @@ export default function Dashboard() {
     }, [account]);
 
     const getInitAccounts = async () => {
-        const accounts = await getAccounts();
-        setContext({...context, accounts: accounts});
+        const result = await getAccounts();
+        setAccounts(result);
     }
 
     const getData = async () => {
@@ -69,10 +67,10 @@ export default function Dashboard() {
         var plugAccount = [account.plugAccount.id];
         var tiktokAccount = [account.tiktokAccount.id];
         if (plugAccount[0] === 'all') {
-            plugAccount = context.accounts.filter(item => item.accountType === 'plug').map(item => item.token);
+            plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
         if (tiktokAccount[0] === 'all') {
-            tiktokAccount = context.accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
+            tiktokAccount = accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
         }
         var result = await getDataByConnection(date.start, date.end, plugAccount, tiktokAccount, timezone);
         if (result === "server_error") return;
@@ -91,7 +89,7 @@ export default function Dashboard() {
         setRevenueLoading(true);
         var plugAccount = [account.plugAccount.id];
         if (plugAccount[0] === 'all') {
-            plugAccount = context.accounts.filter(item => item.accountType === 'plug').map(item => item.token);
+            plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
         const result = await getOnlyRevenues(date.start, date.end, plugAccount, timezone);
         var newRevenues = revenues;
@@ -104,7 +102,7 @@ export default function Dashboard() {
         setSpendLoading(true);
         var tiktokAccount = [account.tiktokAccount.id];
         if (tiktokAccount[0] === 'all') {
-            tiktokAccount = context.accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
+            tiktokAccount = accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
         }
         const result = await getOnlySpends(date.start, date.end, tiktokAccount);
         var newRevenues = revenues;
@@ -164,7 +162,7 @@ export default function Dashboard() {
                                         onchange={handleAccountSelect} 
                                         data={[
                                             {name: 'All', value: 'all'}, 
-                                            ...context.accounts
+                                            ...accounts
                                                 .filter(item => item.accountType === 'plug')
                                                 .map(item => ({name: item.name, value: item.token}))
                                         ]} 
@@ -177,7 +175,7 @@ export default function Dashboard() {
                                         onchange={handleAccountSelect} 
                                         data={[
                                             {name: 'All', value: 'all'}, 
-                                            ...context.accounts
+                                            ...accounts
                                                 .filter(item => item.accountType === 'tiktok')
                                                 .map(item => ({name: item.name, value: item.token}))
                                         ]} 

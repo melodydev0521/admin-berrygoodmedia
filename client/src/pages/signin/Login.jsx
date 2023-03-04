@@ -78,7 +78,6 @@ export default function Login() {
 
     const handleLogin = async () => {
         const result = await login(user);
-        console.log(result);
         if (result.response !== undefined) {
             if (result.response.status === 400) {
                 validTextField(result.response.data);
@@ -87,10 +86,11 @@ export default function Login() {
         }
         setError(initialError);
         setLoading(true);
+        console.log(result);
         setAuthToken(result.token);
         const newUser = await loadUser();
         setLoading(false);
-        setAppContext({...appContext, user: newUser, isAuthenticated: true});
+        setAppContext({...appContext, user: newUser, isAuthenticated: true, token: result.token});
         navigate('/');
     }
 

@@ -11,5 +11,8 @@ export const login = user => {
 export const loadUser = ()  => {
     return api.get('/auth').then(res => {
         return res.data;
-    }).catch(err => window.location.href = '/login');
+    }).catch(err => {
+        window.localStorage.clear();
+        window.location.href = '/login';
+    });
 };

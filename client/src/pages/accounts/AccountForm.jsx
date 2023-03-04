@@ -1,6 +1,5 @@
-import { Button, Grid, TextField } from '@mui/material'
+import { Grid } from '@mui/material'
 import React from 'react'
-import { useAppContext } from '../../context/AppContext'
 import { addAccount } from '../../api/accounts'
 import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
@@ -26,15 +25,16 @@ export default function AccountForm() {
     };
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
-    const [context, setContext] = useAppContext();
+    const [accounts, setAccounts] = React.useState([]);
+
 
     React.useEffect(() => {
         getInitAccounts();
     }, []);
 
     const getInitAccounts = async () => {
-        const accounts = await getAccounts();
-        setContext({...context, accounts: accounts});
+        const result = await getAccounts();
+        setAccounts({...accounts, accounts: result});
     }
 
     const handleAccountTypeChange = (name, item) => {
@@ -59,7 +59,7 @@ export default function AccountForm() {
         
         // Save account
         const newAccount = await addAccount(account);
-        setContext({...context, accounts: [...context.accounts, newAccount]});
+        setAccounts({...accounts, newAccount});
         setAccount(initialAccount);
     }
 

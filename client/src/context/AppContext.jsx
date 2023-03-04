@@ -2,10 +2,9 @@ import React from 'react';
 
 const initialState = {
     theme: 'dark',
-    accounts: [],
     token: null,
     isAuthenticated: false,
-    checkingStatus: false
+    checkingStatus: true
 };
 
 const AppContext = React.createContext(initialState);
