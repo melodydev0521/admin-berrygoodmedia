@@ -33,19 +33,19 @@ mongoose.connect(mongoUrl)
   process.exit();
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '../../client/build')));
-	app.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-  });
-}
-
 // Primary App Routers
 app.use("/api/revenue", revenue);
 app.use("/api/external-api", external);
 app.use("/api/account", account);
 app.use("/api/auth", auth);
 app.use("/api/user", user);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '../../client/build')));
+	app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 80;
 
