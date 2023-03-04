@@ -18,21 +18,21 @@ function Main () {
 	const [context, setContext] = useAppContext();
 
 	React.useEffect(() => {
-		if (window.location.pathname !== '/login') {
-			// check for token in LS when app first runs
-			if (localStorage.token) {
-				// if there is a token set axios he`aders for all requests
-				setAuthToken(localStorage.token);
-			}
-			loadtoken();
-			// try to fetch a user, if no token or invalid token we
-			// will get a 401 response from our API
+		setContext({...context, checkingStatus: true})
+		// check for token in LS when app first runs
+		if (localStorage.token) {
+			// if there is a token set axios he`aders for all requests
+			setAuthToken(localStorage.token);
 		}
+		loadtoken();
+		// try to fetch a user, if no token or invalid token we
+		// will get a 401 response from our API
 	}, []);
 
 	const loadtoken = async () => {
 		const user = await loadUser();
-		setContext({...context, isAuthenticated: true, user: user});
+		console.log(user)
+		setContext({...context, isAuthenticated: true, user: user, checkingStatus: false});
 	}
 
 	return (
@@ -46,7 +46,9 @@ function Main () {
 						<Grid container item xl={10} lg={9} md={9} xs={12}>
 							{routes.map(route => 
 								<Routes key={route.id}>
+									<Route path={route.path} element={<ProtectedRoute />}>
 										<Route path={route.path} element={route.component} />
+									</Route>
 								</Routes>
 							)}
 						</Grid>

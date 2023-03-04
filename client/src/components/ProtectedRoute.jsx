@@ -5,10 +5,13 @@ const ProtectedRoute = () => {
 
     const [context] = useAppContext();
     const { isAuthenticated } = context;
-
-    // if(checkingStatus) {
-    //     return <img src='/loading.svg' width={50} height={50} />
-    // }
+    if(context.checkingStatus) {
+        return <div style={{ width: '100%', height: '100vh', display: 'flex' }}>
+            <img src='/assets/happy-hacker.gif' style={{ alignItems: 'center', width: '150px', margin: '10px auto'}} />
+        </div>
+    }
+    console.log(context)
+    return <Outlet />
 
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 

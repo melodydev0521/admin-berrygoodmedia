@@ -90,7 +90,7 @@ export default function Login() {
         setAuthToken(result.token);
         const newUser = await loadUser();
         setLoading(false);
-        setAppContext({...appContext, user: newUser});
+        setAppContext({...appContext, user: newUser, isAuthenticated: true});
         navigate('/');
     }
 

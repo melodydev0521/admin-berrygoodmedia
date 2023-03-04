@@ -4,7 +4,8 @@ const initialState = {
     theme: 'dark',
     accounts: [],
     token: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    checkingStatus: false
 };
 
 const AppContext = React.createContext(initialState);
