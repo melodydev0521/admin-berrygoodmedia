@@ -100,6 +100,10 @@ export default function DashForm(props) {
 						value={date.start} 
 						onchange={handleSearchDate}
 						className='form-item-animation'
+						sx={{
+							opacity: 0, 
+							animationDelay: '0.0s' 
+						}}
 					/>
 				</Grid>
 				<Grid container item lg={12} xs={6}>
@@ -109,6 +113,10 @@ export default function DashForm(props) {
 						value={date.end} 
 						onchange={handleSearchDate}
 						className='form-item-animation'
+						sx={{
+							opacity: 0, 
+							animationDelay: '0.05s' 
+						}}
 					/>
 				</Grid>
 			</Grid>
@@ -125,6 +133,10 @@ export default function DashForm(props) {
 								.map(item => ({name: item.name, value: item.token}))
 						]} 
 						className='form-item-animation'
+						sx={{
+							opacity: 0, 
+							animationDelay: '0.1s' 
+						}}
 					/>
 				</Grid>
 				<Grid container item lg={12} sm={4} xs={12}>
@@ -139,6 +151,10 @@ export default function DashForm(props) {
 								.map(item => ({name: item.name, value: item.token}))
 						]}
 						className='form-item-animation'
+						sx={{
+							opacity: 0, 
+							animationDelay: '0.15s' 
+						}}
 					/>
 				</Grid>
 				<Grid container item lg={12} sm={4} xs={12}>
@@ -151,6 +167,10 @@ export default function DashForm(props) {
 							{ name: 'Chicago', value: 'Chicago' }
 						]}
 						className='form-item-animation'
+						sx={{
+							opacity: 0, 
+							animationDelay: '0.2s' 
+						}}
 					/>
 				</Grid>
 			</Grid>

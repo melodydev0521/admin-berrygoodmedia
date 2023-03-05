@@ -2,14 +2,12 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router';
 import {
 	Drawer,
-	Toolbar,
 	Divider,
 	List,
 	ListItem,
 	ListItemText,
 	ListItemButton,
 	ListItemIcon,
-	FormControlLabel,
 	Box
 } from '@mui/material'
 import routes from '../../config/routes';
@@ -17,7 +15,7 @@ import {
 	StyledSidebar,
 	StyledAvatar
 } from './sidebarStyles';
-import ThemeSwitch from './ThemeSwitch';
+// import ThemeSwitch from './ThemeSwitch';
 import { useAppContext } from '../../context/AppContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -31,6 +29,14 @@ export default function Sidebar(props) {
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
+
+	React.useEffect(() => {
+		const isPageMatched = routes.map(r => r.path)
+			.filter(i => i === location.pathname).length === 0 ? false : true;
+		if (!isPageMatched) {
+			navigate('/page-404');
+		}
+	}, []);
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -78,17 +84,16 @@ export default function Sidebar(props) {
 				width: '100%',
 				minHeight: { md: '100vh' } 
 			}}
-			style={location.pathname === '/login' ? {display: 'none'} : {display: 'block'}}
-			aria-label="mailbox folders"
+			style={{ display: routes.filter(i => i.standAlone && i.path === location.pathname).length !== 0 ? 
+				'none' : 'block'
+			}}
 		>
 			<Drawer
 				container={container}
 				variant="temporary"
 				open={mobileOpen}
 				onClose={handleDrawerToggle}
-				ModalProps={{
-					keepMounted: true,
-				}}
+				ModalProps={{ keepMounted: true }}
 				sx={{
 					display: { xs: 'block', sm: 'none' },
 					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' },

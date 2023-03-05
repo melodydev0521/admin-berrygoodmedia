@@ -29,6 +29,8 @@ export default function BasicDatePicker(props) {
                         size='small'
                         fullWidth
                         className={props.className}
+                        sx={props.sx}
+                        style={props.style}
                     />
                 )}
             />
@@ -41,5 +43,7 @@ BasicDatePicker.propTypes = {
     name: PropTypes.string,
     onchange: PropTypes.func,
     value: PropTypes.any,
-    className: PropTypes.string
+    className: PropTypes.string,
+    sx: PropTypes.object,
+    style: PropTypes.object
 }

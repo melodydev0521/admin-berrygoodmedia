@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import * as React from 'react';
+import React from 'react';
 import {
     InputLabel,
     MenuItem,
@@ -21,7 +21,13 @@ export default function StyledSelect(props) {
             });
     };
     return (
-        <FormControl fullWidth error={props.error} className={props.className}>
+        <FormControl 
+            fullWidth 
+            error={props.error} 
+            className={props.className}
+            sx={props.sx}
+            style={props.style}
+        >
             <InputLabel
                 size="small"
             >{props.label}</InputLabel>
@@ -49,5 +55,7 @@ StyledSelect.propTypes = {
     label: PropTypes.string,
     onchange: PropTypes.func,
     error: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    sx: PropTypes.object,
+    style: PropTypes.object
 }

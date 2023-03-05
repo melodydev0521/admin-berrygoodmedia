@@ -1,15 +1,15 @@
 
 .form-item-animation {
-    animation: bounce-left 0.5s ease-in-out;
+    animation: bounce-left 0.2s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 @keyframes bounce-left {
     0% {
-        transform: translateX(30px);
+        transform: translateY(30px);
     }
     100% { 
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
   }

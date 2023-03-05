@@ -9,7 +9,6 @@ import { themeDark, themeLight } from './mui.config.theme';
 import './App.css';
 import Sidebar from './components/Layout/Sidebar';
 import routes from './config/routes';
-import Login from './pages/signin/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './api/auth';
@@ -20,14 +19,10 @@ function Main () {
 	React.useEffect(() => {
 		if (window.location.pathname !== '/login') {
 			setContext({...context, checkingStatus: true})
-			// check for token in LS when app first runs
 			if (localStorage.token) {
-				// if there is a token set axios he`aders for all requests
 				setAuthToken(localStorage.token);
 			}
 			loadtoken();
-			// try to fetch a user, if no token or invalid token we
-			// will get a 401 response from our API
 		}
 	}, []);
 
@@ -45,7 +40,7 @@ function Main () {
 							<Sidebar />
 						</Grid>
 						<Grid container item xl={10} lg={10} md={9} xs={12}>
-							{routes.map(route => 
+							{routes.filter(item => !item.standAlone).map(route => 
 								<Routes key={route.id}>
 									<Route path={route.path} element={<ProtectedRoute />}>
 										<Route path={route.path} element={route.component} />
@@ -55,16 +50,17 @@ function Main () {
 						</Grid>
 					</Grid>
 				</ScopedCssBaseline>
-				<Routes>
-					<Route path='/login' element={<Login />} />					
-				</Routes>
+				{routes.filter(item => item.standAlone).map(route => 
+					<Routes key={route.id}>
+						<Route path={route.path} element={route.component} />					
+					</Routes>
+				)}
 			</BrowserRouter>
 		</ThemeProvider>
 	)
 }
 
 function App() {
-
 	return (
 		<AppWrapper>
 			<Main />

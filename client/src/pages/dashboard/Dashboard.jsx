@@ -54,7 +54,7 @@ export default function Dashboard() {
             <Grid container item spacing={2} direction="row">
                 <Grid container item spacing={1} lg={3} md={12} direction={"column"}>
                     <StyledCard>
-                        <Grid container item spacing={2} marginTop={10}>
+                        <Grid container item spacing={2} marginTop={10} sx={{ md: { margin: 0 }}}>
                             <DashForm 
                                 getData={getData}
                                 refreshRevenues={refreshRevenues}
