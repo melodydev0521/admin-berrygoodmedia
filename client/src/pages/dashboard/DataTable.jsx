@@ -141,7 +141,9 @@ export default function DataTable({ondelete, revenues, isLoading}) {
 
     return (
         <Grid item container xs={12} rowSpacing={2}>
-            <TotalCards total={total} />
+            <TotalCards 
+                total={total}
+            />
             <StyledTable 
                 isLoading={isLoading} 
                 columns={columns} 

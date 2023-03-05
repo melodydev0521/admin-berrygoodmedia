@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import React from 'react'
 import styled from 'styled-components'
 import { Card, Grid } from '@mui/material'
-import CountUp, {useCountUp} from 'react-countup'
+import CountUp from 'react-countup'
 
 const StyledCard = styled(Card)`
     width: 100%;
@@ -32,18 +32,7 @@ const CardContent = styled.p`
 export default function TotalCards(props) {
 
     const {total} = props;
-
-    const [xTotal, setXTotal] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
-
-    props.onchange = () => {
-        // if (state.revenue !== total.revenue || 
-        //     state.spend !== total.spend || 
-        //     state.profit !== total.profit || 
-        //     state.roas !== total.roas) {
-        //         setState(total);
-        //     }
-        setXTotal(total);
-    }
+    const [xtotal, setXtotal] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
 
     const convertNumberString = number => { 
         return number.toLocaleString("en-US");
@@ -60,11 +49,12 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>Revenue</CardTitle>
                             <CardContent>
-                                $<CountUp
-                                    start={xTotal.revenue}
+                                $<CountUp 
+                                    start={xtotal.revenue}
                                     end={total.revenue} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
+                                    onEnd={() => setXtotal({...xtotal, revenue: total.revenue})}
                                 />
                             </CardContent>
                         </Grid>
@@ -80,11 +70,12 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>Spend</CardTitle>
                             <CardContent>
-                                $<CountUp
-                                    start={xTotal.spend}
+                                $<CountUp 
+                                    start={xtotal.spend}
                                     end={total.spend} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
+                                    onEnd={() => setXtotal({...xtotal, spend: total.spend})}
                                 />
                             </CardContent>
                         </Grid>
@@ -100,11 +91,12 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>Profit</CardTitle>
                             <CardContent>
-                                $<CountUp
-                                    start={xTotal.profit}
+                                $<CountUp 
+                                    start={xtotal.profit}
                                     end={total.profit} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
+                                    onEnd={() => setXtotal({...xtotal, profit: total.profit})}
                                 />
                             </CardContent>
                         </Grid>
@@ -120,12 +112,13 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>ROAS</CardTitle>
                             <CardContent>
-                                <CountUp
-                                    start={xTotal.roas * 100}
-                                    end={total.roas * 100} 
+                                $<CountUp 
+                                    start={xtotal.roas}
+                                    end={total.roas} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
-                                />%
+                                    onEnd={() => setXtotal({...xtotal, roas: total.roas})}
+                                />
                             </CardContent>
                         </Grid>
                     </Grid>
@@ -136,6 +129,5 @@ export default function TotalCards(props) {
 }
 
 TotalCards.propTypes = {
-  total: PropTypes.object,
-  onchange: PropTypes.func
+  total: PropTypes.object
 }
