@@ -48,7 +48,7 @@ export default function DashForm(props) {
 	const handleAccountSelect = (accountType, accountContent) => setAccount({ ...account, [accountType]: accountContent });
 	const handleTimezoneSelect = (name, tz) => setTimezone(tz.id);
 
-	const getData = () => {
+	const getData = async () => {
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
             alert('choose account or timezone');
             return;
@@ -61,11 +61,13 @@ export default function DashForm(props) {
         if (tiktokAccount[0] === 'all') {
             tiktokAccount = accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
         }
-		props.getData(date.start, date.end, plugAccount, tiktokAccount, timezone);
+		await props.getData(date.start, date.end, plugAccount, tiktokAccount, timezone);
 		setLoadUsedAccount({
             plug: account.plugAccount.id, 
             tiktok: account.tiktokAccount.id
         });
+		if (props.revenues.length !== 0)
+			setUnavailable(false);
 	}
 
 	const refreshRevenues = async () => {
@@ -194,7 +196,8 @@ export default function DashForm(props) {
 }
 
 DashForm.propTypes = {
-  getData: PropTypes.func,
-  refreshRevenues: PropTypes.func,
-  refreshSpends: PropTypes.func
+	revenues: PropTypes.array,
+	getData: PropTypes.func,
+	refreshRevenues: PropTypes.func,
+	refreshSpends: PropTypes.func
 }

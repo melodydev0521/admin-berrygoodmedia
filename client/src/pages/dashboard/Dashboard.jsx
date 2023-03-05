@@ -59,6 +59,7 @@ export default function Dashboard() {
                                 getData={getData}
                                 refreshRevenues={refreshRevenues}
                                 refreshSpends={refreshSpends}
+                                revenues={revenues}
                             />
                         </Grid>
                     </StyledCard>
