@@ -33,7 +33,6 @@ export default function DataTable({ondelete, revenues, isLoading}) {
 
     React.useEffect(() => {
         if (revenues.length !== 0) {
-            console.log(revenues);
 		    setTotal(initialTotal);
             var totalVal = {
                 name: 'Total',

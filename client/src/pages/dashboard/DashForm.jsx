@@ -33,7 +33,6 @@ export default function DashForm(props) {
 	}, []);
 
 	React.useEffect(() => {
-		console.log(loadUsedAccount, account);
         if (loadUsedAccount.plug === account.plugAccount.id && 
             loadUsedAccount.tiktok === account.tiktokAccount.id && 
 			props.revenues.length !== 0)
@@ -69,7 +68,6 @@ export default function DashForm(props) {
             plug: account.plugAccount.id, 
             tiktok: account.tiktokAccount.id
         });
-		console.log(props.revenues.length)
 		if (props.revenues.length !== 0)
 			setUnavailable(false);
 	}
