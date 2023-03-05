@@ -37,7 +37,7 @@ export default function TotalCards(props) {
     const convertNumberString = number => { 
         return number.toLocaleString("en-US");
     }
-
+    console.log(xtotal);
     return (
         <Grid item container spacing={3} xs={12} sx={{marginBottom: '20px'}}>
             <Grid item container md={3} xs={6} className='card-hover'>
