@@ -22,6 +22,7 @@ export default function Dashboard() {
 
     const getData = async (startDate, endDate, plugAccount, tiktokAccount, timezone) => {
         setLoading(true);
+        setRevenues([]);
         var result = await getDataByConnection(startDate, endDate, plugAccount, tiktokAccount, timezone);
         if (result === "server_error") return;
         setRevenues(result);
