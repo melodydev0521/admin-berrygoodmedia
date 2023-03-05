@@ -33,8 +33,10 @@ export default function DashForm(props) {
 	}, []);
 
 	React.useEffect(() => {
+		console.log(loadUsedAccount, account);
         if (loadUsedAccount.plug === account.plugAccount.id && 
-            loadUsedAccount.tiktok === account.tiktokAccount.id)
+            loadUsedAccount.tiktok === account.tiktokAccount.id && 
+			props.revenues.length !== 0)
             setUnavailable(false);
         else setUnavailable(true);
     }, [account]);
@@ -49,6 +51,7 @@ export default function DashForm(props) {
 	const handleTimezoneSelect = (name, tz) => setTimezone(tz.id);
 
 	const getData = async () => {
+		setUnavailable(true);
         if (isEmpty(account.tiktokAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
             alert('choose account or timezone');
             return;
@@ -66,6 +69,7 @@ export default function DashForm(props) {
             plug: account.plugAccount.id, 
             tiktok: account.tiktokAccount.id
         });
+		console.log(props.revenues.length)
 		if (props.revenues.length !== 0)
 			setUnavailable(false);
 	}
