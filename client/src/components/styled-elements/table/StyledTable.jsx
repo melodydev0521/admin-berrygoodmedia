@@ -45,7 +45,6 @@ function stableSort(array, comparator) {
 export default function CustomizedTables(props) {
     const [orderBy, setOrderBy] = React.useState(null);
     const [order, setOrder] = React.useState('asc');
-    console.log(props.totalRow)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
