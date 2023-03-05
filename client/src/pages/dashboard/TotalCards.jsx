@@ -36,13 +36,14 @@ export default function TotalCards(props) {
     const [state, setState] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
 
     React.useEffect(() => {
+        console.log(state, total);
         if (state.revenue !== total.revenue || 
             state.spend !== total.spend || 
             state.profit !== total.profit || 
             state.roas !== total.roas) {
-                setState(props.total);
+                setState(total);
             }
-    }, [props.total]);
+    }, [total]);
 
     const convertNumberString = number => { 
         return number.toLocaleString("en-US");
