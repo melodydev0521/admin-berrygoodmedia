@@ -32,7 +32,7 @@ const CardContent = styled.p`
 export default function TotalCards(props) {
 
     const {total} = props;
-    const xtotal = {
+    var xtotal = {
         revenue: 0, 
         spend: 0, 
         profit: 0, 
@@ -116,13 +116,13 @@ export default function TotalCards(props) {
                         <Grid item xs={7}>
                             <CardTitle>ROAS</CardTitle>
                             <CardContent>
-                                $<CountUp 
-                                    start={xtotal.roas}
-                                    end={total.roas} 
+                                <CountUp 
+                                    start={xtotal.roas * 100}
+                                    end={total.roas * 100} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
                                     onEnd={() => setXtotal('roas', total.roas)}
-                                />
+                                /> %
                             </CardContent>
                         </Grid>
                     </Grid>
