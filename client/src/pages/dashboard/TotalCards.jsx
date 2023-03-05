@@ -18,7 +18,6 @@ const StyledCard = styled(Card)`
 `;
 
 
-
 const CardTitle = styled.h3`
     margin: 5px;
     text-align: center;
@@ -51,10 +50,10 @@ export default function TotalCards(props) {
 
     return (
         <Grid item container spacing={3} xs={12} sx={{marginBottom: '20px'}}>
-            <Grid item container xs={3} className='card-hover'>
+            <Grid item container md={3} xs={6} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.6s'}}>
-                    <Grid container item direction={'row'} spacing={2}>
-                        <Grid item xs={5}>
+                    <Grid container item direction={'row'} spacing={2} alignItems={'center'}>
+                        <Grid item md={5} sm={3} xs={5}>
                             <img src='/assets/revenue.png' style={{width: '100%'}} />
                         </Grid>
                         <Grid item xs={7}>
@@ -66,10 +65,10 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3} className='card-hover'>
+            <Grid item container md={3} xs={6} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.7s'}}>
-                    <Grid container item direction={'row'} spacing={2}>
-                        <Grid item xs={5}>
+                    <Grid container item direction={'row'} spacing={2} alignItems={'center'}>
+                        <Grid item md={5} sm={3} xs={5}>
                             <img src='/assets/spend.png' style={{width: '100%'}} />
                         </Grid>
                         <Grid item xs={7}>
@@ -79,10 +78,10 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3} className='card-hover'>
+            <Grid item container md={3} xs={6} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.8s'}}>
-                    <Grid container item direction={'row'} spacing={2}>
-                        <Grid item xs={5}>
+                    <Grid container item direction={'row'} spacing={2} alignItems={'center'}>
+                        <Grid item md={5} sm={3} xs={5}>
                             <img src='/assets/profit.png' style={{width: '100%'}} />
                         </Grid>
                         <Grid item xs={7}>
@@ -92,10 +91,10 @@ export default function TotalCards(props) {
                     </Grid>
                 </StyledCard>
             </Grid>
-            <Grid item container xs={3} className='card-hover'>
+            <Grid item container md={3} xs={6} className='card-hover'>
                 <StyledCard sx={{animationDelay: '0.9s'}}>
-                    <Grid container item direction={'row'} spacing={2}>
-                        <Grid item xs={5}>
+                    <Grid container item direction={'row'} spacing={2} alignItems={'center'}>
+                        <Grid item md={5} sm={3} xs={5}>
                             <img src='/assets/roas.png' style={{width: '100%'}} />
                         </Grid>
                         <Grid item xs={7}>

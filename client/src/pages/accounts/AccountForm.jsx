@@ -93,7 +93,7 @@ export default function AccountForm() {
                     error={errors.token}
                 />
             </Grid>
-            <Grid container item xs={2}>
+            <Grid container item lg={2} md={12}>
                 <StyledButtonSuccess 
                     color='success' 
                     fullWidth

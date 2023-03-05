@@ -345,14 +345,14 @@ const AdManager = () => {
                                             onchange={handleDataChange}
                                             onremove={handleDataRemove}
                                         />
-                                            <StyledButtonPrimary
-                                                style={{ backgroundColor: '#363636', marginTop: '15px' }}
-                                                onClick={handleDataSave}
-                                                fullWidth
-                                                sx={{padding: '10px'}}
-                                            >
-                                                Add Connection Revenues
-                                            </StyledButtonPrimary>
+                                        <StyledButtonPrimary
+                                            style={{ backgroundColor: '#363636', marginTop: '15px' }}
+                                            onClick={handleDataSave}
+                                            fullWidth
+                                            sx={{padding: '10px'}}
+                                        >
+                                            Add Connection Revenues
+                                        </StyledButtonPrimary>
                                     </Grid>
                                     <Grid container item md={3} xs={6}>
                                         <AdSetList
@@ -368,6 +368,14 @@ const AdManager = () => {
                                         onchange={handleDataChange}
                                         onremove={handleDataRemove}
                                     />
+                                    <StyledButtonPrimary
+                                        style={{ backgroundColor: '#363636', marginTop: '15px' }}
+                                        onClick={handleDataSave}
+                                        fullWidth
+                                        sx={{padding: '10px'}}
+                                    >
+                                        Add Connection Revenues
+                                    </StyledButtonPrimary>
                                 </Grid>
                             </Grid>
                         </Grid>

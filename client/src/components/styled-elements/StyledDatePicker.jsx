@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import * as React from 'react'
 import TextField from '@mui/material/TextField'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -10,15 +11,15 @@ import timezone from 'dayjs/plugin/timezone'
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export default function BasicDatePicker({ label, value, name, onchange}) {
+export default function BasicDatePicker(props) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                label={label}
-                value={dayjs(value)}
+                label={props.label}
+                value={dayjs(props.value)}
                 onChange={(newValue) => {
-                    onchange({
-                        name: name,
+                    props.onchange({
+                        name: props.name,
                         value: dayjs.tz(dayjs(newValue), "EST").format('YYYY-MM-DD'),
                     })
                 }}
@@ -27,9 +28,18 @@ export default function BasicDatePicker({ label, value, name, onchange}) {
                         {...params}
                         size='small'
                         fullWidth
+                        className={props.className}
                     />
                 )}
             />
         </LocalizationProvider>
     )
+}
+
+BasicDatePicker.propTypes = {
+    label: PropTypes.string,
+    name: PropTypes.string,
+    onchange: PropTypes.func,
+    value: PropTypes.any,
+    className: PropTypes.string
 }

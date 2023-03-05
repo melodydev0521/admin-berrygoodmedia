@@ -37,18 +37,24 @@ export default function DataArea() {
         },
         {
             id: 'accountType',
-            label: 'Account Type',
+            label: 'Type',
+            style: {
+                width: '5%'
+            }
         },
         {
             id: 'name',
-            label: 'Name'
+            label: 'Name',
+            style: {
+                width: '20%'
+            }
         },
         {
             id: 'token',
             label: 'Token',
             align: 'left',
             style: {
-                width: '40%'
+                width: '65%'
             }
         },
         {
@@ -57,7 +63,7 @@ export default function DataArea() {
             label: '',
             style: {
                 padding: '0',
-                width: '30px'
+                width: '5%'
             },
             render: (item, col) =>  
                 <IconButton

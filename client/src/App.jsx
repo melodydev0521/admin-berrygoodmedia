@@ -41,10 +41,10 @@ function Main () {
 			<BrowserRouter basename='/'>
 				<ScopedCssBaseline>
 					<Grid container direction={'row'} spacing={1}>
-						<Grid container item xl={2} lg={3} md={3} xs={12}>
+						<Grid container item xl={2} lg={2} md={3} xs={12}>
 							<Sidebar />
 						</Grid>
-						<Grid container item xl={10} lg={9} md={9} xs={12}>
+						<Grid container item xl={10} lg={10} md={9} xs={12}>
 							{routes.map(route => 
 								<Routes key={route.id}>
 									<Route path={route.path} element={<ProtectedRoute />}>

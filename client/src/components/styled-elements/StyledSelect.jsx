@@ -21,7 +21,7 @@ export default function StyledSelect(props) {
             });
     };
     return (
-        <FormControl fullWidth error={props.error}>
+        <FormControl fullWidth error={props.error} className={props.className}>
             <InputLabel
                 size="small"
             >{props.label}</InputLabel>
@@ -48,5 +48,6 @@ StyledSelect.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     onchange: PropTypes.func,
-    error: PropTypes.bool
+    error: PropTypes.bool,
+    className: PropTypes.string
 }

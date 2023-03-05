@@ -16,14 +16,14 @@ const routes = [
     {
         id: 'media-ad-connect',
         path: '/media-ad-connect',
-        text: 'Connect Media&AdSource',
+        text: 'Media & AdSources',
         icon: <HubOutlinedIcon />,
         component: <MediaAdConnect />
     },
     {
         id: 'account-setting',
         path: '/account-setting',
-        text: 'Account Settings',
+        text: 'Account',
         icon: <ManageAccountsOutlinedIcon />,
         component: <AccountSetting />
     }
