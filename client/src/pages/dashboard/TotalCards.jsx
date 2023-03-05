@@ -32,12 +32,16 @@ const CardContent = styled.p`
 export default function TotalCards(props) {
 
     const {total} = props;
-    const [xtotal, setXtotal] = React.useState({revenue: 0, spend: 0, profit: 0, roas: 0});
+    const xtotal = {
+        revenue: 0, 
+        spend: 0, 
+        profit: 0, 
+        roas: 0
+    };
 
-    const convertNumberString = number => { 
-        return number.toLocaleString("en-US");
-    }
-    console.log(xtotal);
+    const convertNumberString = number => number.toLocaleString("en-US");
+    const setXtotal = (name, val) => xtotal = {...xtotal, [name]: val}
+
     return (
         <Grid item container spacing={3} xs={12} sx={{marginBottom: '20px'}}>
             <Grid item container md={3} xs={6} className='card-hover'>
@@ -54,7 +58,7 @@ export default function TotalCards(props) {
                                     end={total.revenue} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
-                                    onEnd={() => setXtotal({...xtotal, revenue: total.revenue})}
+                                    onEnd={() => setXtotal('revenue', total.revenue)}
                                 />
                             </CardContent>
                         </Grid>
@@ -75,7 +79,7 @@ export default function TotalCards(props) {
                                     end={total.spend} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
-                                    onEnd={() => setXtotal({...xtotal, spend: total.spend})}
+                                    onEnd={() => setXtotal('spend', total.spend)}
                                 />
                             </CardContent>
                         </Grid>
@@ -96,7 +100,7 @@ export default function TotalCards(props) {
                                     end={total.profit} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
-                                    onEnd={() => setXtotal({...xtotal, profit: total.profit})}
+                                    onEnd={() => setXtotal('profit', total.profit)}
                                 />
                             </CardContent>
                         </Grid>
@@ -117,7 +121,7 @@ export default function TotalCards(props) {
                                     end={total.roas} 
                                     decimals={2} 
                                     formattingFn={convertNumberString} 
-                                    onEnd={() => setXtotal({...xtotal, roas: total.roas})}
+                                    onEnd={() => setXtotal('roas', total.roas)}
                                 />
                             </CardContent>
                         </Grid>
