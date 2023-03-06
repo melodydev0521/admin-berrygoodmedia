@@ -198,7 +198,7 @@ export const getSnapchatAds = (start, end, token='') => {
     const fields = "fields"
     
     return fetch(
-        `https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=TOTAL&breakdown=campaign&start_time=2023-03-05T00:00:00-05:00&end_time=2023-03-06T00:00:00-05:00&fields=spend`,
+        `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=TOTAL&breakdown=campaign&start_time=2023-03-05T00:00:00-05:00&end_time=2023-03-06T00:00:00-05:00&fields=spend`,
         {
             method: 'GET',
             headers: {
