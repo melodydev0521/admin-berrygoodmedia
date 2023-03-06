@@ -176,7 +176,7 @@ export const getSnapchatToken = () => {
     const refresh_token = "eyJraWQiOiJyZWZyZXNoLXRva2VuLWExMjhnY20uMCIsInR5cCI6IkpXVCIsImVuYyI6IkExMjhHQ00iLCJhbGciOiJkaXIifQ..dcLESAjKp_XqDPne.NQTmwEzjNdpmPK2iANTvFnzZX-EqMHuaV4x-wPGmw_VVLE_ksewtX45anBdwaFu6aMf0oEZXt7xd8_aaErj4Fknz8ii6kvuo8GZDFCFOZqLdJ9-5kWCxhKsPumW5CBxn5c9rEkLUv6dPIyoXiXdITdJF1Lva6RRK6zTCUK5VpgMW-_2tfkXGugerxrYMkczBpM4doPFNI9A6_JKsYt0CrJ8aJJHfDt0AL2amV7wfcBq7erp9xdKIW_sUbWjokO5DERZurlCm1Xj8HzM.CGD43mx9IERSF5GGPeX24w";
 
     return fetch(
-        `https://accounts.snapchat.com/login/oauth2/access_token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&refresh_token=${refresh_token}`,
+        `https://berrygoodmedia.herokuapp.com/https://accounts.snapchat.com/login/oauth2/access_token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&refresh_token=${refresh_token}`,
         { 
             method: 'POST',
         })
