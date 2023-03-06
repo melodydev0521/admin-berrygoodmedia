@@ -181,9 +181,7 @@ export const getSnapchatToken = () => {
             method: 'POST',
         })
         .then(res => res.json())
-        .then((data) => {
-            return data;
-        })
+        .then((data) => data.access_token)
         .catch((err) => publicError(err))
 }
 
@@ -216,8 +214,7 @@ export const getSnapchatAds = (start, end, token='') => {
         })
         .catch(async (err) => {
             const newToken = await getSnapchatToken();
-            console.log(newToken)
-            // getSnapchatAds(start, end, newToken)
+            getSnapchatAds(start, end, newToken)
         });
 }
 
