@@ -201,6 +201,12 @@ export const getSnapchatAds = (start, end, token='') => {
         {
             method: 'GET',
             headers: {
+                "Access-Control-Request-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                'Access-Control-Allow-Origin': '*',
+                "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                'Access-Control-Allow-Credentials': 'true',
                 "Authorization": `bearer eyJpc3MiOiJodHRwczpcL1wvYWNjb3VudHMuc25hcGNoYXQuY29tXC9hY2NvdW50c1wvb2F1dGgyXC90b2tlbiIsInR5cCI6IkpXVCIsImVuYyI6IkExMjhDQkMtSFMyNTYiLCJhbGciOiJkaXIiLCJraWQiOiJhY2Nlc3MtdG9rZW4tYTEyOGNiYy1oczI1Ni4wIn0..MzPtn3oD498dH4Ud7wVGAg.dm7zhIxD9fvYsoYpQd9phB2Vxm_qRSW71EOF9uv86Vik6ewRbJh6KO-La62Zp5Q92wgd70pGMbPM46uiDjKVfMq9oWftsQxaAYgY3hbKTBoaAMN2mhLBnMOeqcfjyKAJNWbm9wT6xyhmDWiKGsXam_ugDMuIzn0IdiW4cTv5KQEeIIQf8900mxgG0F_IB6k6Gbwv6NwdHcZoTIUap8zgLP36Vzge8CInq6r6wZJ6R7F3IOtyePBzE2XM73mzXCJvTKRcAsxeUGgzOu8SL_euy3bJStm_N0Lt-TnF8gC8rboDxvSDGJGdwzrejj15x8iwxHlSFDbBH-oNQs2T-2OBX30O2iuNTBuecc6FSSkm69bv-v7Nl23WTCdykErcoJFLhdAfUXOMjSbouJ8TYvQPbwk7O1OR_9vNdKFzqttlq0D71v3d_kL6-THTKzTdegXn6sCcwa3Ciqe8EDU22PNGD6s5UuKnn0ueaWkhHzvftqOaWIn3BAAdXZdwvgUN9l3C2bucEdKE7O3MOOlZBkd-BRMORjgQwvi5JndxBpEMXIOmQXN3Rq_XyxXsV7iL6fbzrix2h8C-xxDzC5ORnbAYTU3Iw7iRXSN7S1ep0jITGNnpqqoWUInlGZS2CXo7EvGRHbdMU1jlgAGyxPudbxhpFpVEU7HtLBwupiuDebCgLdXqza9hlXBHLfXU9IpaxQy8lkMSx7KC6mkFgX1fj0ti-PLLzg6N3lsHei5H1b6wdyU.4bvw9W8L4eIXx_NNgkNxoQ`
             }
         }
