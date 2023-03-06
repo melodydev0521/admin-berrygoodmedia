@@ -3,6 +3,7 @@ import isEmpty from "is-empty";
 import api from "../utils/api";
 import { publicError } from "./general";
 import { getData as getSnapSets } from './snapchat';
+import dayjs from 'dayjs';
 
 /**
  * @params {startDate, endDate}
@@ -165,28 +166,6 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
         .catch((err) => publicError(err))
 }
 
-
-/**
- * @method POST
- * @desc Get Snapchat Bearer Token
- */
-export const getSnapchatToken = () => {
-    // Params
-    const client_id = "35e1e9c1-22a9-43f5-ac31-0bb8a4f1fe74";
-    const client_secret = "18d3bc0f2844bd7f741a";
-    const grant_type = "refresh_token";
-    const refresh_token = "eyJraWQiOiJyZWZyZXNoLXRva2VuLWExMjhnY20uMCIsInR5cCI6IkpXVCIsImVuYyI6IkExMjhHQ00iLCJhbGciOiJkaXIifQ..dcLESAjKp_XqDPne.NQTmwEzjNdpmPK2iANTvFnzZX-EqMHuaV4x-wPGmw_VVLE_ksewtX45anBdwaFu6aMf0oEZXt7xd8_aaErj4Fknz8ii6kvuo8GZDFCFOZqLdJ9-5kWCxhKsPumW5CBxn5c9rEkLUv6dPIyoXiXdITdJF1Lva6RRK6zTCUK5VpgMW-_2tfkXGugerxrYMkczBpM4doPFNI9A6_JKsYt0CrJ8aJJHfDt0AL2amV7wfcBq7erp9xdKIW_sUbWjokO5DERZurlCm1Xj8HzM.CGD43mx9IERSF5GGPeX24w";
-
-    return fetch(
-        `https://berrygoodmedia.herokuapp.com/https://accounts.snapchat.com/login/oauth2/access_token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&refresh_token=${refresh_token}`,
-        { 
-            method: 'POST',
-        })
-        .then(res => res.json())
-        .then((data) => data.access_token)
-        .catch((err) => publicError(err))
-}
-
 export const getSnapchatAds = async (start, end, account) => {
     // Params
     const client_id = 'c709b00b-600d-4ef7-8aeb-b350ba752c0d';
@@ -205,7 +184,8 @@ export const getSnapchatAds = async (start, end, account) => {
             const granularity = "TOTAL";
             const breakdown = "campaign";
             const start_time = `${start}T00:00:00-05:00`;
-            const end_time = `${end}T00:00:00-05:00`;
+            const end_time = `${dayjs(start).add(1, 'day').format('YYYY-MM-DD')}T00:00:00-05:00`;
+            console.log(end_time)
             const fields = "spend";
 
             return fetch(

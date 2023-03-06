@@ -41,7 +41,6 @@ export default function TotalCards(props) {
 
     const convertNumberString = number => number.toLocaleString("en-US");
     const setXtotal = (name, val) => xtotal = {...xtotal, [name]: val};
-    console.log(xtotal)
 
     return (
         <Grid item container spacing={3} xs={12} sx={{marginBottom: '20px'}}>

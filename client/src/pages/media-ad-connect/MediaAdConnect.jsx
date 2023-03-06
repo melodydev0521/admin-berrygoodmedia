@@ -276,6 +276,7 @@ const AdManager = () => {
     }
 
     const handleDataSave = async () => {
+        console.log(state.data)
         const result = await addRevenue(state.data.map(item => ({
             name: item.name, 
             offer: item.offer, 
@@ -284,7 +285,7 @@ const AdManager = () => {
             bearerToken: state.plugAccount.id
         })));
         if (result === "server_error") return;
-        navigate('/dashboard');
+        navigate('/');
     }
 
     const handleAccountSelect = (accountType, account) => {
