@@ -223,30 +223,30 @@ export const getSnapchatAds = async (start, end, token='') => {
         })
         .catch((err) => publicError(err))
     
-    return fetch(
-        `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
-        {
-            method: 'GET',
-            headers: {
-                "Access-Control-Request-Method": "GET,HEAD,OPTIONS,POST,PUT",
-                "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-                "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-                'Access-Control-Allow-Origin': '*',
-                "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
-                'Access-Control-Allow-Credentials': 'true',
-                "Authorization": `bearer ${newToken}`
-            }
-        }
-    )
-        .then(res => res.json())
-        .then(data => {
-            console.log(data.total_stats.total_stat.breakdown_stats.campaign);
-            return data.total_stats.total_stat.breakdown_stats.campaign
-        })
-        .catch(async (err) => {
-            // const newToken = await getSnapchatToken();
-            // getSnapchatAds(start, end, newToken)
-        });
+    // return fetch(
+    //     `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
+    //     {
+    //         method: 'GET',
+    //         headers: {
+    //             "Access-Control-Request-Method": "GET,HEAD,OPTIONS,POST,PUT",
+    //             "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    //             "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    //             'Access-Control-Allow-Origin': '*',
+    //             "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
+    //             'Access-Control-Allow-Credentials': 'true',
+    //             "Authorization": `bearer ${newToken}`
+    //         }
+    //     }
+    // )
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data.total_stats.total_stat.breakdown_stats.campaign);
+    //         return data.total_stats.total_stat.breakdown_stats.campaign
+    //     })
+    //     .catch(async (err) => {
+    //         // const newToken = await getSnapchatToken();
+    //         // getSnapchatAds(start, end, newToken)
+    //     });
 }
 
 export const getDataByConnection = (start, end, bearerToken, advertiser_id, timezone) => {
