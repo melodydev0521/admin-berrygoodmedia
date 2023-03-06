@@ -27,7 +27,7 @@ const AdManager = () => {
         startDate: '2023-02-19',
         endDate: '2023-02-19',
         plugAccount: null,
-        tiktokAccount: null,
+        adAccount: null,
         snapchatAccount: null,
         mediaSources: [],
         adSets: [],
@@ -141,13 +141,13 @@ const AdManager = () => {
     }
 
     const getAdSets = async () => {
-        if (isEmpty(state.tiktokAccount)) {
+        if (isEmpty(state.adAccount)) {
             alert('error');
             return;
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.tiktokAccount.id);
+        const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.adAccount.id);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
@@ -165,13 +165,13 @@ const AdManager = () => {
     }
 
     const getCampaigns = async () => {
-        if (isEmpty(state.tiktokAccount)) {
+        if (isEmpty(state.adAccount)) {
             alert('error');
             return;
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.tiktokAccount.id);
+        const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount.id);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
@@ -281,7 +281,7 @@ const AdManager = () => {
             name: item.name, 
             offer: item.offer, 
             campaignId: item.campaignId,
-            advertiserId: state.tiktokAccount.id,
+            advertiserId: state.adAccount.id,
             bearerToken: state.plugAccount.id
         })));
         if (result === "server_error") return;
@@ -316,24 +316,14 @@ const AdManager = () => {
                             </Grid>
                             <Grid container item xs={4}>
                                 <StyledSelect 
-                                    name="tiktokAccount" 
-                                    label="Tiktok Account" 
+                                    name="adAccount" 
+                                    label="Ad Account" 
                                     onchange={handleAccountSelect}
-                                    data={accounts.filter(item => item.accountType === "tiktok").map(item => ({name: item.name, value: item.token}))}
-                                    error={errors.tiktok} 
-                                    helperText={errors.tiktok}
+                                    data={accounts.filter(item => item.accountType === "tiktok" || item.accountType === "snapchat").map(item => ({name: item.name, value: item.token}))}
+                                    error={errors.adAccount} 
+                                    helperText={errors.adAccount}
                                 />
                             </Grid>
-                            <Grid container item xs={4}>
-                            <StyledSelect 
-                                name="snapchatAccount" 
-                                label="Snapchat Account" 
-                                onchange={handleAccountSelect}
-                                data={accounts.filter(item => item.accountType === "snapchat").map(item => ({name: item.name, value: item.token}))}
-                                error={errors.snapchat} 
-                                helperText={errors.snapchat}
-                            />
-                        </Grid>
                         </Grid>
                         <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
                             <Grid container item md={6} xs={6}>
