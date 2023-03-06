@@ -186,7 +186,6 @@ export const getSnapchatAds = async (start, end, account) => {
             const start_time = `${start}T00:00:00-05:00`;
             const end_time = `${dayjs(start).add(1, 'day').format('YYYY-MM-DD')}T00:00:00-05:00`;
             const fields = "spend";
-            console.log(account)
             return fetch(
                 `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/${account}/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
                 {

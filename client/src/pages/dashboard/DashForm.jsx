@@ -56,11 +56,11 @@ export default function DashForm(props) {
             return;
         }
         var plugAccount = [account.plugAccount.id];
-        if (plugAccount[0].token === 'all') {
+        if (plugAccount[0] === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
         var adAccount = [account.adAccount.id];
-        if (adAccount[0] === 'all') {
+        if (adAccount[0].token === 'all') {
             adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat');
         } else {
 			adAccount = accounts.filter(item => item.token === adAccount[0]);
