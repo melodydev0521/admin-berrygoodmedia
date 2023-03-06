@@ -221,10 +221,7 @@ export const getSnapchatAds = async (start, end, token='') => {
                     }
                 })
                 .then(res => res.json())
-                .then(data => {
-                    // return data.total_stats.total_stat.breakdown_stats.campaign
-                    return data
-                })
+                .then(data => data)
                 .catch(async (err) => {
                     // const newToken = await getSnapchatToken();
                     // getSnapchatAds(start, end, newToken)

@@ -187,10 +187,12 @@ const AdManager = () => {
     const getSnapAdsList = async () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const snapads = await getSnapchatAds(state.startDate, state.endDate);
-        console.log(snapads);
-        return;
-        if (snapads === "server_error") return;
+        const result = await getSnapchatAds(state.startDate, state.endDate);
+        if (result.request_status === "ERROR") {
+            return alert(result.debug_message);
+        }
+        if (result === "server_error") return;
+        const snapads = result.total_stats.total_stat.breakdown_stats.campaign;
         var index = 1;
         var adSets = [];
         if (!isEmpty(snapads)) {
@@ -201,7 +203,6 @@ const AdManager = () => {
         }
         
         adSets = await excludeConnectedRevenues("adsets", adSets);
-        console.log(adSets)
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
