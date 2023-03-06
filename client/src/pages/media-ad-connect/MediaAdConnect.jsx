@@ -14,9 +14,9 @@ import { addRevenue, getRevenues } from '../../api/revenues'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import { styled as muiStyled } from '@mui/system';
 import { StyledButtonPrimary, StyledButtonSuccess } from '../../components/styled-elements/buttonStyles';
 import { getData as getAccounts } from '../../api/accounts';
+import { getData as getSnapSets } from '../../api/snapchat';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -153,6 +153,7 @@ const AdManager = () => {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
                 campaignId: item.dimensions.adgroup_id,
+                adgroupName: item.dimensions.adgroup_name
             }));
         }
         
@@ -189,18 +190,15 @@ const AdManager = () => {
 
         const result = await getSnapchatAds(state.startDate, state.endDate);
         if (result.request_status === "ERROR") {
+            setState({ ...state, isAdLoading: true, adSets: [] });
             return alert(result.debug_message);
         }
         if (result === "server_error") return;
         const snapads = result.total_stats[0].total_stat.breakdown_stats.campaign;
+
+        const snapsets = await getSnapSets();
         var index = 1;
-        var adSets = [];
-        if (!isEmpty(snapads)) {
-            adSets = snapads.map((item) => ({
-                no: index ++,
-                campaignId: item.id,
-            }));
-        }
+        const adSets = snapads.filter(item => snapsets.filter(i => item.campaignId === i.campaignId).length !== 0).map(item => ({no: index++, ...item}));
         
         adSets = await excludeConnectedRevenues("adsets", adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
@@ -314,7 +312,7 @@ const AdManager = () => {
                                     name="tiktokAccount" 
                                     label="Tiktok Account" 
                                     onchange={handleAccountSelect}
-                                    data={accounts.filter(item => item.accountType === "adsets").map(item => ({name: item.name, value: item.token}))}
+                                    data={accounts.filter(item => item.accountType === "tiktok").map(item => ({name: item.name, value: item.token}))}
                                     error={errors.tiktok} 
                                     helperText={errors.tiktok}
                                 />
