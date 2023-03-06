@@ -93,7 +93,7 @@ const AdManager = () => {
         if (savedRevenue === "server_error") return;
         if (contentType === 'media') {
             return contentVal.filter(item => savedRevenue.filter(i => i.name === item.name).length === 0)
-        } else if (contentType === 'tiktok') {
+        } else if (contentType === "adsets") {
             return contentVal.filter(item => savedRevenue.filter(i => i.campaignId === item.campaignId).length === 0)
         }
     }
@@ -156,7 +156,7 @@ const AdManager = () => {
             }));
         }
         
-        adSets = await excludeConnectedRevenues('tiktok', adSets);
+        adSets = await excludeConnectedRevenues("adsets", adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
@@ -179,7 +179,7 @@ const AdManager = () => {
             }));
         }
         
-        adSets = await excludeConnectedRevenues('tiktok', adSets);
+        adSets = await excludeConnectedRevenues("adsets", adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
@@ -188,17 +188,19 @@ const AdManager = () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const snapads = await getSnapchatAds(state.startDate, state.endDate);
+        console.log(snapads);
         if (snapads === "server_error") return;
         var index = 1;
         var adSets = [];
         if (!isEmpty(snapads)) {
-            adSets = snapads.list.map((item) => ({
+            adSets = snapads.map((item) => ({
                 no: index ++,
                 campaignId: item.id,
             }));
         }
         
-        adSets = await excludeConnectedRevenues('tiktok', adSets);
+        adSets = await excludeConnectedRevenues("adsets", adSets);
+        console.log(adSets)
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
@@ -310,7 +312,7 @@ const AdManager = () => {
                                     name="tiktokAccount" 
                                     label="Tiktok Account" 
                                     onchange={handleAccountSelect}
-                                    data={accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token}))}
+                                    data={accounts.filter(item => item.accountType === "adsets").map(item => ({name: item.name, value: item.token}))}
                                     error={errors.tiktok} 
                                     helperText={errors.tiktok}
                                 />
