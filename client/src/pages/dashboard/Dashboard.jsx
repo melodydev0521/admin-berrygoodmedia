@@ -47,7 +47,7 @@ export default function Dashboard() {
         const result = await getOnlySpends(startDate, endDate, adAccount);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => {
-            const matched = result.filter(i => i.name === item.name)[0];
+            const matched = result.filter(i => i.campaignId === item.campaignId)[0];
             return {
                 ...item, 
                 spend: Number(matched.spend),
