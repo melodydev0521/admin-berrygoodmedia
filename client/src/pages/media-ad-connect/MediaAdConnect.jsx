@@ -192,7 +192,7 @@ const AdManager = () => {
             return alert(result.debug_message);
         }
         if (result === "server_error") return;
-        const snapads = result.total_stats.total_stat.breakdown_stats.campaign;
+        const snapads = result.total_stats[0].total_stat.breakdown_stats.campaign;
         var index = 1;
         var adSets = [];
         if (!isEmpty(snapads)) {
