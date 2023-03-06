@@ -292,7 +292,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 ...adSets,
                 ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
                     no: index ++,
-                    campaignId: id,
+                    campaignId: item.id,
                     spend: Number(item.stats.spend),
                 }))
             ];
@@ -381,8 +381,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     adSets = [
         ...adSets,
         ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
-            no: index ++,
-            campaignId: id,
+            campaignId: item.id,
             spend: Number(item.stats.spend),
         }))
     ];
