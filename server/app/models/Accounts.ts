@@ -2,7 +2,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 enum accountType {
     plug = 'plug',
-    tiktok = 'tiktok'
+    tiktok = 'tiktok',
+    snapchat = 'snapchat'
 }
 
 export interface IAccounts extends Document {
@@ -14,7 +15,7 @@ export interface IAccounts extends Document {
 const AccountSchema: Schema = new Schema({
     accountType: {
         type: String,
-        enum: ['plug', 'tiktok']
+        enum: ['plug', 'tiktok', 'snapchat']
     },
     name: {
         type: String,

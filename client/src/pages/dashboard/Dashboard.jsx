@@ -32,7 +32,12 @@ export default function Dashboard() {
     const refreshRevenues = async (startDate, endDate, plugAccount, timezone) => {
         const result = await getOnlyRevenues(startDate, endDate, plugAccount, timezone);
         var newRevenues = revenues;
-        newRevenues = newRevenues.map(item => ({...item, revenue: Number(result.filter(i => i.name === item.name)[0].revenue)}));
+        newRevenues = newRevenues.map(item => ({
+            ...item, 
+            revenue: Number(result.filter(i => i.name === item.name)[0].revenue),
+            profit: Number(result.revenue - result.spend),
+            roas: Number(result.revenue / result.spend)
+        }));
         setRevenues(newRevenues);
     }
 

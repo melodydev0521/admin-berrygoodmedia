@@ -8,7 +8,8 @@ import StyledTextField from '../../components/styled-elements/StyledTextField'
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
-    { name: 'Tiktok Account', value: 'tiktok' }
+    { name: 'Tiktok Account', value: 'tiktok' },
+    { name: 'Snapchat Account', value: 'snapchat' }
 ];
 
 export default function AccountForm(props) {

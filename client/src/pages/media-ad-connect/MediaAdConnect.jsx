@@ -43,6 +43,7 @@ const AdManager = () => {
     const initialErrors = {
         plug: '',
         tiktok: '',
+        snapchat: '',
         start: '',
         end: ''
     }
@@ -301,7 +302,7 @@ const AdManager = () => {
                     </Grid>
                     <Grid container item xs={12} direction={"row"} spacing={1} justifyContent={'space-between'}>
                         <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
-                            <Grid container item xs={6}>
+                            <Grid container item xs={4}>
                                 <StyledSelect
                                     name="plugAccount" 
                                     label="Plug Account" 
@@ -311,7 +312,7 @@ const AdManager = () => {
                                     helperText={errors.tiktok}
                                 />
                             </Grid>
-                            <Grid container item xs={6}>
+                            <Grid container item xs={4}>
                                 <StyledSelect 
                                     name="tiktokAccount" 
                                     label="Tiktok Account" 
@@ -321,6 +322,16 @@ const AdManager = () => {
                                     helperText={errors.tiktok}
                                 />
                             </Grid>
+                            <Grid container item xs={4}>
+                            <StyledSelect 
+                                name="snapchatAccount" 
+                                label="Snapchat Account" 
+                                onchange={handleAccountSelect}
+                                data={accounts.filter(item => item.accountType === "snapchat").map(item => ({name: item.name, value: item.token}))}
+                                error={errors.snapchat} 
+                                helperText={errors.snapchat}
+                            />
+                        </Grid>
                         </Grid>
                         <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
                             <Grid container item md={6} xs={6}>
