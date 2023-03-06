@@ -56,14 +56,14 @@ export default function DashForm(props) {
             return;
         }
         var plugAccount = [account.plugAccount.id];
-        var adAccount = account.adAccount.id;
         if (plugAccount[0].token === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
-        if (adAccount[0].token === 'all') {
+        var adAccount = [account.adAccount.id];
+        if (adAccount[0] === 'all') {
             adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat');
         } else {
-			adAccount = accounts.filter(item => item.token === adAccount);
+			adAccount = accounts.filter(item => item.token === adAccount[0]);
 		}
 		await props.getData(date.start, date.end, plugAccount, adAccount, timezone);
 		setLoadUsedAccount({
@@ -88,8 +88,10 @@ export default function DashForm(props) {
         setSpendLoading(true);
         var adAccount = [account.adAccount.id];
         if (adAccount[0] === 'all') {
-            adAccount = accounts.filter(item => item.accountType === 'tiktok').map(item => item.token);
-        }
+            adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat');
+        } else {
+			adAccount = accounts.filter(item => item.token === adAccount[0]);
+		}
 		await props.refreshSpends(date.start, date.end, adAccount, timezone);
         setSpendLoading(false);
     }
