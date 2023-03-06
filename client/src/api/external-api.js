@@ -179,8 +179,8 @@ export const getSnapchatToken = () => {
         `https://accounts.snapchat.com/login/oauth2/access_token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&refresh_token=${refresh_token}`,
         { 
             method: 'POST',
-        }
-    )
+        })
+        .then(res => res.json())
         .then((data) => {
             return data.access_token;
         })
