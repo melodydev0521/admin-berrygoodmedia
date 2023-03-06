@@ -31,25 +31,30 @@ export default function Dashboard() {
     const refreshRevenues = async (startDate, endDate, plugAccount, timezone) => {
         const result = await getOnlyRevenues(startDate, endDate, plugAccount, timezone);
         var newRevenues = revenues;
-        console.log(newRevenues, result)
-        newRevenues = newRevenues.map(item => ({
-            ...item, 
-            revenue: Number(result.filter(i => i.name === item.name)[0].revenue),
-            profit: Number(result.revenue) - Number(result.spend),
-            roas: Number(result.revenue) / Number(result.spend)
-        }));
+        newRevenues = newRevenues.map(item => {
+            const matched = result.filter(i => i.name === item.name)[0];
+            return {
+                ...item, 
+                revenue: Number(matched.revenue),
+                profit: Number(matched.revenue) - Number(item.spend),
+                roas: Number(matched.revenue) / Number(item.spend)
+            }
+        });
         setRevenues(newRevenues);
     }
 
     const refreshSpends = async (startDate, endDate, adAccount) => {
         const result = await getOnlySpends(startDate, endDate, adAccount);
         var newRevenues = revenues;
-        newRevenues = newRevenues.map(item => ({
-            ...item, 
-            spend: Number(result.filter(i => i.campaignId === item.campaignId)[0].spend),
-            profit: Number(result.revenue) - Number(result.spend),
-            roas: Number(result.revenue) / Number(result.spend)
-        }));
+        newRevenues = newRevenues.map(item => {
+            const matched = result.filter(i => i.name === item.name)[0];
+            return {
+                ...item, 
+                spend: Number(matched.spend),
+                profit: Number(item.revenue) - Number(matched.spend),
+                roas: Number(item.revenue) / Number(matched.spend)
+            }
+        });
         setRevenues([...newRevenues]);
     }
 
