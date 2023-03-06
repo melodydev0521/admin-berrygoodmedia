@@ -28,7 +28,6 @@ const AdManager = () => {
         endDate: '2023-02-19',
         plugAccount: null,
         adAccount: null,
-        snapchatAccount: null,
         mediaSources: [],
         adSets: [],
         data: [],
@@ -190,7 +189,7 @@ const AdManager = () => {
     const getSnapAdsList = async () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const result = await getSnapchatAds(state.startDate, state.endDate, state.snapchatAccount.id);
+        const result = await getSnapchatAds(state.startDate, state.endDate, state.adAccount.id);
         if (result.request_status === "ERROR") {
             setState({ ...state, isAdLoading: true, adSets: [] });
             return alert(result.debug_message);
