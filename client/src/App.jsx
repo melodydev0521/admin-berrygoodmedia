@@ -6,12 +6,14 @@ import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { themeDark, themeLight } from './mui.config.theme';
-import './App.css';
 import Sidebar from './components/Layout/Sidebar';
 import routes from './config/routes';
 import ProtectedRoute from './components/ProtectedRoute';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './api/auth';
+import '../../assets/animations.css'
+import './App.css'
+
 
 function Main () {
 	const [context, setContext] = useAppContext();

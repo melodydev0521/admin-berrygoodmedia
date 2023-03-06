@@ -24,6 +24,8 @@ export default function ConnectedList(props) {
         props.onchange(key);
     }
 
+    var i = 0;
+
     return (
         <StyledList>
             {props.isLoading ? (
@@ -38,7 +40,8 @@ export default function ConnectedList(props) {
                 state.data.map((item) => (
                     <StyledListItem
                         key={item.no}
-                        style={{ padding: '3px 5px' }}
+                        style={{ padding: '3px 5px', animationDelay: i += 0.1 }}
+                        className='bounce-left'
                     >
                         <div style={{width: '45%', display: 'flex', flexDirection: 'row'}}>
                             {!isEmpty(item.icon) && 
