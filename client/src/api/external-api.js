@@ -220,6 +220,15 @@ export const getSnapchatAds = async (start, end, token='') => {
                         "Authorization": `bearer ${data.access_token}`
                     }
                 })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.total_stats.total_stat.breakdown_stats.campaign);
+                    return data.total_stats.total_stat.breakdown_stats.campaign
+                })
+                .catch(async (err) => {
+                    // const newToken = await getSnapchatToken();
+                    // getSnapchatAds(start, end, newToken)
+                });
         })
         .catch((err) => publicError(err))
     
