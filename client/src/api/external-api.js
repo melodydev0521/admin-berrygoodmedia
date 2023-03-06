@@ -181,11 +181,12 @@ export const getSnapchatToken = () => {
             method: 'POST',
         }
     )
-        .then((res) => res.json())
-        .then((data) => {
-            return data.access_token;
-        })
-        .catch((err) => publicError(err))
+    .then(res => console.log(res));
+        // .then((res) => res.json())
+        // .then((data) => {
+        //     return data.access_token;
+        // })
+        // .catch((err) => publicError(err))
 }
 
 export const getSnapchatAds = (start, end, token='') => {
