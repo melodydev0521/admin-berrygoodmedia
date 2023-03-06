@@ -36,7 +36,7 @@ export default function Dashboard() {
     }
 
     const refreshSpends = async (startDate, endDate, tiktokAccount) => {
-        const result = await getOnlySpends(endDate, endDate, tiktokAccount);
+        const result = await getOnlySpends(startDate, endDate, tiktokAccount);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, spend: Number(result.filter(i => i.campaignId === item.campaignId)[0].spend)}));
         setRevenues([...newRevenues]);

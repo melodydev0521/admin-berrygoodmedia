@@ -210,7 +210,7 @@ export const getSnapchatAds = (start, end, token='') => {
     )
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            return data.total_stats.total_stat.breakdown_stats.campaign
         })
         .catch(async (err) => {
             const newToken = await getSnapchatToken();
@@ -286,16 +286,18 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 ];
             }
 
-            // const snapchatData = await getSnapchatAds(start, end);
-            // adSets = [
-            //     ...adSets,
-            //     ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
-            //         no: index ++,
-            //         campaignId: id,
-            //         spend: Number(item.stats.spend),
-            //     }))
-            // ];
+            // SnapChat
+            const snapchatData = await getSnapchatAds(start, end);
+            adSets = [
+                ...adSets,
+                ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
+                    no: index ++,
+                    campaignId: id,
+                    spend: Number(item.stats.spend),
+                }))
+            ];
 
+            // Combination
             index = 1;
             const result = [];
             data.forEach(item => {
@@ -373,5 +375,17 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
             }))
         ];
     }
+
+    // SnapChat
+    const snapchatData = await getSnapchatAds(start, end);
+    adSets = [
+        ...adSets,
+        ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
+            no: index ++,
+            campaignId: id,
+            spend: Number(item.stats.spend),
+        }))
+    ];
+
     return adSets;
 }
