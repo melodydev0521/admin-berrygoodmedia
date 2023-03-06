@@ -171,7 +171,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
 export const getSnapchatToken = () => {
     // Params
     const client_id = "35e1e9c1-22a9-43f5-ac31-0bb8a4f1fe74";
-    const client_secret = "client_secret";
+    const client_secret = "18d3bc0f2844bd7f741a";
     const grant_type = "refresh_token";
     const refresh_token = "eyJraWQiOiJyZWZyZXNoLXRva2VuLWExMjhnY20uMCIsInR5cCI6IkpXVCIsImVuYyI6IkExMjhHQ00iLCJhbGciOiJkaXIifQ..dcLESAjKp_XqDPne.NQTmwEzjNdpmPK2iANTvFnzZX-EqMHuaV4x-wPGmw_VVLE_ksewtX45anBdwaFu6aMf0oEZXt7xd8_aaErj4Fknz8ii6kvuo8GZDFCFOZqLdJ9-5kWCxhKsPumW5CBxn5c9rEkLUv6dPIyoXiXdITdJF1Lva6RRK6zTCUK5VpgMW-_2tfkXGugerxrYMkczBpM4doPFNI9A6_JKsYt0CrJ8aJJHfDt0AL2amV7wfcBq7erp9xdKIW_sUbWjokO5DERZurlCm1Xj8HzM.CGD43mx9IERSF5GGPeX24w";
 
