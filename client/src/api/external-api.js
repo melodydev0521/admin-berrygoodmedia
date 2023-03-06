@@ -253,7 +253,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             index = 1;
 
             for (let element of advertiser_id) {
-                if (element.name === 'snapchat') continue;
+                if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_adgroup(start, end, element.token);
                 adSets = [
                     ...adSets,
@@ -267,7 +267,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             }            
 
             for (let element of advertiser_id) {
-                if (element.name === 'snapchat') continue;
+                if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_campaign(start, end, element.token);
                 adSets = [
                     ...adSets,
@@ -282,7 +282,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             // SnapChat
             for (let element of advertiser_id) {
-                if (element.name === 'tiktok') continue;
+                if (element.accountType === 'tiktok') continue;
                 const snapchatResult = await getSnapchatAds(start, end, element.token);
                 if (snapchatResult.request_status !== "ERROR") {
                     const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
@@ -366,7 +366,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     var adSets = [];
 
     for (let element of advertiser_id) {
-        if (element.name === 'snapchat') continue;
+        if (element.accountType === 'snapchat') continue;
         tiktokData = await getTiktok_adgroup(start, end, element.token);
         adSets = [
             ...adSets,
@@ -378,7 +378,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     }
 
     for (let element of advertiser_id) {
-        if (element.name === 'snapchat') continue;
+        if (element.accountType === 'snapchat') continue;
         tiktokData = await getTiktok_campaign(start, end, element.token);
         adSets = [
             ...adSets,
@@ -391,7 +391,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
 
     // SnapChat
     for (let element of advertiser_id) {
-        if (element.name === 'tiktok') continue;
+        if (element.accountType === 'tiktok') continue;
         const snapchatResult = await getSnapchatAds(start, end, element.token);
         if (snapchatResult.request_status !== "ERROR") {
             const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;

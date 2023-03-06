@@ -56,16 +56,15 @@ export default function DashForm(props) {
             return;
         }
         var plugAccount = [account.plugAccount.id];
-        var adAccount = [{
-			accountType: account.adAccount.name,
-			token: account.adAccount.id
-	}];
+        var adAccount = account.adAccount.id;
         if (plugAccount[0].token === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
         if (adAccount[0].token === 'all') {
-            adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat').map(item => item);
-        }
+            adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat');
+        } else {
+			adAccount = accounts.filter(item => item.token === adAccount);
+		}
 		await props.getData(date.start, date.end, plugAccount, adAccount, timezone);
 		setLoadUsedAccount({
             plug: account.plugAccount.id, 
