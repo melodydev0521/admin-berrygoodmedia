@@ -19,11 +19,10 @@ export default function Dashboard() {
     const [loading, setLoading] = React.useState(false);
     const [revenues, setRevenues] = React.useState([]);
 
-    const getData = async (startDate, endDate, plugAccount, tiktokAccount, timezone) => {
+    const getData = async (startDate, endDate, plugAccount, adAccount, timezone) => {
         setLoading(true);
         setRevenues([]);
-        var result = await getDataByConnection(startDate, endDate, plugAccount, tiktokAccount, timezone);
-        console.log(result)
+        var result = await getDataByConnection(startDate, endDate, plugAccount, adAccount, timezone);
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);
@@ -41,8 +40,8 @@ export default function Dashboard() {
         setRevenues(newRevenues);
     }
 
-    const refreshSpends = async (startDate, endDate, tiktokAccount) => {
-        const result = await getOnlySpends(startDate, endDate, tiktokAccount);
+    const refreshSpends = async (startDate, endDate, adAccount) => {
+        const result = await getOnlySpends(startDate, endDate, adAccount);
         var newRevenues = revenues;
         newRevenues = newRevenues.map(item => ({...item, spend: Number(result.filter(i => i.campaignId === item.campaignId)[0].spend)}));
         setRevenues([...newRevenues]);

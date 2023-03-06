@@ -209,7 +209,7 @@ export const getSnapchatAds = async (start, end, account) => {
             const fields = "spend";
 
             return fetch(
-                `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
+                `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/${account}/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
                 {
                     method: 'GET',
                     headers: {
@@ -224,7 +224,9 @@ export const getSnapchatAds = async (start, end, account) => {
                 })
                 .then(res => res.json())
                 .then(data => data)
-                .catch(async (err) => publicError(err));
+                .catch(async (err) => {
+                    console.log(err)
+                });
         })
         .catch((err) => publicError(err))
 }
@@ -298,25 +300,31 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             }
 
             // SnapChat
-            const snapchatResult = await getSnapchatAds(start, end);
-            if (snapchatResult.request_status !== "ERROR") {
-                const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
-                var snapsets = await getSnapSets();
-                snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
-                    .map(item => {
-                        const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
-                        return {
-                            no: index++, 
-                            adgroupName: item.name, 
-                            campaignId: item.campaignId,
-                            spend: Number(matched.stats.spend) / 1000000
-                        };
-                    });
-                adSets = [
-                    ...adSets,
-                    ...snapsets
-                ];
+            for (let element of advertiser_id) {
+                const snapchatResult = await getSnapchatAds(start, end, element);
+                if (snapchatResult.request_status !== "ERROR") {
+                    const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
+                    var snapsets = await getSnapSets();
+                    snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
+                        .map(item => {
+                            const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
+                            return {
+                                no: index++, 
+                                adgroupName: item.name, 
+                                campaignId: item.campaignId,
+                                spend: Number(matched.stats.spend) / 1000000
+                            };
+                        });
+                    adSets = [
+                        ...adSets,
+                        ...snapsets
+                    ];
+                } else {
+                    console.log(snapchatResult.debug_message);
+                }
             }
+
+
 
             // Combination
             index = 1;
