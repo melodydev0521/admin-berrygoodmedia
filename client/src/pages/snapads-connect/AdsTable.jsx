@@ -4,7 +4,7 @@ import StyledTable from '../../components/styled-elements/table/StyledTable'
 import { IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-export default function DataArea(props) {
+export default function AdsTable(props) {
 
     const columns = [
         {
@@ -15,22 +15,15 @@ export default function DataArea(props) {
             }
         },
         {
-            id: 'accountType',
-            label: 'Type',
-            style: {
-                width: '5%'
-            }
-        },
-        {
             id: 'name',
             label: 'Name',
             style: {
-                width: '20%'
+                width: '25%'
             }
         },
         {
-            id: 'token',
-            label: 'Token',
+            id: 'campaignId',
+            label: 'Campaign ID',
             align: 'left',
             style: {
                 width: '65%'
@@ -47,7 +40,7 @@ export default function DataArea(props) {
             render: (item, col) =>  
                 <IconButton
                     sx={{ margin: '5px' }}
-                    onClick={() => props.handleAccountDelete(col.key)}
+                    onClick={() => props.handleItemDelete(col.key)}
                     color='error'
                 >
                     <DeleteIcon />
@@ -55,7 +48,6 @@ export default function DataArea(props) {
         }
     ];
     var index = 1;
-
     return (
         <StyledTable 
             data={props.data.map(item => ({...item, no: index++, key: item._id}))}
@@ -66,8 +58,8 @@ export default function DataArea(props) {
     )
 }
 
-DataArea.propTypes = {
+AdsTable.propTypes = {
   data: PropTypes.array,
-  handleAccountDelete: PropTypes.func,
+  handleItemDelete: PropTypes.func,
   loading: PropTypes.bool
 }

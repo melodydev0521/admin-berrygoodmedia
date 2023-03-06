@@ -1,10 +1,10 @@
 import PropTypes from "prop-types"
 import { TextField } from '@mui/material'
 import React from 'react'
+import isEmpty from 'is-empty'
 
 export default function StyledTextField(props) {
-    return (
-        <TextField
+    return <TextField
             name={props.name}
             label={props.label}
             onChange={props.onchange}
@@ -12,16 +12,19 @@ export default function StyledTextField(props) {
             variant='outlined'
             fullWidth
             size="small"
-            error={props.error}
-            // helperText={`${props.name} field is required!`}
+            error={props.error !== '' && typeof props.error == "string"}
+            helperText={!isEmpty(props.helperText) ? props.helperText : ''}
         />
-    )
 }
 
 StyledTextField.propTypes = {
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onchange: PropTypes.func,
-  value: PropTypes.string,
-  error: PropTypes.bool
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    onchange: PropTypes.func,
+    value: PropTypes.string,
+    error: PropTypes.string,
+    helperText: PropTypes.string,
+    className: PropTypes.string,
+    sx: PropTypes.object,
+    style: PropTypes.object
 }

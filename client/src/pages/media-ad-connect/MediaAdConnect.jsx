@@ -4,7 +4,7 @@ import isEmpty from 'is-empty'
 import { Grid, Typography } from '@mui/material'
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined'
 import { StyledCard } from '../../components/styled-elements/styledCard'
-import { getInfuse, getPlug, getTiktok_adgroup, getTiktok_campaign } from '../../api/external-api'
+import { getInfuse, getPlug, getSnapchatAds, getTiktok_adgroup, getTiktok_campaign } from '../../api/external-api'
 import BasicDatePicker from '../../components/styled-elements/StyledDatePicker'
 import MediaList from '../../components/connect-components/MediaList'
 import AdSetList from '../../components/connect-components/AdSetList'
@@ -16,7 +16,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { styled as muiStyled } from '@mui/system';
 import { StyledButtonPrimary, StyledButtonSuccess } from '../../components/styled-elements/buttonStyles';
-import { getAccounts } from '../../api/accounts';
+import { getData as getAccounts } from '../../api/accounts';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,6 +39,15 @@ const AdManager = () => {
         },
         pairComplete: false,
     };
+    
+    const initialErrors = {
+        plug: '',
+        tiktok: '',
+        start: '',
+        end: ''
+    }
+
+    const [errors, setErrors] = React.useState(initialErrors);
 
     const [state, setState] = React.useState(initialState);
     const navigate = useNavigate();
@@ -85,7 +94,7 @@ const AdManager = () => {
         if (contentType === 'media') {
             return contentVal.filter(item => savedRevenue.filter(i => i.name === item.name).length === 0)
         } else if (contentType === 'tiktok') {
-            return contentVal.filter(item => savedRevenue.filter(i => i.tiktokDataId === item.tiktokDataId).length === 0)
+            return contentVal.filter(item => savedRevenue.filter(i => i.campaignId === item.campaignId).length === 0)
         }
     }
 
@@ -143,9 +152,7 @@ const AdManager = () => {
         if (!isEmpty(tiktokData)) {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
-                tiktokDataId: item.dimensions.adgroup_id,
-                spend: item.metrics.spend,
-                adgroupName: item.metrics.adgroup_name,
+                campaignId: item.dimensions.adgroup_id,
             }));
         }
         
@@ -168,9 +175,26 @@ const AdManager = () => {
         if (!isEmpty(tiktokData)) {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
-                tiktokDataId: item.dimensions.campaign_id,
-                spend: item.metrics.spend,
-                adgroupName: item.metrics.campaign_name,
+                campaignId: item.dimensions.campaign_id,
+            }));
+        }
+        
+        adSets = await excludeConnectedRevenues('tiktok', adSets);
+        setState({...state, adSets: adSets, isAdLoading: false});
+        automaticConnection();
+    }
+
+    const getSnapAdsList = async () => {
+        setState({ ...state, isAdLoading: true, adSets: [] });
+
+        const snapads = await getSnapchatAds(state.startDate, state.endDate);
+        if (snapads === "server_error") return;
+        var index = 1;
+        var adSets = [];
+        if (!isEmpty(snapads)) {
+            adSets = snapads.list.map((item) => ({
+                no: index ++,
+                campaignId: item.id,
             }));
         }
         
@@ -215,7 +239,7 @@ const AdManager = () => {
             ],
             adSets: [
                 ...state.adSets,
-                { no: removeData.adSets, tiktokDataId: removeData.tiktokDataId, adgroupName: removeData.adgroupName, spend: removeData.spend }
+                { no: removeData.adSets, campaignId: removeData.campaignId }
             ],
             data: state.data.filter(item => item.no !== key)
         });
@@ -233,9 +257,7 @@ const AdManager = () => {
         const adSets = 
             state.data.map(item => ({
                 no: item.adSets, 
-                tiktokDataId: item.tiktokDataId, 
-                adgroupName: item.adgroupName, 
-                spend: item.spend
+                campaignId: item.campaignId
             }));
 
         setState({
@@ -249,7 +271,7 @@ const AdManager = () => {
         const result = await addRevenue(state.data.map(item => ({
             name: item.name, 
             offer: item.offer, 
-            tiktokDataId: item.tiktokDataId,
+            campaignId: item.campaignId,
             advertiserId: state.tiktokAccount.id,
             bearerToken: state.plugAccount.id
         })));
@@ -279,6 +301,8 @@ const AdManager = () => {
                                     label="Plug Account" 
                                     onchange={handleAccountSelect}
                                     data={accounts.filter(item => item.accountType === 'plug').map(item => ({name: item.name, value: item.token}))} 
+                                    error={errors.tiktok}
+                                    helperText={errors.tiktok}
                                 />
                             </Grid>
                             <Grid container item xs={6}>
@@ -286,7 +310,9 @@ const AdManager = () => {
                                     name="tiktokAccount" 
                                     label="Tiktok Account" 
                                     onchange={handleAccountSelect}
-                                    data={accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token}))} 
+                                    data={accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token}))}
+                                    error={errors.tiktok} 
+                                    helperText={errors.tiktok}
                                 />
                             </Grid>
                         </Grid>
@@ -319,14 +345,19 @@ const AdManager = () => {
                                         </StyledButtonSuccess>
                                     </Grid>
                                     <Grid container item spacing={1} md={3} xs={6}>
-                                        <Grid container item xs={6}>
+                                        <Grid container item xs={4}>
                                             <StyledButtonSuccess onClick={getAdSets} fullWidth>
                                                 AD SETS
                                             </StyledButtonSuccess>
                                         </Grid>
-                                        <Grid container item xs={6}>
+                                        <Grid container item xs={4}>
                                             <StyledButtonSuccess onClick={getCampaigns} fullWidth>
                                                 Campaigns
+                                            </StyledButtonSuccess>
+                                        </Grid>
+                                        <Grid container item xs={4}>
+                                            <StyledButtonSuccess onClick={getSnapAdsList} fullWidth>
+                                                Snap Ads
                                             </StyledButtonSuccess>
                                         </Grid>
                                     </Grid>

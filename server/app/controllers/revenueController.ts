@@ -22,7 +22,7 @@ export const addRevenue: RequestHandler = (req, res) => {
     RevenueModel.insertMany(req.body.revenues.map((item: IRevenue) => ({
         name: item.name,
         offer: item.offer,
-        tiktokDataId: item.tiktokDataId,
+        campaignId: item.campaignId,
         bearerToken: item.bearerToken,
         advertiserId: item.advertiserId
     })))

@@ -6,6 +6,7 @@ import {
     FormControl,
     Select
 } from '@mui/material';
+import isEmpty from "is-empty";
 
 export default function StyledSelect(props) {
 
@@ -23,7 +24,7 @@ export default function StyledSelect(props) {
     return (
         <FormControl 
             fullWidth 
-            error={props.error} 
+            error={props.error !== '' && typeof props.error == "string"}
             className={props.className}
             sx={props.sx}
             style={props.style}
@@ -36,6 +37,7 @@ export default function StyledSelect(props) {
                 onChange={handleChange}
                 value={state}
                 size='small'
+                error={props.error !== '' && typeof props.error == "string"}
             >
                 {props.data.map(item => 
                     <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
@@ -54,7 +56,8 @@ StyledSelect.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     onchange: PropTypes.func,
-    error: PropTypes.bool,
+    error: PropTypes.string,
+    helperText: PropTypes.string,
     className: PropTypes.string,
     sx: PropTypes.object,
     style: PropTypes.object

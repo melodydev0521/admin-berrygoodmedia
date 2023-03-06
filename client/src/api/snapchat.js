@@ -1,11 +1,11 @@
 import api from "../utils/api";
 
 export const getData = () => {
-    return api.get('/account').then(res => res.data);
+    return api.get('/snapchat').then(res => res.data);
 }
 
 export const addData = (account) => {
-    return api.post('/account', account)
+    return api.post('/snapchat', account)
         .then(res => {
             return {
                 isValid: true,
@@ -21,5 +21,5 @@ export const addData = (account) => {
 }
 
 export const deleteData = _id => {
-    return api.delete(`/account/${_id}`).then(res => res.data);
+    return api.delete(`/snapchat/${_id}`).then(res => res.data);
 }

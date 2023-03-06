@@ -12,6 +12,7 @@ import external from './routes/external';
 import account from './routes/account';
 import auth from './routes/auth';
 import user from './routes/user';
+import snapset from './routes/snapset';
 
 dotenv.config();
 const app: Application = express();
@@ -39,6 +40,7 @@ app.use("/api/external-api", external);
 app.use("/api/account", account);
 app.use("/api/auth", auth);
 app.use("/api/user", user);
+app.use("/api/snapchat", snapset);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, '../../client/build')));

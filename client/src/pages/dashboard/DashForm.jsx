@@ -8,7 +8,7 @@ import { Grid } from '@mui/material'
 import { StyledButtonPrimary } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledDatePicker from '../../components/styled-elements/StyledDatePicker'
-import { getAccounts } from '../../api/accounts'
+import { getData as getAccounts } from '../../api/accounts'
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IRevenue extends Document {
     name: string,
     offer: string,
-    tiktokDataId: string,
+    campaignId: string,
     advertiserId: string,
     bearerToken: string
 }
@@ -16,7 +16,7 @@ const RevenueSchema: Schema = new Schema({
     offer: {
         type: String
     },
-    tiktokDataId: {
+    campaignId: {
         type: String,
         required: true
     },

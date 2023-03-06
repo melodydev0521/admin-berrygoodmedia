@@ -1,17 +1,17 @@
+import PropTypes from "prop-types"
 import { Grid } from '@mui/material'
 import React from 'react'
-import { addAccount } from '../../api/accounts'
+import { addData } from '../../api/accounts'
 import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledTextField from '../../components/styled-elements/StyledTextField'
-import { getAccounts } from '../../api/accounts';
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
     { name: 'Tiktok Account', value: 'tiktok' }
-]
+];
 
-export default function AccountForm() {
+export default function AccountForm(props) {
 
     const initialAccount = {
         accountType: '',
@@ -19,23 +19,12 @@ export default function AccountForm() {
         token: ''
     };
     const initialErrors = {
-        accountTypes: false,
-        name: false,
-        token: false
+        accountType: '',
+        name: '',
+        token: ''
     };
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
-    const [accounts, setAccounts] = React.useState([]);
-
-
-    React.useEffect(() => {
-        getInitAccounts();
-    }, []);
-
-    const getInitAccounts = async () => {
-        const result = await getAccounts();
-        setAccounts({...accounts, accounts: result});
-    }
 
     const handleAccountTypeChange = (name, item) => {
         setAccount({...account, accountType: item.id});
@@ -45,22 +34,12 @@ export default function AccountForm() {
 
     const handleAccountSave = async () => {
         // Validate Fields
-        var isValid = true;
-        var validate = {};
-        for (const i in account) {
-            validate[i] = account[i] === '';
-            if (account[i] === '') {
-                isValid = false;
-            }
+        const newItem = await addData(account);
+        if (!newItem.isValid) {
+            return setErrors(newItem.errors);
         }
-        setErrors(validate);
-        if (!isValid) return;
-        setErrors(initialErrors);
-        
-        // Save account
-        const newAccount = await addAccount(account);
-        setAccounts({...accounts, newAccount});
         setAccount(initialAccount);
+        props.addNew(newItem.data);
     }
 
     return (
@@ -104,4 +83,8 @@ export default function AccountForm() {
             </Grid>
         </Grid>
     )
+}
+
+AccountForm.propTypes = {
+    addNew: PropTypes.func
 }

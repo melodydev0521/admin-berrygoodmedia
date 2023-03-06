@@ -6,12 +6,12 @@ import {
 } from '@mui/material'
 import { StyledCard } from '../../components/styled-elements/styledCard'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
-import AccountForm from './AccountForm'
-import DataArea from './DataArea'
-import { deleteData, getData } from '../../api/accounts'
+import AdsForm from './AdsForm'
+import AdsTable from './AdsTable'
+import { deleteData, getData } from '../../api/snapchat'
 
-export default function AccountSetting() {
-	
+export default function SnapAds() {
+
 	const [loading, setLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
 
@@ -43,13 +43,13 @@ export default function AccountSetting() {
 				<Box sx={{ display: 'flex', flexDirection: 'row' }}>
 					<ManageAccountsOutlinedIcon />
 					<Typography style={{ padding: '3px' }}>
-						Account Setting
+						SnapSet
 					</Typography>
 				</Box>
 				<br />
-				<AccountForm addNew={addItem} />
+				<AdsForm addNew={addItem} />
 				<br />
-				<DataArea 
+				<AdsTable 
 					data={data}
 					handleItemDelete={handleItemDelete}
 					loading={loading}

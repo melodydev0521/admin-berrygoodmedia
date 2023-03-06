@@ -10,7 +10,7 @@ export default function MediaList(props) {
     const initialState = {
         selected: 0,
         data: [],
-    }
+    };
 
     const [state, setState] = React.useState(initialState)
 

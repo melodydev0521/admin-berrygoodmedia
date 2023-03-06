@@ -8,7 +8,7 @@ import AccountModel, { IAccounts } from "../models/Accounts";
 export const getAccounts: RequestHandler = (req, res) => {
     AccountModel
         .find()
-        .then((accounts: Array<IAccounts>) => res.json(accounts));
+        .then((accounts: Array<IAccounts>) => res.json(accounts.reverse()));
 }
 
 /**

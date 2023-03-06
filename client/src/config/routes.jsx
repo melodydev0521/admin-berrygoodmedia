@@ -6,6 +6,7 @@ import MediaAdConnect from '../pages/media-ad-connect/MediaAdConnect'
 import AccountSetting from '../pages/accounts/AccountSetting'
 import Login from '../pages/signin/Login'
 import Page404 from '../pages/404'
+import SnapAds from '../pages/snapads-connect/SnapAds' 
 
 const routes = [   
     {
@@ -31,6 +32,14 @@ const routes = [
         private: true,
         icon: <ManageAccountsOutlinedIcon />,
         component: <AccountSetting />
+    },
+    {
+        id: 'snapset-setting',
+        path: '/snapset-setting',
+        text: 'SnapChat Setting',
+        private: true,
+        icon: <ManageAccountsOutlinedIcon />,
+        component: <SnapAds />
     },
     {
         id: 'login',
