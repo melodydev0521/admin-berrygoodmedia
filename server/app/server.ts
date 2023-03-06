@@ -56,18 +56,3 @@ const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
-
-
-// app.listen(4000);
-// // comment out this line when testing on localhost
-// const httpsServer = https.createServer(
-//   {
-//     key: fs.readFileSync("/etc/letsencrypt/live/shafirpl.com/privkey.pem"),
-//     cert: fs.readFileSync("/etc/letsencrypt/live/shafirpl.com/fullchain.pem"),
-//   },
-//   app
-// );
-
-// httpsServer.listen(443, () => {
-//   console.log("HTTPS Server running on port 443");
-// });
