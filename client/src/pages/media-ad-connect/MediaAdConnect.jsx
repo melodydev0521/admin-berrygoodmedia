@@ -319,7 +319,9 @@ const AdManager = () => {
                                     name="adAccount" 
                                     label="Ad Account" 
                                     onchange={handleAccountSelect}
-                                    data={accounts.filter(item => item.accountType === "tiktok" || item.accountType === "snapchat").map(item => ({name: item.name, value: item.token}))}
+                                    data={accounts
+                                        .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
+                                        .map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token}))}
                                     error={errors.adAccount} 
                                     helperText={errors.adAccount}
                                 />
