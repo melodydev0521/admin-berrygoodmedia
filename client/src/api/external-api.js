@@ -215,9 +215,8 @@ export const getSnapchatAds = (start, end, token='') => {
             console.log(data);
         })
         .catch(async (err) => {
-            console.log(err);
-            // const newToken = await  getSnapchatToken();
-            // getSnapchatAds(start, end, newToken)
+            const newToken = await getSnapchatToken();
+            getSnapchatAds(start, end, newToken)
         });
 }
 
