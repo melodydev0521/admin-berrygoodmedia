@@ -185,13 +185,14 @@ export const getSnapchatToken = () => {
         .catch((err) => publicError(err))
 }
 
-export const getSnapchatAds = (start, end, token='') => {
+export const getSnapchatAds = async (start, end, token='') => {
     // Params
     const granularity = "TOTAL";
     const breakdown = "campaign";
     const start_time = `${start}T00:00:00-05:00`;
     const end_time = `${end}T00:00:00-05:00`;
-    const fields = "spend"
+    const fields = "spend";
+    const newToken = await getSnapchatToken();
     
     return fetch(
         `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
@@ -204,7 +205,7 @@ export const getSnapchatAds = (start, end, token='') => {
                 'Access-Control-Allow-Origin': '*',
                 "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
                 'Access-Control-Allow-Credentials': 'true',
-                "Authorization": `bearer ${token}`
+                "Authorization": `bearer ${newToken}`
             }
         }
     )
@@ -213,8 +214,8 @@ export const getSnapchatAds = (start, end, token='') => {
             return data.total_stats.total_stat.breakdown_stats.campaign
         })
         .catch(async (err) => {
-            const newToken = await getSnapchatToken();
-            getSnapchatAds(start, end, newToken)
+            // const newToken = await getSnapchatToken();
+            // getSnapchatAds(start, end, newToken)
         });
 }
 
