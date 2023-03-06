@@ -149,8 +149,8 @@ export default function DashForm(props) {
 						data={[
 							{name: 'All', value: 'all'}, 
 							...accounts
-								.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat')
-								.map(item => ({name: item.name, value: item.token}))
+								.filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
+								.map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token}))
 						]}
 						className='form-item-animation'
 						sx={{
