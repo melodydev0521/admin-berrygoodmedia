@@ -34,8 +34,8 @@ export default function Dashboard() {
         newRevenues = newRevenues.map(item => ({
             ...item, 
             revenue: Number(result.filter(i => i.name === item.name)[0].revenue),
-            profit: Number(result.revenue - result.spend),
-            roas: Number(result.revenue / result.spend)
+            profit: Number(result.revenue) - Number(result.spend),
+            roas: Number(result.revenue) / Number(result.spend)
         }));
         setRevenues(newRevenues);
     }
@@ -43,7 +43,12 @@ export default function Dashboard() {
     const refreshSpends = async (startDate, endDate, adAccount) => {
         const result = await getOnlySpends(startDate, endDate, adAccount);
         var newRevenues = revenues;
-        newRevenues = newRevenues.map(item => ({...item, spend: Number(result.filter(i => i.campaignId === item.campaignId)[0].spend)}));
+        newRevenues = newRevenues.map(item => ({
+            ...item, 
+            spend: Number(result.filter(i => i.campaignId === item.campaignId)[0].spend),
+            profit: Number(result.revenue) - Number(result.spend),
+            roas: Number(result.revenue) / Number(result.spend)
+        }));
         setRevenues([...newRevenues]);
     }
 

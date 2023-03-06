@@ -65,7 +65,6 @@ export default function DashForm(props) {
         } else {
 			adAccount = accounts.filter(item => item.token === adAccount[0]);
 		}
-		console.log(plugAccount, adAccount)
 		await props.getData(date.start, date.end, plugAccount, adAccount, timezone);
 		setLoadUsedAccount({
             plug: account.plugAccount.id, 
