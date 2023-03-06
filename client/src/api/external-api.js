@@ -191,7 +191,7 @@ export const getSnapchatAds = (start, end, token='') => {
     const breakdown = "campaign";
     const start_time = `${start}T00:00:00-05:00`;
     const end_time = `${end}T00:00:00-05:00`;
-    const fields = "fields"
+    const fields = "spend"
     
     return fetch(
         `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
