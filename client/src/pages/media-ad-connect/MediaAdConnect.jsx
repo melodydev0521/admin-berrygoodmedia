@@ -198,9 +198,12 @@ const AdManager = () => {
 
         const snapsets = await getSnapSets();
         var index = 1;
-        console.log(snapsets, snapads)
-        var adSets = snapsets.filter(item => snapads.filter(i => item.campaignId === i.id).length !== 0).map(item => ({no: index++, ...item}));
-        console.log(adSets);
+        var adSets = snapsets.filter(item => snapads.filter(i => item.campaignId === i.id).length !== 0)
+            .map(item => ({
+                no: index++, 
+                adgroupName: item.name, 
+                campaignId: item.campaignId
+            }));
         adSets = await excludeConnectedRevenues("adsets", adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();

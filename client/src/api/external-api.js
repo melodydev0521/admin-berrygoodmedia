@@ -1,7 +1,9 @@
 // Created by MelodyDev 02/17/2023
-import isEmpty from "is-empty"
+import isEmpty from "is-empty";
 import api from "../utils/api";
-import { publicError } from "./general"
+import { publicError } from "./general";
+import { getData as getSnapSets } from './snapchat';
+
 /**
  * @params {startDate, endDate}
  * @return JSON Infuse data
@@ -324,15 +326,25 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             }
 
             // SnapChat
-            const snapchatData = await getSnapchatAds(start, end);
-            adSets = [
-                ...adSets,
-                ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
-                    no: index ++,
-                    campaignId: item.id,
-                    spend: Number(item.stats.spend),
-                }))
-            ];
+            const snapchatResult = await getSnapchatAds(start, end);
+            if (snapchatResult.request_status !== "ERROR") {
+                const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
+                var snapsets = await getSnapSets();
+                snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
+                    .map(item => {
+                        const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
+                        return {
+                            no: index++, 
+                            adgroupName: item.name, 
+                            campaignId: item.campaignId,
+                            spend: Number(matched.stats.spend) / 1000000
+                        };
+                    });
+                adSets = [
+                    ...adSets,
+                    ...snapsets
+                ];
+            }
 
             // Combination
             index = 1;
