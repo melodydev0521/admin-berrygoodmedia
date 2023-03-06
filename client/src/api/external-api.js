@@ -186,7 +186,7 @@ export const getSnapchatAds = async (start, end, account) => {
             const start_time = `${start}T00:00:00-05:00`;
             const end_time = `${dayjs(start).add(1, 'day').format('YYYY-MM-DD')}T00:00:00-05:00`;
             const fields = "spend";
-
+            console.log(account)
             return fetch(
                 `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/${account}/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
                 {
@@ -253,7 +253,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             index = 1;
 
             for (let element of advertiser_id) {
-                tiktokData = await getTiktok_adgroup(start, end, element);
+                if (element.name === 'snapchat') continue;
+                tiktokData = await getTiktok_adgroup(start, end, element.token);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -266,7 +267,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             }            
 
             for (let element of advertiser_id) {
-                tiktokData = await getTiktok_campaign(start, end, element);
+                if (element.name === 'snapchat') continue;
+                tiktokData = await getTiktok_campaign(start, end, element.token);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -280,7 +282,8 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             // SnapChat
             for (let element of advertiser_id) {
-                const snapchatResult = await getSnapchatAds(start, end, element);
+                if (element.name === 'tiktok') continue;
+                const snapchatResult = await getSnapchatAds(start, end, element.token);
                 if (snapchatResult.request_status !== "ERROR") {
                     const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
                     var snapsets = await getSnapSets();
@@ -363,7 +366,8 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     var adSets = [];
 
     for (let element of advertiser_id) {
-        tiktokData = await getTiktok_adgroup(start, end, element);
+        if (element.name === 'snapchat') continue;
+        tiktokData = await getTiktok_adgroup(start, end, element.token);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -374,7 +378,8 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     }
 
     for (let element of advertiser_id) {
-        tiktokData = await getTiktok_campaign(start, end, element);
+        if (element.name === 'snapchat') continue;
+        tiktokData = await getTiktok_campaign(start, end, element.token);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -386,7 +391,8 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
 
     // SnapChat
     for (let element of advertiser_id) {
-        const snapchatResult = await getSnapchatAds(start, end, element);
+        if (element.name === 'tiktok') continue;
+        const snapchatResult = await getSnapchatAds(start, end, element.token);
         if (snapchatResult.request_status !== "ERROR") {
             const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
             var snapsets = await getSnapSets();

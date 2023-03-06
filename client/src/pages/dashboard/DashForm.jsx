@@ -19,7 +19,7 @@ export default function DashForm(props) {
     const [timezone, setTimezone] = React.useState(undefined);
     const [account, setAccount] = React.useState({ plugAccount: {}, adAccount: {}});
     const [unavailable, setUnavailable] = React.useState(true);
-    const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', tiktok: ''});
+    const [loadUsedAccount, setLoadUsedAccount] = React.useState({plug: '', ad: ''});
     const [accounts, setAccounts] = React.useState([]);
 	const [revenueLoading, setRevenueLoading] = React.useState(false);
 	const [spendLoading, setSpendLoading] = React.useState(false);
@@ -34,7 +34,7 @@ export default function DashForm(props) {
 
 	React.useEffect(() => {
         if (loadUsedAccount.plug === account.plugAccount.id && 
-            loadUsedAccount.tiktok === account.adAccount.id && 
+            loadUsedAccount.ad === account.adAccount.id && 
 			props.revenues.length !== 0)
             setUnavailable(false);
         else setUnavailable(true);
@@ -56,17 +56,20 @@ export default function DashForm(props) {
             return;
         }
         var plugAccount = [account.plugAccount.id];
-        var adAccount = [account.adAccount.id];
+        var adAccount = [{
+			accountType: account.adAccount.name,
+			token: account.adAccount.id
+	}];
         if (plugAccount[0] === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
         if (adAccount[0] === 'all') {
-            adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat').map(item => item.token);
+            adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat').map(item => item);
         }
 		await props.getData(date.start, date.end, plugAccount, adAccount, timezone);
 		setLoadUsedAccount({
             plug: account.plugAccount.id, 
-            tiktok: account.adAccount.id
+            ad: account.adAccount.id
         });
 		if (props.revenues.length !== 0)
 			setUnavailable(false);
