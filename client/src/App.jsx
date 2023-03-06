@@ -11,7 +11,7 @@ import routes from './config/routes';
 import ProtectedRoute from './components/ProtectedRoute';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './api/auth';
-import '../../assets/animations.css'
+import './assets/animations.css'
 import './App.css'
 
 
