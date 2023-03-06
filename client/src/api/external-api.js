@@ -185,7 +185,6 @@ export const getSnapchatAds = async (start, end, account) => {
             const breakdown = "campaign";
             const start_time = `${start}T00:00:00-05:00`;
             const end_time = `${dayjs(start).add(1, 'day').format('YYYY-MM-DD')}T00:00:00-05:00`;
-            console.log(end_time)
             const fields = "spend";
 
             return fetch(
@@ -386,14 +385,27 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
     }
 
     // SnapChat
-    const snapchatData = await getSnapchatAds(start, end);
-    adSets = [
-        ...adSets,
-        ...isEmpty(snapchatData) ? [] : snapchatData.map(item => ({
-            campaignId: item.id,
-            spend: Number(item.stats.spend),
-        }))
-    ];
+    for (let element of advertiser_id) {
+        const snapchatResult = await getSnapchatAds(start, end, element);
+        if (snapchatResult.request_status !== "ERROR") {
+            const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
+            var snapsets = await getSnapSets();
+            snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
+                .map(item => {
+                    const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
+                    return {
+                        campaignId: item.campaignId,
+                        spend: Number(matched.stats.spend) / 1000000
+                    };
+                });
+            adSets = [
+                ...adSets,
+                ...snapsets
+            ];
+        } else {
+            console.log(snapchatResult.debug_message);
+        }
+    }
 
     return adSets;
 }

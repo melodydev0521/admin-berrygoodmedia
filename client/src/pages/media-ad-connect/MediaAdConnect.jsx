@@ -42,8 +42,7 @@ const AdManager = () => {
     
     const initialErrors = {
         plug: '',
-        tiktok: '',
-        snapchat: '',
+        adAccount: '',
         start: '',
         end: ''
     }
@@ -275,7 +274,6 @@ const AdManager = () => {
     }
 
     const handleDataSave = async () => {
-        console.log(state.data)
         const result = await addRevenue(state.data.map(item => ({
             name: item.name, 
             offer: item.offer, 
@@ -309,8 +307,8 @@ const AdManager = () => {
                                     label="Plug Account" 
                                     onchange={handleAccountSelect}
                                     data={accounts.filter(item => item.accountType === 'plug').map(item => ({name: item.name, value: item.token}))} 
-                                    error={errors.tiktok}
-                                    helperText={errors.tiktok}
+                                    error={errors.plug}
+                                    helperText={errors.plug}
                                 />
                             </Grid>
                             <Grid container item xs={4}>
