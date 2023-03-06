@@ -51,7 +51,7 @@ export default function AccountSetting() {
 				<br />
 				<DataArea 
 					data={data}
-					handleItemDelete={handleItemDelete}
+					handleAccountDelete={handleItemDelete}
 					loading={loading}
 				/>
 			</StyledCard>
