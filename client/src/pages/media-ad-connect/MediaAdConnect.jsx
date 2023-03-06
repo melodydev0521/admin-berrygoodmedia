@@ -189,6 +189,7 @@ const AdManager = () => {
 
         const snapads = await getSnapchatAds(state.startDate, state.endDate);
         console.log(snapads);
+        return;
         if (snapads === "server_error") return;
         var index = 1;
         var adSets = [];
