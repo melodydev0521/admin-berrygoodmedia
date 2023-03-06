@@ -187,12 +187,41 @@ export const getSnapchatToken = () => {
 
 export const getSnapchatAds = async (start, end, token='') => {
     // Params
-    const granularity = "TOTAL";
-    const breakdown = "campaign";
-    const start_time = `${start}T00:00:00-05:00`;
-    const end_time = `${end}T00:00:00-05:00`;
-    const fields = "spend";
-    const newToken = await getSnapchatToken();
+    const client_id = "35e1e9c1-22a9-43f5-ac31-0bb8a4f1fe74";
+    const client_secret = "18d3bc0f2844bd7f741a";
+    const grant_type = "refresh_token";
+    const refresh_token = "eyJraWQiOiJyZWZyZXNoLXRva2VuLWExMjhnY20uMCIsInR5cCI6IkpXVCIsImVuYyI6IkExMjhHQ00iLCJhbGciOiJkaXIifQ..dcLESAjKp_XqDPne.NQTmwEzjNdpmPK2iANTvFnzZX-EqMHuaV4x-wPGmw_VVLE_ksewtX45anBdwaFu6aMf0oEZXt7xd8_aaErj4Fknz8ii6kvuo8GZDFCFOZqLdJ9-5kWCxhKsPumW5CBxn5c9rEkLUv6dPIyoXiXdITdJF1Lva6RRK6zTCUK5VpgMW-_2tfkXGugerxrYMkczBpM4doPFNI9A6_JKsYt0CrJ8aJJHfDt0AL2amV7wfcBq7erp9xdKIW_sUbWjokO5DERZurlCm1Xj8HzM.CGD43mx9IERSF5GGPeX24w";
+
+    return fetch(
+        `https://berrygoodmedia.herokuapp.com/https://accounts.snapchat.com/login/oauth2/access_token?client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&refresh_token=${refresh_token}`,
+        { 
+            method: 'POST',
+        })
+        .then(res => res.json())
+        .then((data) => {
+            // Params
+            const granularity = "TOTAL";
+            const breakdown = "campaign";
+            const start_time = `${start}T00:00:00-05:00`;
+            const end_time = `${end}T00:00:00-05:00`;
+            const fields = "spend";
+
+            return fetch(
+                `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Access-Control-Request-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                        "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                        "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Access-Token, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+                        'Access-Control-Allow-Origin': '*',
+                        "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
+                        'Access-Control-Allow-Credentials': 'true',
+                        "Authorization": `bearer ${data.access_token}`
+                    }
+                })
+        })
+        .catch((err) => publicError(err))
     
     return fetch(
         `https://berrygoodmedia.herokuapp.com/https://adsapi.snapchat.com/v1/adaccounts/c51a11db-86a7-4bab-81ee-1a21a6743841/stats/?granularity=${granularity}&breakdown=${breakdown}&start_time=${start_time}&end_time=${end_time}&fields=${fields}`,
