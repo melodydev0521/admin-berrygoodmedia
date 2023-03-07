@@ -159,7 +159,7 @@ const AdManager = () => {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
                 campaignId: item.dimensions.adgroup_id,
-                adgroupName: item.dimensions.adgroup_name
+                adgroupName: item.metrics.adgroup_name
             }));
         }
         
@@ -187,7 +187,7 @@ const AdManager = () => {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
                 campaignId: item.dimensions.campaign_id,
-                adgroupName: item.dimensions.adgroup_name
+                adgroupName: item.metrics.adgroup_name
             }));
         }
         
