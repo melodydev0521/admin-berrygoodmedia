@@ -54,6 +54,7 @@ export default function AdsTable(props) {
             columns={columns}
             isLoading={props.loading}
             total={false}
+            className='bounce-up'
         />
     )
 }

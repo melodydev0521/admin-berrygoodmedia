@@ -100,12 +100,13 @@ const AdManager = () => {
 
     const getMediaSource = async () => {
         if (isEmpty(state.plugAccount)) {
-            alert('error');
+            setErrors({...errors, plug: 'Choose the account'});
             return;
         }
-        setState({ ...state, isMediaLoading: true, mediaSources: [] })
-        const infuseData = await getInfuse(state.startDate, state.endDate)
-        const plugData = await getPlug(state.startDate, state.endDate, state.plugAccount.id)
+        setErrors(initialErrors);
+        setState({ ...state, isMediaLoading: true, mediaSources: [] });
+        const infuseData = await getInfuse(state.startDate, state.endDate);
+        const plugData = await getPlug(state.startDate, state.endDate, state.plugAccount.id);
         if (infuseData === "server_error" || plugData === "server_error") return;
         var index = 1;
         var mediaSources = [];
@@ -140,11 +141,12 @@ const AdManager = () => {
 
     const getAdSets = async () => {
         if (isEmpty(state.adAccount)) {
-            alert('error');
+            setErrors({...errors, adAccount: 'Choose the account'});
             return;
         }
-        setState({ ...state, isAdLoading: true, adSets: [] });
+        setErrors(initialErrors);
 
+        setState({ ...state, isAdLoading: true, adSets: [] });
         const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.adAccount.id);
         if (tiktokData === "server_error") return;
         var index = 1;
@@ -290,7 +292,7 @@ const AdManager = () => {
     }
 
     return (
-        <Grid container item lg={10} md={12} style={{ margin: '30px auto' }}>
+        <Grid container item xs={11} style={{ margin: '30px auto' }}>
             <StyledCard>
                 <Grid container item direction={'column'} spacing={1}>
                     <Grid container item direction={'row'} marginBottom={3}>
@@ -301,17 +303,16 @@ const AdManager = () => {
                     </Grid>
                     <Grid container item xs={12} direction={"row"} spacing={1} justifyContent={'space-between'}>
                         <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
-                            <Grid container item xs={4}>
+                            <Grid container item xs={6}>
                                 <StyledSelect
                                     name="plugAccount" 
                                     label="Plug Account" 
                                     onchange={handleAccountSelect}
                                     data={accounts.filter(item => item.accountType === 'plug').map(item => ({name: item.name, value: item.token}))} 
                                     error={errors.plug}
-                                    helperText={errors.plug}
                                 />
                             </Grid>
-                            <Grid container item xs={4}>
+                            <Grid container item xs={6}>
                                 <StyledSelect 
                                     name="adAccount" 
                                     label="Ad Account" 
@@ -320,7 +321,6 @@ const AdManager = () => {
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
                                         .map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token}))}
                                     error={errors.adAccount} 
-                                    helperText={errors.adAccount}
                                 />
                             </Grid>
                         </Grid>

@@ -5,7 +5,15 @@
 }
 
 .bounce-right {
-    animation: bounce-right 0.2 ease-in-out;
+    opacity: 0;
+    animation: bounce-right 0.2s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.bounce-up {
+    opacity: 0;
+    animation-delay: 0s;
+    animation: bounce-up 0.2s ease-in-out;
     animation-fill-mode: forwards;
 }
 
@@ -23,6 +31,17 @@
     0% {
         opacity: 0;
         transform: translateY(-30px);
+    }
+    100% { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
     }
     100% { 
         transform: translateY(0);

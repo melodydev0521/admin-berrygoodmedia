@@ -38,7 +38,6 @@ export default function AdsForm(props) {
                     onchange={handleTextFieldChange}
                     value={snapset.name}
                     error={errors.name}
-                    helperText={errors.name}
                 />
             </Grid>
             <Grid container item lg={8} md={12} xs={12}>
@@ -48,7 +47,6 @@ export default function AdsForm(props) {
                     onchange={handleTextFieldChange}
                     value={snapset.campaignId}
                     error={errors.campaignId}
-                    helperText={errors.campaignId}
                 />
             </Grid>
             <Grid container item lg={2} md={12}>

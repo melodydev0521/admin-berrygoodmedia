@@ -13,7 +13,7 @@ export default function StyledTextField(props) {
             fullWidth
             size="small"
             error={props.error !== '' && typeof props.error == "string"}
-            helperText={!isEmpty(props.helperText) ? props.helperText : ''}
+            helperText={!isEmpty(props.error) ? props.error : ''}
         />
 }
 
@@ -23,7 +23,6 @@ StyledTextField.propTypes = {
     onchange: PropTypes.func,
     value: PropTypes.string,
     error: PropTypes.string,
-    helperText: PropTypes.string,
     className: PropTypes.string,
     sx: PropTypes.object,
     style: PropTypes.object

@@ -4,7 +4,8 @@ import {
     InputLabel,
     MenuItem,
     FormControl,
-    Select
+    Select,
+    FormHelperText
 } from '@mui/material';
 import isEmpty from "is-empty";
 
@@ -43,12 +44,13 @@ export default function StyledSelect(props) {
                     <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
                 )}
             </Select>
+            <FormHelperText>{!isEmpty(props.error) ? props.error : ''}</FormHelperText>
         </FormControl>
     );
 }
 
 StyledSelect.defaultProps = {
-    error: false
+    error: ''
 }
 
 StyledSelect.propTypes = {

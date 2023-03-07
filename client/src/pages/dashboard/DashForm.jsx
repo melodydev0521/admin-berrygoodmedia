@@ -15,6 +15,13 @@ dayjs.extend(timezone);
 
 export default function DashForm(props) {
 
+	const initialErrors = {
+		start: '',
+		end: '',
+		plug: '',
+		ad: '',
+		timezone: ''
+	};
     const [date, setDate] = React.useState({start: '', end: ''});
     const [timezone, setTimezone] = React.useState(undefined);
     const [account, setAccount] = React.useState({ plugAccount: {}, adAccount: {}});
@@ -23,6 +30,7 @@ export default function DashForm(props) {
     const [accounts, setAccounts] = React.useState([]);
 	const [revenueLoading, setRevenueLoading] = React.useState(false);
 	const [spendLoading, setSpendLoading] = React.useState(false);
+	const [errors, setErrors] = React.useState(initialErrors);
 
 	React.useEffect(() => {
 		setDate({
@@ -49,12 +57,35 @@ export default function DashForm(props) {
 	const handleAccountSelect = (accountType, accountContent) => setAccount({ ...account, [accountType]: accountContent });
 	const handleTimezoneSelect = (name, tz) => setTimezone(tz.id);
 
+	const validateForm = () => {
+		var isValid = true;
+		if (isEmpty(date.start)) {
+			setErrors({...errors, start: 'Start date field is required'});
+			isValid = false;
+		}
+		if (isEmpty(date.end)) {
+			setErrors({...errors, end: 'End date field is required'});
+			isValid = false;
+		}
+		if (isEmpty(timezone)) {
+			setErrors({...errors, timezone: 'Timezone is required'});
+			isValid = false;
+		}
+		if (isEmpty(account.adAccount)) {
+			setErrors({...errors, ad: 'Ad Account is required'});
+			isValid = false;
+		}
+		if (isEmpty(account.plugAccount)) {
+			setErrors({...errors, plug: 'Plug Account is required'});
+			isValid = false;
+		}
+		return isValid;
+	}
+
 	const getData = async () => {
 		setUnavailable(true);
-        if (isEmpty(account.adAccount) || isEmpty(account.plugAccount) || isEmpty(timezone)) {
-            alert('choose account or timezone');
-            return;
-        }
+		setErrors(initialErrors);
+        if (!validateForm()) return;
         var plugAccount = [account.plugAccount.id];
         if (plugAccount[0] === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
@@ -110,6 +141,7 @@ export default function DashForm(props) {
 							opacity: 0, 
 							animationDelay: '0.0s' 
 						}}
+						error={errors.start}
 					/>
 				</Grid>
 				<Grid container item lg={12} xs={6}>
@@ -123,6 +155,7 @@ export default function DashForm(props) {
 							opacity: 0, 
 							animationDelay: '0.05s' 
 						}}
+						error={errors.end}
 					/>
 				</Grid>
 			</Grid>
@@ -143,6 +176,7 @@ export default function DashForm(props) {
 							opacity: 0, 
 							animationDelay: '0.1s' 
 						}}
+						error={errors.plug}
 					/>
 				</Grid>
 				<Grid container item lg={12} sm={4} xs={12}>
@@ -161,6 +195,7 @@ export default function DashForm(props) {
 							opacity: 0, 
 							animationDelay: '0.15s' 
 						}}
+						error={errors.ad}
 					/>
 				</Grid>
 				<Grid container item lg={12} sm={4} xs={12}>
@@ -177,6 +212,7 @@ export default function DashForm(props) {
 							opacity: 0, 
 							animationDelay: '0.2s' 
 						}}
+						error={errors.timezone}
 					/>
 				</Grid>
 			</Grid>

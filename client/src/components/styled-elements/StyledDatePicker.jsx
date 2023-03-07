@@ -7,6 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
+import isEmpty from 'is-empty'
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,6 +32,8 @@ export default function BasicDatePicker(props) {
                         className={props.className}
                         sx={props.sx}
                         style={props.style}
+                        error={props.error !== '' && typeof props.error == "string"}
+                        helperText={!isEmpty(props.error) ? props.error : ''}
                     />
                 )}
             />
@@ -45,5 +48,6 @@ BasicDatePicker.propTypes = {
     value: PropTypes.any,
     className: PropTypes.string,
     sx: PropTypes.object,
-    style: PropTypes.object
+    style: PropTypes.object,
+    error: PropTypes.string
 }

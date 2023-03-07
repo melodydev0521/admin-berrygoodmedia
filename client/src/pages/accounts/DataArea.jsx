@@ -62,6 +62,7 @@ export default function DataArea(props) {
             columns={columns}
             isLoading={props.loading}
             total={false}
+            className='bounce-up'
         />
     )
 }

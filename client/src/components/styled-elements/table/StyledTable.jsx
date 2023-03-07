@@ -53,7 +53,7 @@ export default function CustomizedTables(props) {
     };
 
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{width: '100%'}} className={props.className}>
             <StyledTableContainer>
                 <Table>
                     <EnhancedTableHead
@@ -118,16 +118,6 @@ export default function CustomizedTables(props) {
                                 <StyledTableCell style={{color: '#333'}} align="center"></StyledTableCell>
                             </TableRow>
                         }
-                        {/*<TableRow>
-                            <StyledTableCell colSpan={8} style={{width: '100%'}}>
-                                <TablePagination
-                                    current={state.current}
-                                    total={props.data.length}
-                                    pageSize={state.pageSize}
-                                    onPageChange={handlePageChange}
-                                />
-                            </StyledTableCell>
-                                    </TableRow>*/}
                     </TableBody>
                 </Table>
             </StyledTableContainer>
@@ -140,5 +130,6 @@ CustomizedTables.propTypes = {
   data: PropTypes.array,
   totalRow: PropTypes.object,
   isLoading: PropTypes.bool,
-  total: PropTypes.bool.isRequired
+  total: PropTypes.bool.isRequired,
+  className: PropTypes.string
 }
