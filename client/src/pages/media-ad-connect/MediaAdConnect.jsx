@@ -144,6 +144,10 @@ const AdManager = () => {
             setErrors({...errors, adAccount: 'Choose the account'});
             return;
         }
+        if (state.adAccount.accountType === 'snapchat') {
+            setErrors({...errors, adAccount: 'Choose Tiktok Account'});
+            return;
+        }
         setErrors(initialErrors);
 
         setState({ ...state, isAdLoading: true, adSets: [] });
@@ -166,7 +170,11 @@ const AdManager = () => {
 
     const getCampaigns = async () => {
         if (isEmpty(state.adAccount)) {
-            alert('error');
+            setErrors({...errors, adAccount: 'Choose the account'});
+            return;
+        }
+        if (state.adAccount.accountType === 'snapchat') {
+            setErrors({...errors, adAccount: 'Choose Tiktok Account'});
             return;
         }
         setState({ ...state, isAdLoading: true, adSets: [] });
@@ -179,6 +187,7 @@ const AdManager = () => {
             adSets = tiktokData.list.map((item) => ({
                 no: index ++,
                 campaignId: item.dimensions.campaign_id,
+                adgroupName: item.dimensions.adgroup_name
             }));
         }
         
@@ -188,6 +197,14 @@ const AdManager = () => {
     }
 
     const getSnapAdsList = async () => {
+        if (isEmpty(state.adAccount)) {
+            setErrors({...errors, adAccount: 'Choose the account'});
+            return;
+        }
+        if (state.adAccount.accountType !== 'snapchat') {
+            setErrors({...errors, adAccount: 'Choose Snapchat Account'});
+            return;
+        }
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const result = await getSnapchatAds(state.startDate, state.endDate, state.adAccount.id);
@@ -319,7 +336,7 @@ const AdManager = () => {
                                     onchange={handleAccountSelect}
                                     data={accounts
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-                                        .map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token}))}
+                                        .map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token, accountType: item.accountType}))}
                                     error={errors.adAccount} 
                                 />
                             </Grid>

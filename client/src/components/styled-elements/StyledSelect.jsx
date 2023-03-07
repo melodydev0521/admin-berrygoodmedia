@@ -18,9 +18,11 @@ export default function StyledSelect(props) {
         props.onchange(
             props.name, 
             { 
+                ...props.data.filter(item => item.value === event.target.value)[0],
                 name: props.data.filter(item => item.value === event.target.value)[0].name, 
                 id: event.target.value
-            });
+            },
+            );
     };
     return (
         <FormControl 
