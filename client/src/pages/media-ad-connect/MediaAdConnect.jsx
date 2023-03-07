@@ -177,6 +177,7 @@ const AdManager = () => {
             setErrors({...errors, adAccount: 'Choose Tiktok Account'});
             return;
         }
+        setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount.id);
@@ -205,6 +206,7 @@ const AdManager = () => {
             setErrors({...errors, adAccount: 'Choose Snapchat Account'});
             return;
         }
+        setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const result = await getSnapchatAds(state.startDate, state.endDate, state.adAccount.id);
