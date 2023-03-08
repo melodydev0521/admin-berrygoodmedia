@@ -7,7 +7,7 @@ export const themeDark = createTheme({
             default: "#000000"
         },
         primary: {
-            main: '#363636'
+            main: '#000000'
         },
         success: {
             main: '#3F4899'

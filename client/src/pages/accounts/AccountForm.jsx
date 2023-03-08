@@ -17,17 +17,21 @@ export default function AccountForm(props) {
     const initialAccount = {
         accountType: '',
         name: '',
-        token: ''
+        token: '',
+        accessToken: ''
     };
     const initialErrors = {
         accountType: '',
         name: '',
-        token: ''
+        token: '',
+        accessToken: ''
     };
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
+    const [atInputVisible, setAtInputVisible] = React.useState(false);
 
     const handleAccountTypeChange = (name, item) => {
+        item.id === "tiktok" ? setAtInputVisible(true) : setAtInputVisible(false);
         setAccount({...account, accountType: item.id});
     }
 
@@ -45,7 +49,7 @@ export default function AccountForm(props) {
 
     return (
         <Grid container item xs={12} spacing={1} flexDirection={"row"}>
-            <Grid container item lg={3} md={6} xs={6}>
+            <Grid container item lg={2} md={6} xs={6}>
                 <StyledSelect 
                     data={accountTypes}
                     name='accounttype'
@@ -64,13 +68,22 @@ export default function AccountForm(props) {
                     error={errors.name}
                 />
             </Grid>
-            <Grid container item lg={5} md={12} xs={12}>
+            <Grid container item lg={atInputVisible ? 3 : 6} md={12} xs={12}>
                 <StyledTextField
                     label='Token'
                     name="token"
                     onchange={handleTextFieldChange}
                     value={account.token}
                     error={errors.token}
+                />
+            </Grid>
+            <Grid container item lg={3} md={12} xs={12} sx={{ display: `${atInputVisible ? 'block' : 'none'}` }}>
+                <StyledTextField
+                    label='Access Token'
+                    name="accessToken"
+                    onchange={handleTextFieldChange}
+                    value={account.accessToken}
+                    error={errors.accessToken}
                 />
             </Grid>
             <Grid container item lg={2} md={12}>
@@ -87,5 +100,6 @@ export default function AccountForm(props) {
 }
 
 AccountForm.propTypes = {
-    addNew: PropTypes.func
+    addNew: PropTypes.func,
+    handleChange: PropTypes.func
 }

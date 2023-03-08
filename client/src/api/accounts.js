@@ -20,6 +20,16 @@ export const addData = (account) => {
         });
 }
 
+export const editData = _id => {
+    return api
+        .delete(`/account/${_id}`)
+        .then(res => res.data)
+        .catch(err => ({
+            isValid: false,
+            errors: err.response.data
+        }));
+}
+
 export const deleteData = _id => {
     return api.delete(`/account/${_id}`).then(res => res.data);
 }

@@ -8,7 +8,7 @@ import { StyledCard } from '../../components/styled-elements/styledCard'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import AccountForm from './AccountForm'
 import DataArea from './DataArea'
-import { deleteData, getData } from '../../api/accounts'
+import { deleteData, editData, getData } from '../../api/accounts'
 
 export default function AccountSetting() {
 	
@@ -33,6 +33,16 @@ export default function AccountSetting() {
         setData([...updateData]);
     }
 
+	const handleItemChange = async (_id) => {
+        // Validate Fields
+        // const newItem = await editData(account);
+        // if (!newItem.isValid) {
+        //     return setErrors(newItem.errors);
+        // }
+        // setAccount(initialAccount);
+        // props.addNew(newItem.data);
+    }
+
 	const addItem = item => {
 		setData([item, ...data]);
 	}
@@ -52,6 +62,7 @@ export default function AccountSetting() {
 				<DataArea 
 					data={data}
 					handleAccountDelete={handleItemDelete}
+					handleAccountChange={handleItemChange}
 					loading={loading}
 				/>
 			</StyledCard>

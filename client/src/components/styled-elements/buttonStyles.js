@@ -2,13 +2,33 @@ import { Button } from "@mui/material";
 import styled from "@mui/styled-engine";
 
 export const StyledButtonPrimary = styled(Button)(({ theme }) => ({
-    background: theme.mode === 'dark' ? '#000' : 'linear-gradient(246.12deg, #0804D2 24%, rgba(75, 73, 170, 0.56) 121.04%)',
-    color: '#fff'
+    // background: theme.mode === 'dark' ? '#000' : 'linear-gradient(246.12deg, #0804D2 24%, rgba(75, 73, 170, 0.56) 121.04%)',
+    background: '#fff',
+    color: '#000',
+
+    [`&:hover`]: {
+        background: '#333',
+        color: "#fff"
+    },
+    [`&.Mui-disabled`]: {
+        background: '#a6a6a6',
+        color: "#333"
+    }
 }));
 
 export const StyledButtonSuccess = styled(Button)(({ theme }) => ({
-    background: theme.mode === 'dark' ? '#000' : 'linear-gradient(246.12deg, #198825 24%, rgba(68, 255, 87, 0.56) 121.04%)',
-    color: '#fff'
+    // background: theme.mode === 'dark' ? '#000' : 'linear-gradient(246.12deg, #198825 24%, rgba(68, 255, 87, 0.56) 121.04%)',
+    background: '#fff',
+    color: '#000',
+
+    [`&:hover`]: {
+        background: '#333',
+        color: "#fff"
+    },
+    [`&.Mui-disabled`]: {
+        background: '#a6a6a6',
+        color: "#333"
+    }
 }));
 
 export const StyledButtonWarning = styled(Button)(({ theme }) => ({

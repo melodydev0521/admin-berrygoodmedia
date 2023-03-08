@@ -12,28 +12,38 @@ export default function DataArea(props) {
             label: 'no',
             style: {
                 width: '5%'
-            }
+            },
         },
         {
             id: 'accountType',
             label: 'Type',
             style: {
                 width: '5%'
-            }
+            },
+            sort: true
         },
         {
             id: 'name',
             label: 'Name',
             style: {
                 width: '20%'
-            }
+            },
+            sort: true
         },
         {
             id: 'token',
             label: 'Token',
             align: 'left',
             style: {
-                width: '65%'
+                width: '35%'
+            }
+        },
+        {
+            id: 'accessToken',
+            label: 'Access Token',
+            align: 'left',
+            style: {
+                width: '30%'
             }
         },
         {
@@ -45,13 +55,22 @@ export default function DataArea(props) {
                 width: '5%'
             },
             render: (item, col) =>  
-                <IconButton
-                    sx={{ margin: '5px' }}
-                    onClick={() => props.handleAccountDelete(col.key)}
-                    color='error'
-                >
-                    <DeleteIcon />
-                </IconButton>
+                <React.Fragment>
+                    <IconButton
+                        sx={{ margin: '5px' }}
+                        onClick={() => props.handleAccountChange(col.key)}
+                        color='error'
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton
+                        sx={{ margin: '5px' }}
+                        onClick={() => props.handleAccountDelete(col.key)}
+                        color='error'
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </React.Fragment>
         }
     ];
     var index = 1;
@@ -70,5 +89,6 @@ export default function DataArea(props) {
 DataArea.propTypes = {
   data: PropTypes.array,
   handleAccountDelete: PropTypes.func,
+  handleAccountChange: PropTypes.func,
   loading: PropTypes.bool
 }

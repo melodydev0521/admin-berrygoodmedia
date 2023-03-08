@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import AccountModel, { IAccounts } from "../models/Accounts";
+import accountValidate from "../validations/accountValidate";
 
 /**
  * @param req {*}
@@ -16,10 +17,18 @@ export const getAccounts: RequestHandler = (req, res) => {
  * @param res {IAccount}
  */
 export const addAccount: RequestHandler = (req, res) => {
+
+    const { errors, isValid } = accountValidate(req.body);
+
+    if (!isValid) {
+        throw res.status(400).json(errors);
+    }
+
     const newAccount: IAccounts = new AccountModel({
         accountType: req.body.accountType,
         name: req.body.name,
-        token: req.body.token
+        token: req.body.token,
+        accessToken: req.body.accessToken
     });
 
     newAccount

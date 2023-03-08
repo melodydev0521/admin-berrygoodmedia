@@ -219,7 +219,7 @@ export default function DashForm(props) {
 			<Grid container item>
 				<StyledButtonPrimary
 					style={{width: '100%'}}
-					variant="outlined"
+					// variant="outlined"
 					onClick={getData}
 				>
 					<span>Get Connections</span>

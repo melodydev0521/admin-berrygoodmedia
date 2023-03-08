@@ -9,7 +9,8 @@ enum accountType {
 export interface IAccounts extends Document {
     accountType: accountType,
     name: string,
-    token: string
+    token: string,
+    accessToken?: string
 }
 
 const AccountSchema: Schema = new Schema({
@@ -24,6 +25,9 @@ const AccountSchema: Schema = new Schema({
     token: {
         type: String,
         require: true
+    },
+    accessToken: {
+        type: String
     }
 });
 

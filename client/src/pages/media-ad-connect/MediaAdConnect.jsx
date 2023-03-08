@@ -210,6 +210,7 @@ const AdManager = () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const result = await getSnapchatAds(state.startDate, state.endDate, state.adAccount.id);
+        console.log(result);
         if (result.request_status === "ERROR") {
             setState({ ...state, isAdLoading: true, adSets: [] });
             return alert(result.debug_message);
@@ -225,7 +226,9 @@ const AdManager = () => {
                 adgroupName: item.name, 
                 campaignId: item.campaignId
             }));
+        console.log(adSets);
         adSets = await excludeConnectedRevenues("adsets", adSets);
+        console.log(adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
@@ -338,7 +341,9 @@ const AdManager = () => {
                                     onchange={handleAccountSelect}
                                     data={accounts
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-                                        .map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token, accountType: item.accountType}))}
+                                        .map(item => ({name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={30} /> : 
+                                            item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={30} /> : 
+                                            <i>other</i>} &nbsp; {item.name}</React.Fragment>, value: item.token, accountType: item.accountType}))}
                                     error={errors.adAccount} 
                                 />
                             </Grid>
@@ -404,7 +409,7 @@ const AdManager = () => {
                                             onremove={handleDataRemove}
                                         />
                                         <StyledButtonPrimary
-                                            style={{ backgroundColor: '#363636', marginTop: '15px' }}
+                                            style={{ marginTop: '15px' }}
                                             onClick={handleDataSave}
                                             fullWidth
                                             sx={{padding: '10px'}}
