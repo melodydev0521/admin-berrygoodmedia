@@ -188,7 +188,9 @@ export default function DashForm(props) {
 							{name: 'All', value: 'all'}, 
 							...accounts
 								.filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-								.map(item => ({name: `${item.accountType} | ${item.name}`, value: item.token}))
+								.map(item => ({name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={30} /> : 
+									item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={30} /> : 
+									<i>other</i>} &nbsp; {item.name}</React.Fragment>, value: item.token, accountType: item.accountType}))
 						]}
 						className='form-item-animation'
 						sx={{
