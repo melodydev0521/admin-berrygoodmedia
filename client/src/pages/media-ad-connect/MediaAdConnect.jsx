@@ -179,7 +179,6 @@ const AdManager = () => {
         }
         setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
-        console.log(state.adAccount)
 
         const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount);
         if (tiktokData === "server_error") return;
@@ -211,7 +210,6 @@ const AdManager = () => {
         setState({ ...state, isAdLoading: true, adSets: [] });
 
         const result = await getSnapchatAds(state.startDate, state.endDate, state.adAccount.id);
-        console.log(result);
         if (result.request_status === "ERROR") {
             setState({ ...state, isAdLoading: true, adSets: [] });
             return alert(result.debug_message);
@@ -227,9 +225,7 @@ const AdManager = () => {
                 adgroupName: item.name, 
                 campaignId: item.campaignId
             }));
-        console.log(adSets);
         adSets = await excludeConnectedRevenues("adsets", adSets);
-        console.log(adSets);
         setState({...state, adSets: adSets, isAdLoading: false});
         automaticConnection();
     }
@@ -311,10 +307,9 @@ const AdManager = () => {
     }
 
     const handleAccountSelect = (accountType, account) => {
-        console.log(accountType, account)
         setState({ ...state, [accountType]: account });
     }
-    console.log(accounts)
+
     return (
         <Grid container item xs={11} style={{ margin: '30px auto' }}>
             <StyledCard>

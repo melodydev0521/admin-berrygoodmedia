@@ -219,7 +219,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             const infuseData = await getInfuse(start, end);
             var index = 1;
             var mediaSources = [];
-            
             if (!isEmpty(infuseData)) {
                 mediaSources = [
                     ...infuseData.map((item) => ({
@@ -250,10 +249,12 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             var tiktokData = [];
             var adSets = [];
             index = 1;
+            console.log(advertiser_id)
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_adgroup(start, end, element);
+                console.log(tiktokData)
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -263,11 +264,12 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                         adgroupName: item.metrics.adgroup_name,
                     })),
                 ];
-            }            
+            }  
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_campaign(start, end, element);
+                console.log(tiktokData)
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -286,6 +288,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 if (snapchatResult.request_status !== "ERROR") {
                     const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
                     var snapsets = await getSnapSets();
+                console.log(snapsets)
                     snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
                         .map(item => {
                             const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
@@ -304,8 +307,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     console.log(snapchatResult.debug_message);
                 }
             }
-
-            console.log(adSets);
 
             // Combination
             index = 1;
@@ -331,6 +332,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }
                 }
             });
+            console.log(result)
             return result;
         });
 }
