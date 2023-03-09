@@ -38,6 +38,7 @@ const AdManager = () => {
             dataKey: 0
         },
         pairComplete: false,
+        adBtnTiktokToggle: true // if false: snapchat
     };
     
     const initialErrors = {
@@ -308,7 +309,8 @@ const AdManager = () => {
     }
 
     const handleAccountSelect = (accountType, account) => {
-        setState({ ...state, [accountType]: account });
+        console.log(account.accountType)
+        setState({ ...state, [accountType]: account, adBtnTiktokToggle: account.accountType === 'tiktok' });
     }
 
     return (
@@ -374,18 +376,18 @@ const AdManager = () => {
                                             GET MEDIA SOURCES
                                         </StyledButtonSuccess>
                                     </Grid>
-                                    <Grid container item spacing={1} md={3} xs={6}>
-                                        <Grid container item xs={4}>
+                                    <Grid container item spacing={1} xs={6} md={3}>
+                                        <Grid container item xs={6} sx={{display: state.adBtnTiktokToggle ? 'block' : 'none'}} >
                                             <StyledButtonSuccess onClick={getAdSets} fullWidth>
-                                                AD SETS
+                                                AD Group
                                             </StyledButtonSuccess>
                                         </Grid>
-                                        <Grid container item xs={4}>
+                                        <Grid container item xs={6} sx={{display: state.adBtnTiktokToggle ? 'block' : 'none'}} >
                                             <StyledButtonSuccess onClick={getCampaigns} fullWidth>
                                                 Campaigns
                                             </StyledButtonSuccess>
                                         </Grid>
-                                        <Grid container item xs={4}>
+                                        <Grid container item xs={12} sx={{display: state.adBtnTiktokToggle ? 'none' : 'block'}}>
                                             <StyledButtonSuccess onClick={getSnapAdsList} fullWidth>
                                                 Snap Ads
                                             </StyledButtonSuccess>
