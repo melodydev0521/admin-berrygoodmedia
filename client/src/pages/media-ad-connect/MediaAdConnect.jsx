@@ -179,6 +179,7 @@ const AdManager = () => {
         }
         setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
+        console.log(state.adAccount)
 
         const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount);
         if (tiktokData === "server_error") return;
@@ -310,9 +311,10 @@ const AdManager = () => {
     }
 
     const handleAccountSelect = (accountType, account) => {
+        console.log(accountType, account)
         setState({ ...state, [accountType]: account });
     }
-
+    console.log(accounts)
     return (
         <Grid container item xs={11} style={{ margin: '30px auto' }}>
             <StyledCard>
@@ -341,7 +343,7 @@ const AdManager = () => {
                                     onchange={handleAccountSelect}
                                     data={accounts
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-                                        .map(item => ({name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={30} /> : 
+                                        .map(item => ({...item, name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={30} /> : 
                                             item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={30} /> : 
                                             <i>other</i>} &nbsp; {item.name}</React.Fragment>, value: item.token, accountType: item.accountType}))}
                                     error={errors.adAccount} 
