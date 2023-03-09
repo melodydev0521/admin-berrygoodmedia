@@ -249,12 +249,11 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             var tiktokData = [];
             var adSets = [];
             index = 1;
-            console.log(advertiser_id)
+            console.log(mediaSources)
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_adgroup(start, end, element);
-                console.log(tiktokData)
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -269,7 +268,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
                 tiktokData = await getTiktok_campaign(start, end, element);
-                console.log(tiktokData)
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -288,7 +286,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 if (snapchatResult.request_status !== "ERROR") {
                     const snapchatData = snapchatResult.total_stats[0].total_stat.breakdown_stats.campaign;
                     var snapsets = await getSnapSets();
-                console.log(snapsets)
                     snapsets = snapsets.filter(item => snapchatData.filter(i => item.campaignId === i.id).length !== 0)
                         .map(item => {
                             const matched = snapchatData.filter(i => item.campaignId === i.id)[0];
