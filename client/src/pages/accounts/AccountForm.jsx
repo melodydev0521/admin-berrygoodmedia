@@ -5,18 +5,14 @@ import { addData } from '../../api/accounts'
 import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledTextField from '../../components/styled-elements/StyledTextField'
-import StyledAutoCompelete from "../../components/styled-elements/StyledAutoCompelete"
+// import StyledAutoCompelete from "../../components/styled-elements/StyledAutoCompelete"
+import { getData as getAdsAccount } from '../../api/snapchat'
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
     { name: 'Tiktok Account', value: 'tiktok' },
     { name: 'Snapchat Account', value: 'snapchat' }
 ];
-
-const tiktokAccessTokens = [
-    '70f21646e0a7da20e90acaf96b939a4c49d8fc59',
-    '5d640f4dfedd2a648548d1812cfa96738cd723a7'
-]
 
 export default function AccountForm(props) {
 
@@ -35,10 +31,24 @@ export default function AccountForm(props) {
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
     const [atInputVisible, setAtInputVisible] = React.useState(false);
+    const [adsAccounts, setAdsAccounts] = React.useState([]);
+
+    React.useEffect(() => {
+        getInit();
+    }, []);
+
+    const getInit = async () => {
+        const result = await getAdsAccount();
+        setAdsAccounts(result.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token})));
+    }
 
     const handleAccountTypeChange = (name, item) => {
         item.id === "tiktok" ? setAtInputVisible(true) : setAtInputVisible(false);
         setAccount({...account, accountType: item.id});
+    }
+
+    const handleAccessTokenChange = (name, item) => {
+        setAccount({...account, accessToken: item.id});
     }
 
     const handleTextFieldChange = e => setAccount({...account, [e.target.name]: e.target.value})
@@ -49,7 +59,9 @@ export default function AccountForm(props) {
         if (!newItem.isValid) {
             return setErrors(newItem.errors);
         }
-        setAccount(initialAccount);
+        setAccount({
+            ...account, name: '', token: ''
+        });
         props.addNew(newItem.data);
     }
 
@@ -84,13 +96,13 @@ export default function AccountForm(props) {
                 />
             </Grid>
             <Grid container item lg={3} md={12} xs={12} sx={{ display: `${atInputVisible ? 'block' : 'none'}` }}>
-                <StyledAutoCompelete
+                <StyledSelect
                     label='Access Token'
                     name="accessToken"
-                    onchange={handleTextFieldChange}
+                    onchange={handleAccessTokenChange}
                     value={account.accessToken}
                     error={errors.accessToken}
-                    options={tiktokAccessTokens}
+                    data={adsAccounts}
                 />
             </Grid>
             <Grid container item lg={2} md={12}>

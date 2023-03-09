@@ -150,6 +150,7 @@ export default function DataTable({ondelete, revenues, isLoading}) {
                 data={ isEmpty(revenues) ? [] : revenues.map(item => ({...item, key: item._id}))}
                 totalRow={total}
                 total={true}
+                className='bounce-up'
             />
         </Grid>
     )

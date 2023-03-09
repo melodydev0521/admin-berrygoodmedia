@@ -15,6 +15,7 @@ export default function StyledSelect(props) {
 
     const handleChange = (event) => {
         setState(event.target.value);
+        console.log(event.target.value)
         props.onchange(
             props.name, 
             { 

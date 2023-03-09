@@ -36,7 +36,7 @@ const routes = [
     {
         id: 'snapset-setting',
         path: '/snapset-setting',
-        text: 'SnapChat Setting',
+        text: 'Name & ID',
         private: true,
         icon: <ManageAccountsOutlinedIcon />,
         component: <SnapAds />

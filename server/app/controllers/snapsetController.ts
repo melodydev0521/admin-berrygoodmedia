@@ -24,8 +24,9 @@ export const addData: RequestHandler = (req, res) => {
     }
 
     const newSnapset: ISnapSet = new SnapSetModel({
+        accountType: req.body.accountType,
         name: req.body.name,
-        campaignId: req.body.campaignId
+        token: req.body.token
     });
 
     newSnapset

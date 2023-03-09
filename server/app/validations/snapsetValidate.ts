@@ -5,19 +5,25 @@ import { IFormValidate } from "./formValidate";
 const snapsetValidate = (data: ISnapSet): IFormValidate => {
 
     const errors = {
+        accountType: '',
         name: '',
-        campaignId: ''
+        token: ''
     };
 
     var isValid: boolean = true;
+
+    if (isEmpty(data.accountType)) {
+        errors.accountType = "Account Type is requried";
+        isValid = false;
+    }
 
     if (isEmpty(data.name)) {
         errors.name = "Name is requried";
         isValid = false;
     }
 
-    if (isEmpty(data.campaignId)) {
-        errors.campaignId = "Campaign Id is required";
+    if (isEmpty(data.token)) {
+        errors.token = "Token is required";
         isValid = false;
     }
 

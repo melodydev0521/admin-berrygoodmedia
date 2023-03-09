@@ -221,7 +221,7 @@ const AdManager = () => {
 
         const snapsets = await getSnapSets();
         var index = 1;
-        var adSets = snapsets.filter(item => snapads.filter(i => item.campaignId === i.id).length !== 0)
+        var adSets = snapsets.filter(item => snapads.filter(i => item.accountType === 'snapchat' && item.token === i.id).length !== 0)
             .map(item => ({
                 no: index++, 
                 adgroupName: item.name, 
@@ -341,14 +341,15 @@ const AdManager = () => {
                                     onchange={handleAccountSelect}
                                     data={accounts
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-                                        .map(item => ({...item, name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={25} /> : 
-                                            item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={25} /> : 
+                                        .map(item => ({...item, name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={20} /> : 
+                                            item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={20} /> : 
                                             <i>other</i>} &nbsp; {item.name}</React.Fragment>, value: item.token, accountType: item.accountType}))}
                                     error={errors.adAccount} 
+                                    style={{display: 'flex'}}
                                 />
                             </Grid>
                         </Grid>
-                        <Grid container item direction={"row"} spacing={1} lg={5} sm={6} xs={12}>
+                        <Grid container item direction={"row"} spacing={1} xl={3} lg={5} sm={6} xs={12}>
                             <Grid container item md={6} xs={6}>
                                 <BasicDatePicker
                                     name="startDate"

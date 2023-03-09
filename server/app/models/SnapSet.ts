@@ -1,16 +1,26 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+enum accountType {
+    plug = 'tiktok',
+    snapchat = 'snapchat'
+}
 export interface ISnapSet extends Document {
+    accountType: accountType,
     name: string,
-    campaignId: string
+    token: string
 }
 
 const SnapSetSchema: Schema = new Schema({
+    accountType: {
+        type: String,
+        enum: ['tiktok', 'snapchat'],
+        require: true
+    },
     name: {
         type: String,
         require: true
     },
-    campaignId: {
+    token: {
         type: String,
         require: true
     }

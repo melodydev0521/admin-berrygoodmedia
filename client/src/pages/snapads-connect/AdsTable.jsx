@@ -15,6 +15,13 @@ export default function AdsTable(props) {
             }
         },
         {
+            id: 'accountType',
+            label: 'Account Type',
+            style: {
+                width: '15%'
+            }
+        },
+        {
             id: 'name',
             label: 'Name',
             style: {
@@ -22,11 +29,11 @@ export default function AdsTable(props) {
             }
         },
         {
-            id: 'campaignId',
-            label: 'Campaign ID',
+            id: 'token',
+            label: 'Token',
             align: 'left',
             style: {
-                width: '65%'
+                width: '50%'
             }
         },
         {
