@@ -5,12 +5,18 @@ import { addData } from '../../api/accounts'
 import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyles'
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledTextField from '../../components/styled-elements/StyledTextField'
+import StyledAutoCompelete from "../../components/styled-elements/StyledAutoCompelete"
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
     { name: 'Tiktok Account', value: 'tiktok' },
     { name: 'Snapchat Account', value: 'snapchat' }
 ];
+
+const tiktokAccessTokens = [
+    '70f21646e0a7da20e90acaf96b939a4c49d8fc59',
+    '5d640f4dfedd2a648548d1812cfa96738cd723a7'
+]
 
 export default function AccountForm(props) {
 
@@ -78,12 +84,13 @@ export default function AccountForm(props) {
                 />
             </Grid>
             <Grid container item lg={3} md={12} xs={12} sx={{ display: `${atInputVisible ? 'block' : 'none'}` }}>
-                <StyledTextField
+                <StyledAutoCompelete
                     label='Access Token'
                     name="accessToken"
                     onchange={handleTextFieldChange}
                     value={account.accessToken}
                     error={errors.accessToken}
+                    options={tiktokAccessTokens}
                 />
             </Grid>
             <Grid container item lg={2} md={12}>

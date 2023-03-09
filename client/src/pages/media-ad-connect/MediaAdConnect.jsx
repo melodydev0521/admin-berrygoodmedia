@@ -180,6 +180,7 @@ const AdManager = () => {
         setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
 
+
         const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount);
         if (tiktokData === "server_error") return;
         var index = 1;
@@ -338,8 +339,8 @@ const AdManager = () => {
                                     onchange={handleAccountSelect}
                                     data={accounts
                                         .filter(item => item.accountType === "tiktok" || item.accountType === "snapchat")
-                                        .map(item => ({...item, name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={30} /> : 
-                                            item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={30} /> : 
+                                        .map(item => ({...item, name: <React.Fragment>{item.accountType === "tiktok" ? <img src='/assets/tik-tok.png' width={25} /> : 
+                                            item.accountType === "snapchat" ? <img src='/assets/snapchat.png' width={25} /> : 
                                             <i>other</i>} &nbsp; {item.name}</React.Fragment>, value: item.token, accountType: item.accountType}))}
                                     error={errors.adAccount} 
                                 />

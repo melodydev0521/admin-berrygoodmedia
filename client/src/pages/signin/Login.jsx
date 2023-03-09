@@ -129,6 +129,11 @@ export default function Login() {
                                         error={error.email === '' ? false : true}
                                         value={user.email}
                                         onChange={handleInputChange}
+                                        onKeyDown={e => {
+                                            if (e.keyCode === 13) {
+                                                document.getElementsByName("password")[0].focus();
+                                            }
+                                        }}
                                     />
                                 </StyledLogInput>
                                 <StyledLogInput>
@@ -142,6 +147,11 @@ export default function Login() {
                                         type={'password'}
                                         value={user.password}
                                         onChange={handleInputChange}
+                                        onKeyDown={e => {
+                                            if (e.keyCode === 13) {
+                                                handleLogin();
+                                            }
+                                        }}
                                     />
                                 </StyledLogInput>
                             </LoginCard> 
