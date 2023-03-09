@@ -249,7 +249,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             var tiktokData = [];
             var adSets = [];
             index = 1;
-            console.log(mediaSources)
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
@@ -308,9 +307,12 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             // Combination
             index = 1;
             const result = [];
+            console.log(mediaSources)
+            console.log(data);
             data.forEach(item => {
                 var isMatch = mediaSources.filter(i => i.name == item.name).length !== 0 ? true : false;
                 if (isMatch) {
+                    console.log(1);
                     const media = mediaSources.filter(i => item.name == i.name)[0]
                     const adset = adSets.filter(ad => ad.campaignId == item.campaignId)[0];
                     if (!isEmpty(adset)) {
