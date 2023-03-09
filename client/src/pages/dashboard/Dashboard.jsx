@@ -23,7 +23,6 @@ export default function Dashboard() {
         setLoading(true);
         setRevenues([]);
         var result = await getDataByConnection(startDate, endDate, plugAccount, adAccount, timezone);
-        console.log(result);
         if (result === "server_error") return;
         setRevenues(result);
         setLoading(false);

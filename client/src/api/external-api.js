@@ -307,13 +307,11 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
             // Combination
             index = 1;
             const result = [];
-            console.log(adSets);
             data.forEach(item => {
                 var isMatch = mediaSources.filter(i => i.name == item.name).length !== 0 ? true : false;
                 if (isMatch) {
                     const media = mediaSources.filter(i => item.name == i.name)[0]
                     const adset = adSets.filter(ad => ad.campaignId == item.campaignId)[0];
-                    console.log(adset)
                     if (!isEmpty(adset)) {
                         result.push({
                             no: index ++,
@@ -330,7 +328,6 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                     }
                 }
             });
-            console.log(result)
             return result;
         });
 }
