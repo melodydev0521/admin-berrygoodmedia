@@ -90,11 +90,11 @@ export default function DashForm(props) {
         if (plugAccount[0] === 'all') {
             plugAccount = accounts.filter(item => item.accountType === 'plug').map(item => item.token);
         }
-        var adAccount = [account.adAccount.id];
-        if (adAccount[0] === 'all') {
+        var adAccount = account.adAccount.id;
+        if (adAccount === 'all') {
             adAccount = accounts.filter(item => item.accountType === 'tiktok' || item.accountType === 'snapchat');
         } else {
-			adAccount = accounts.filter(item => item.token === adAccount[0]);
+			adAccount = accounts.filter(item => item.token === adAccount);
 		}
 		await props.getData(date.start, date.end, plugAccount, adAccount, timezone);
 		setLoadUsedAccount({

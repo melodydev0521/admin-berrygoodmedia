@@ -58,13 +58,6 @@ export default function DataArea(props) {
                 <React.Fragment>
                     <IconButton
                         sx={{ margin: '5px' }}
-                        onClick={() => props.handleAccountChange(col.key)}
-                        color='error'
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton
-                        sx={{ margin: '5px' }}
                         onClick={() => props.handleAccountDelete(col.key)}
                         color='error'
                     >

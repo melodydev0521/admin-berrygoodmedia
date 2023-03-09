@@ -108,13 +108,13 @@ export const getPlug = (start, end, bearerToken, timezone = "New_York", fields =
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
+export const getTiktok_adgroup = (startDate, endDate, account) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type
      */
     return fetch(
-        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${advertiser_id}&page=1&data_level=AUCTION_ADGROUP&report_type=BASIC&dimensions=["adgroup_id"]&metrics=["adgroup_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
+        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${account.token}&page=1&data_level=AUCTION_ADGROUP&report_type=BASIC&dimensions=["adgroup_id"]&metrics=["adgroup_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
         { 
             method: 'GET',
             headers: {
@@ -124,7 +124,7 @@ export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
                 'Access-Control-Allow-Origin': '*',
                 "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
                 'Access-Control-Allow-Credentials': 'true',
-                'Access-Token': advertiser_id.accessToken
+                'Access-Token': account.accessToken
             }
         }
     )
@@ -139,13 +139,13 @@ export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
  * @params {startDate, endDate}
  * @return TikTok data with JSON
  */
-export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
+export const getTiktok_campaign = (startDate, endDate, account) => {
     /**
      * @method GET
      * @desc Get Tiktok data with JSON type
      */
     return fetch(
-        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${advertiser_id.token}&page=1&data_level=AUCTION_CAMPAIGN&report_type=BASIC&dimensions=["campaign_id"]&metrics=["campaign_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
+        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${account.token}&page=1&data_level=AUCTION_CAMPAIGN&report_type=BASIC&dimensions=["campaign_id"]&metrics=["campaign_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
         { 
             method: 'GET',
             headers: {
@@ -155,7 +155,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
                 'Access-Control-Allow-Origin': '*',
                 "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
                 'Access-Control-Allow-Credentials': 'true',
-                'Access-Token': advertiser_id.accessToken
+                'Access-Token': account.accessToken
             }
         }
     )
