@@ -32,7 +32,6 @@ function Main () {
 		const user = await loadUser();
 		setContext({...context, isAuthenticated: true, user: user, checkingStatus: false, token: localStorage.token});
 	}
-	console.log(context.theme)
 
 	return (
 		<ThemeProvider theme={context.theme === 'dark' ? themeDark : themeLight}>

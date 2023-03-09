@@ -124,7 +124,7 @@ export const getTiktok_adgroup = (startDate, endDate, advertiser_id) => {
                 'Access-Control-Allow-Origin': '*',
                 "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
                 'Access-Control-Allow-Credentials': 'true',
-                'Access-Token': '70f21646e0a7da20e90acaf96b939a4c49d8fc59'
+                'Access-Token': advertiser_id.accessToken
             }
         }
     )
@@ -145,7 +145,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
      * @desc Get Tiktok data with JSON type
      */
     return fetch(
-        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${advertiser_id}&page=1&data_level=AUCTION_CAMPAIGN&report_type=BASIC&dimensions=["campaign_id"]&metrics=["campaign_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
+        `https://berrygoodmedia.herokuapp.com/https://business-api.tiktok.com/open_api/v1.3/report/integrated/get/?advertiser_id=${advertiser_id.token}&page=1&data_level=AUCTION_CAMPAIGN&report_type=BASIC&dimensions=["campaign_id"]&metrics=["campaign_name","spend"]&page_size=500&start_date=${startDate}&end_date=${endDate}`,
         { 
             method: 'GET',
             headers: {
@@ -155,7 +155,7 @@ export const getTiktok_campaign = (startDate, endDate, advertiser_id) => {
                 'Access-Control-Allow-Origin': '*',
                 "Access-Control-Allow-Method": "GET,HEAD,OPTIONS,POST,PUT",
                 'Access-Control-Allow-Credentials': 'true',
-                'Access-Token': '70f21646e0a7da20e90acaf96b939a4c49d8fc59'
+                'Access-Token': advertiser_id.accessToken
             }
         }
     )
@@ -253,7 +253,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
-                tiktokData = await getTiktok_adgroup(start, end, element.token);
+                tiktokData = await getTiktok_adgroup(start, end, element);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -267,7 +267,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
 
             for (let element of advertiser_id) {
                 if (element.accountType === 'snapchat') continue;
-                tiktokData = await getTiktok_campaign(start, end, element.token);
+                tiktokData = await getTiktok_campaign(start, end, element);
                 adSets = [
                     ...adSets,
                     ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -366,7 +366,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
 
     for (let element of advertiser_id) {
         if (element.accountType === 'snapchat') continue;
-        tiktokData = await getTiktok_adgroup(start, end, element.token);
+        tiktokData = await getTiktok_adgroup(start, end, element);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
@@ -378,7 +378,7 @@ export const getOnlySpends = async (start, end, advertiser_id) => {
 
     for (let element of advertiser_id) {
         if (element.accountType === 'snapchat') continue;
-        tiktokData = await getTiktok_campaign(start, end, element.token);
+        tiktokData = await getTiktok_campaign(start, end, element);
         adSets = [
             ...adSets,
             ...isEmpty(tiktokData) ? [] : tiktokData.list.map((item) => ({
