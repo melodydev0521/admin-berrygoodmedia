@@ -305,7 +305,7 @@ export const getDataByConnection = (start, end, bearerToken, advertiser_id, time
                 }
             }
 
-
+            console.log(adSets);
 
             // Combination
             index = 1;
