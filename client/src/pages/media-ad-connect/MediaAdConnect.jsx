@@ -151,7 +151,7 @@ const AdManager = () => {
         setErrors(initialErrors);
 
         setState({ ...state, isAdLoading: true, adSets: [] });
-        const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.adAccount.id);
+        const tiktokData = await getTiktok_adgroup(state.startDate, state.endDate, state.adAccount);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
@@ -180,7 +180,7 @@ const AdManager = () => {
         setErrors(initialErrors);
         setState({ ...state, isAdLoading: true, adSets: [] });
 
-        const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount.id);
+        const tiktokData = await getTiktok_campaign(state.startDate, state.endDate, state.adAccount);
         if (tiktokData === "server_error") return;
         var index = 1;
         var adSets = [];
