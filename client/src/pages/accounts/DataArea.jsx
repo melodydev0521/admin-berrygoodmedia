@@ -44,7 +44,8 @@ export default function DataArea(props) {
             align: 'left',
             style: {
                 width: '30%'
-            }
+            },
+            // render: token => <p>{props.adsAccounts.filter(item => item.token === token).length === 0 ? token : props.adsAccounts.filter(item => item.token === token)[0]}</p>
         },
         {
             id: 'delete',
@@ -83,5 +84,6 @@ DataArea.propTypes = {
   data: PropTypes.array,
   handleAccountDelete: PropTypes.func,
   handleAccountChange: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  adsAccounts: PropTypes.array
 }

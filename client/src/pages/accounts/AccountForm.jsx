@@ -6,7 +6,6 @@ import { StyledButtonSuccess } from '../../components/styled-elements/buttonStyl
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledTextField from '../../components/styled-elements/StyledTextField'
 // import StyledAutoCompelete from "../../components/styled-elements/StyledAutoCompelete"
-import { getData as getAdsAccount } from '../../api/snapchat'
 
 const accountTypes = [
     { name: 'Plug Account', value: 'plug' },
@@ -31,16 +30,6 @@ export default function AccountForm(props) {
     const [account, setAccount] = React.useState(initialAccount);
     const [errors, setErrors] = React.useState(initialErrors);
     const [atInputVisible, setAtInputVisible] = React.useState(false);
-    const [adsAccounts, setAdsAccounts] = React.useState([]);
-
-    React.useEffect(() => {
-        getInit();
-    }, []);
-
-    const getInit = async () => {
-        const result = await getAdsAccount();
-        setAdsAccounts(result.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token})));
-    }
 
     const handleAccountTypeChange = (name, item) => {
         item.id === "tiktok" ? setAtInputVisible(true) : setAtInputVisible(false);
@@ -102,7 +91,7 @@ export default function AccountForm(props) {
                     onchange={handleAccessTokenChange}
                     value={account.accessToken}
                     error={errors.accessToken}
-                    data={adsAccounts}
+                    data={props.adsAccounts}
                 />
             </Grid>
             <Grid container item lg={2} md={12}>
@@ -120,5 +109,6 @@ export default function AccountForm(props) {
 
 AccountForm.propTypes = {
     addNew: PropTypes.func,
-    handleChange: PropTypes.func
+    handleChange: PropTypes.func,
+    adsAccounts: PropTypes.array
 }

@@ -9,11 +9,13 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import AccountForm from './AccountForm'
 import DataArea from './DataArea'
 import { deleteData, editData, getData } from '../../api/accounts'
+import { getData as getAdsAccount } from '../../api/snapchat'
 
 export default function AccountSetting() {
 	
 	const [loading, setLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
+    const [adsAccounts, setAdsAccounts] = React.useState([]);
 
 	React.useEffect(() => {
         getInitData();
@@ -23,6 +25,8 @@ export default function AccountSetting() {
         setLoading(true);
         const result = await getData();
         setData(result);
+		const accounts = await getAdsAccount();
+		setAdsAccounts(accounts.filter(item => item.accountType === 'tiktok').map(item => ({name: item.name, value: item.token})));
         setLoading(false);
     }
 
@@ -57,10 +61,11 @@ export default function AccountSetting() {
 					</Typography>
 				</Box>
 				<br />
-				<AccountForm addNew={addItem} />
+				<AccountForm addNew={addItem} adsAccounts={adsAccounts} />
 				<br />
 				<DataArea 
 					data={data}
+					adsAccounts={adsAccounts}
 					handleAccountDelete={handleItemDelete}
 					handleAccountChange={handleItemChange}
 					loading={loading}
