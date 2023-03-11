@@ -9,6 +9,7 @@ import { StyledButtonPrimary } from '../../components/styled-elements/buttonStyl
 import StyledSelect from '../../components/styled-elements/StyledSelect'
 import StyledDatePicker from '../../components/styled-elements/StyledDatePicker'
 import { getData as getAccounts } from '../../api/accounts'
+import { makeExcelAndDownload } from "../../config/export-excel"
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -126,6 +127,10 @@ export default function DashForm(props) {
 		await props.refreshSpends(date.start, date.end, adAccount, timezone);
         setSpendLoading(false);
     }
+
+	const exportExcel = () => {
+		makeExcelAndDownload(props.revenues);
+	}
 
 	return (
 		<Grid container item spacing={2}>
@@ -252,6 +257,19 @@ export default function DashForm(props) {
 							spendLoading ? 
 							<img src={'/assets/loading/loading-bolt.gif'} width={30} height={30} /> : 
 							<span>Spends</span>
+						}
+					</StyledButtonPrimary>
+				</Grid>
+				<Grid container item xs={12}>
+					<StyledButtonPrimary
+						// disabled={unavailable}
+						onClick={exportExcel}
+						fullWidth
+					>
+						{
+							spendLoading ? 
+							<img src={'/assets/loading/loading-bolt.gif'} width={30} height={30} /> : 
+							<span>Excel Export</span>
 						}
 					</StyledButtonPrimary>
 				</Grid>
