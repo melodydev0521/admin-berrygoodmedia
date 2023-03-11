@@ -45,7 +45,7 @@ export default function DataArea(props) {
             style: {
                 width: '30%'
             },
-            // render: token => <p>{props.adsAccounts.filter(item => item.token === token).length === 0 ? token : props.adsAccounts.filter(item => item.token === token)[0]}</p>
+            render: token => <p>{props.adsAccounts.filter(item => item.value === token).length === 0 ? token : props.adsAccounts.filter(item => item.value === token)[0].name}</p>
         },
         {
             id: 'delete',
