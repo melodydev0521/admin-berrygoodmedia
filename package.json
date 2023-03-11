@@ -1,7 +1,7 @@
 {
   "name": "affiliate",
   "version": "1.0.0",
-  "description": "affiliate",
+  "description": "admin-berrygoodmedia project",
   "scripts": {
     "start": "npm start --prefix ./server",
     "dev": "concurrently \"npm run dev --prefix ./server\" \"npm start --prefix ./client\"",
@@ -9,7 +9,6 @@
     "build": "concurrently \"npm run build --prefix ./client\" \"npm run build --prefix ./server\"",
     "install-all": "concurrently \"npm install --prefix ./client\" \"npm install --prefix ./server\""
   },
-  "main": "index.js",
   "repository": "https://github.com/melodydev0521/admin-berrygoodmedia.git",
   "author": "MelodyDev0521 <melodydev0521@gmail.com>",
   "license": "MIT",
