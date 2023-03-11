@@ -1,4 +1,3 @@
-import ExcelExport, { alignment, defaultDataType } from 'export-xlsx'
 import download from 'downloadjs'
 import xlsx from 'node-xlsx'
 
