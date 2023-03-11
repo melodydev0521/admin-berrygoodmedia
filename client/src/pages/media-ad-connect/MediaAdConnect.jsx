@@ -75,7 +75,7 @@ const AdManager = () => {
 
     const automaticConnection = () => {
         if (!isEmpty(state.mediaSources) && !isEmpty(state.adSets)) {
-            var index = state.data.length-1;
+            var index = state.data.length + 1;
             const connected = [];
             state.mediaSources.forEach(item => {
                 state.adSets.forEach(ad => {
@@ -85,7 +85,12 @@ const AdManager = () => {
                     }
                 });
             });
-            setState({...state, data: [...connected, state.data]});
+            setState({
+                ...state, 
+                mediaSources: state.mediaSources.filter(item => connected.map(i => i.name).filter(i => i === item.name).length === 0),
+                adSets: state.adSes.filter(item => connected.map(i => i.name).filter(i => i === item.adgroupName).length === 0),
+                data: [...connected, state.data]
+            });
         }
     }
 
