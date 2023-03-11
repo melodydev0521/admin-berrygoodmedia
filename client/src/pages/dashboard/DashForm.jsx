@@ -129,6 +129,7 @@ export default function DashForm(props) {
     }
 
 	const exportExcel = () => {
+		console.log(props.revenues)
 		makeExcelAndDownload(props.revenues);
 	}
 
