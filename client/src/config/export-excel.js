@@ -2,12 +2,19 @@ import download from 'downloadjs'
 import xlsx from 'node-xlsx'
 
 export const makeExcelAndDownload = (dashboardData) => {
+    var index = 1;
+
     const data = [
         ['No', 'Name', 'Revenue', 'Spend', 'Profit', 'ROAS'],
-        ...dashboardData
+        ...dashboardData.map(item => ({
+            no: index ++,
+            name: item.name,
+            revenue: item.revenue,
+            spend: item.spend,
+            profit: item.revenue - item.spend,
+            roas: item.revenue / item.spend        
+        }))
     ];
-    // const range = {s: {c: 0, r: 0}, e: {c: 0, r: 3}}; // A1:A4
-    // const sheetOptions = {'!merges': [range]};
     var buffer = xlsx.build([{name: 'dashboard', data: data}]);
     download(buffer, 'demo.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 }
