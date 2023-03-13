@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import download from 'downloadjs'
 import xlsx from 'node-xlsx'
 
@@ -16,5 +17,6 @@ export const makeExcelAndDownload = (dashboardData) => {
         }))
     ];
     var buffer = xlsx.build([{name: 'dashboard', data: data}]);
-    download(buffer, 'demo.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    const filename = "dashboard-" + dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD') + '-' + Date.now();
+    download(buffer, filename, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 }
