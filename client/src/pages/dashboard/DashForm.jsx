@@ -263,7 +263,7 @@ export default function DashForm(props) {
 				</Grid>
 				<Grid container item xs={12}>
 					<StyledButtonPrimary
-						// disabled={unavailable}
+						disabled={unavailable}
 						onClick={exportExcel}
 						fullWidth
 					>
