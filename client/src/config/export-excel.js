@@ -19,7 +19,7 @@ export const makeExcelAndDownload = (dashboardData) => {
             "$" + Number(item.profit).toFixed(2),
             Number(item.roas * 100).toFixed(2) + '%'       
         ])),
-        ['', 'Total', "$" + totalRevenue, "$" + totalSpend, "$" + (totalRevenue - totalSpend), (totalRevenue / totalSpend) + "%"]
+        ['', 'Total', "$" + totalRevenue, "$" + totalSpend, "$" + Number(totalRevenue - totalSpend).toFixed(2), Number(totalRevenue / totalSpend).toFixed(2) + "%"]
     ];
     var buffer = xlsx.build([{name: 'dashboard', data: data}]);
     const filename = "dashboard-" + dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD') + '-' + Date.now();
