@@ -7,14 +7,14 @@ export const makeExcelAndDownload = (dashboardData) => {
 
     const data = [
         ['No', 'Name', 'Revenue', 'Spend', 'Profit', 'ROAS'],
-        ...dashboardData.map(item => ({
-            no: index ++,
-            name: item.name,
-            revenue: item.revenue,
-            spend: item.spend,
-            profit: item.revenue - item.spend,
-            roas: item.revenue / item.spend        
-        }))
+        ...dashboardData.map(item => ([
+            index ++,
+            item.name,
+            "$" + item.revenue,
+            "$" + item.spend,
+            "$" + Number(item.profit).toFixed(2),
+            Number(item.roas * 100).toFixed(2) + '%'       
+        ]))
     ];
     var buffer = xlsx.build([{name: 'dashboard', data: data}]);
     const filename = "dashboard-" + dayjs.tz(dayjs(), "EST").format('YYYY-MM-DD') + '-' + Date.now();

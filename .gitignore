@@ -3,3 +3,6 @@ dist
 *.env
 dist
 build
+package-lock.json
+yarn.lock
+yarn-error.lock
